@@ -1,0 +1,119 @@
+* {
+    color: #d8dee9;
+    border: 0;
+    outline: 0;
+    padding: 0;
+    margin: 0;
+    font-family: 'Inconsolata Nerd Font', 'Inter Medium';
+    font-size: 15px;
+    font-weight: 900;
+}
+
+window#waybar {
+    background: #111111;
+}
+
+#workspaces button {
+    padding: 0 5px;
+    border-radius: 0px;
+    color: #ffffff;
+    background-color: #5f676a;
+}
+
+#workspaces button.focused {
+    background-color: #285577;
+}
+
+#workspaces button.urgent {
+    background-color: #900000;
+}
+
+#workspaces button.active {
+    background-color: #285577;
+}
+
+#workspaces button:hover {
+    background: #5e81ac;
+}
+
+#clock, #battery, #idle_inhibitor, #pulseaudio, #mode, #tray, #cpu, #memory,
+#window, #custom-power, #custom-dunst, #custom-temperature, #backlight, #disk, #custom-audio, #custom-scratchpad{
+    color: #d8dee9;
+    margin: 0 5px;
+}
+
+#custom-separator {
+    margin: 0;
+    padding: 0;
+}
+
+/* -----------------------------------------------------------------------------
+ * Module styles
+ * -------------------------------------------------------------------------- */
+
+#battery.charging {
+    color: #81a1c1;
+}
+
+@keyframes blink {
+    to {
+        color: #4c566a;
+        background-color: #eceff4;
+    }
+}
+
+#battery.critical:not(.charging) {
+    background: #bf616a;
+    color: #eceff4;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#network.disabled {
+    color: #4c566a;
+}
+
+#network.disconnected {
+    color: #4c566a;
+}
+
+#network {
+    margin-left: 5px;
+}
+
+/*
+#pulseaudio {
+    color: #88c0d0;
+}
+
+#pulseaudio.sink.muted {
+    color: #4c566a;
+}
+
+#pulseaudio.sink:not(.muted) {
+    color: #a3be8c;
+}
+
+#pulseaudio.source-muted {
+    color: #4c566a;
+}
+*/
+
+#idle_inhibitor {
+    color: #ebcb8b;
+}
+
+#idle_inhibitor.deactivated {
+    color: #4c566a;
+}
+
+#custom-power {
+    color: #d08770;
+}
+
+#mode {
+    color: #ebcb8b;
+}

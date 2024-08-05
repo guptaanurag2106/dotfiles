@@ -1,0 +1,42 @@
+* {
+    font-family: 'Inconsolata Nerd Font', 'FontAwesome', 'JetBrainsMono Nerd Font';
+    border: none;
+    outline: none;
+    background-color: transparent;
+    background: none;
+}
+#bar {
+    margin: 30px /* affects top/bottom & left/right alignment */
+}
+
+button, image {
+    background: none;
+    border-style: none;
+    box-shadow: none;
+    color: #999;
+    text-shadow: none;
+}
+
+image {
+  border-radius: 100px;
+  background-color: transparent;
+}
+
+button {
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 5px;
+    border: none;
+}
+
+button:hover {
+    background-color: rgba (255, 255, 255, 0.3)
+}
+
+button:focus {
+    background-color: rgba (255, 255, 255, 0.3)
+}
+
+grid {
+    /* e.g. for common background to all buttons */
+}

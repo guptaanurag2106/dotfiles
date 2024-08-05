@@ -1,0 +1,246 @@
+[
+{
+    "layer": "bottom", // Waybar at top layer
+    "position": "bottom", // Waybar position (top|bottom|left|right)
+    //"height": 32,
+    //"width": 1350,
+    //"spacing": 5,
+    // Choose the order of the modules
+    "modules-left": [
+        "sway/workspaces",
+        "custom/separator",
+        "custom/scratchpad",
+        "sway/mode",
+        "custom/separator",
+        "mpd",
+        "sway/window",
+    ],
+    "modules-center": [
+        "clock",
+    ],
+    "modules-right": [
+        "idle_inhibitor",
+        "custom/separator",
+        "cpu",
+        "custom/temperature",
+        "custom/separator",
+        "memory",
+        "custom/separator",
+        "disk",
+        "custom/separator",
+        "battery",
+        "custom/separator",
+        "backlight",
+        "custom/separator",
+        "custom/audio",
+        "custom/separator",
+        "network",
+        "tray",
+        "custom/dunst",
+        "custom/power"
+    ],
+    "sway/workspaces": {
+        "strip": 20,
+        "disable-scroll": false,
+        "all-outputs": false,
+        "format": "{value}",
+        "numeric-first": false,
+    },
+    "custom/scratchpad": {
+      "interval": 1,
+      "return-type": "json",
+      "exec": "~/.config/waybar/scripts/scratchpad.sh",
+      "exec-if": "exit 0",
+      "on-click": "swaymsg scratchpad show",
+      "on-click-right": "swaymsg move window to scratchpad",
+      "tooltip": false
+    },
+    "sway/mode": {
+        "format": "<span style=\"italic\">{}</span>"
+    },
+    "sway/window": {
+        "format": "{title}",
+        "max-length": 20,
+        "tooltip": true
+    },
+    "mpd": { "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ ",
+        "format-disconnected": "Disconnected ",
+        "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
+        "unknown-tag": "N/A",
+        "interval": 2,
+        "consume-icons": {
+            "on": " "
+        },
+        "random-icons": {
+            "off": "<span color=\"#f53c3c\"></span> ",
+            "on": " "
+        },
+        "repeat-icons": {
+            "on": " "
+        },
+        "single-icons": {
+            "on": "1 "
+        },
+        "state-icons": {
+            "paused": "",
+            "playing": ""
+        },
+        "tooltip-format": "MPD (connected)",
+        "tooltip-format-disconnected": "MPD (disconnected)"
+    },
+    "idle_inhibitor": {
+        "format": "{icon} ",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        },
+        "tooltip": false
+    },
+    "cpu": {
+        "format": "{usage}% {avg_frequency}MHz"
+    },
+    "memory": {
+        "format": "{used:.2f}GiB"
+    },
+    "disk": {
+        "interval": 30,
+        "format": "{used}",
+        "path": "/"
+    },
+    "backlight": {
+        "device": "intel_backlight",
+        "on-scroll-up": "light -A 5",
+        "on-scroll-down": "light -U 5",
+        "format": "{icon}  {percent}%",
+        "format-icons": ["", ""],
+        //"format-icons": ["","","",""],
+        "tooltip": false
+    },
+    "battery": {
+        "states": {
+            // "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon}  {capacity}%",
+        // "format-good": "", // An empty format will hide the module
+        // "format-full": "",
+        "format-charging": " {capacity}%",
+        "format-icons": [
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "tooltip": true,
+        "interval": 10,
+        "tooltip-format": "{time}"
+    },
+    "custom/temperature": {
+      "exec": "~/.config/waybar/scripts/cpu_temp.sh",
+      "format": "{}",
+      "return-type": "json",
+      "interval": 5
+    },
+    //"pulseaudio#sink": {
+    //    "format": "{icon} {volume}%",
+    //    "format-bluetooth": "{icon} {volume}%",
+    //    "format-bluetooth-muted": "{icon} muted",
+    //    // "format-muted": "{icon} muted",
+    //    // "format-source": "",
+    //    // "format-source-muted": "",
+    //    "format-icons": {
+    //        "headphone": "",
+    //        "hands-free": "",
+    //        "headset": "",
+    //        "phone": "",
+    //        "portable": "",
+    //        "car": "",
+    //        "default": [
+    //            "",
+    //            "",
+    //            ""
+    //        ]
+    //    },
+    //    "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+    //    "on-click-right": "pavucontrol",
+    //    "on-scroll-up": "",
+    //    "on-scroll-down": "",
+    //},
+    //"pulseaudio#source": {
+    //    "format": "{format_source}",
+    //    "format-bluetooth": "{format_source}",
+    //    "format-bluetooth-muted": "{format_source}",
+    //    "format-muted": "{format_source}",
+    //    "format-source": " {volume}%",
+    //    "format-source-muted": " {volume}%",
+    //    "format-icons": {
+    //        "headphone": "",
+    //        "hands-free": "",
+    //        "headset": "",
+    //        "phone": "",
+    //        "portable": "",
+    //        "car": "",
+    //        "default": [
+    //            "",
+    //            "",
+    //            ""
+    //        ]
+    //    },
+    //    "on-click": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
+    //    "on-scroll-up": "",
+    //    "on-scroll-down": "",
+    //    "tooltip": false
+    //},
+    "custom/audio": {
+        "format": "{}",
+        "signal": 8,
+        "interval": "once",
+        "exec": "/home/tanz/.config/sway/scripts/audio.sh",
+        "on-click": "pavucontrol",
+    },
+    "network": {
+        // "interface": "wlp2s0", // (Optional) To force the use of this interface
+        "interval": 5,
+        "format": "⚠  Disabled",
+        "format-wifi": " ",
+        "format-ethernet": "  {ifname}: {ipaddr}/{cidr}",
+        "format-disconnected": "⚠  Disconnected",
+        // "on-click": "connman-gtk",
+        "tooltip-format": "{ifname}: {ipaddr}",
+        "tooltip-format-wifi": "{essid} ({signalStrength}%): {ipaddr}"
+    },
+    "clock": {
+        "tooltip-format": "<big>{:%B:%Y}</big>\n\n<tt><small>{calendar}</small></tt>",
+        //"tooltip-format": "{:%A %B %d %Y | %H:%M}",
+        //"format": " {:%a %d %b  %I:%M %p}",	//12 hour format
+        "format": "{:%a %d/%m %H:%M}",
+        "format-alt": " {:%H:%M}",
+        "timezone": "Asia/Kolkata",
+        //"max-length": 200
+        "interval": 5,
+        "tooltip": true
+    },
+    "custom/dunst": {
+        "exec": "~/.config/waybar/scripts/dunst.sh",
+        "on-click": "dunstctl set-paused toggle",
+        "restart-interval": 1,
+        "tooltip": false,
+    },
+    "tray": {
+      "spacing": 5,
+      "show-passive-items": true
+    },
+    "custom/power": {
+        "format": " ⏻ ",
+        "on-click": "nwgbar",
+        "tooltip": false,
+    },
+    "custom/separator": {
+      "format": "|",
+      "interval": "once",
+      "tooltip": false
+    },
+}
+]

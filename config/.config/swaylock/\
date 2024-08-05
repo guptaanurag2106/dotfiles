@@ -1,0 +1,36 @@
+
+image=$HOME/.config/wallpaper.jpg
+daemonize
+clock
+show-failed-attempts
+font="Inconsolata Nerd Font"
+indicator
+indicator-caps-lock
+indicator-radius=120
+indicator-thickness=10
+#color=F5B7C4FF 
+line-color=2E8B92 
+ring-color=2B4C3F 
+inside-color=0A1929 
+key-hl-color=2E8B92 
+#separator-color=00000000
+#text-color=F5B7C4 
+text-caps-lock-color=""
+line-ver-color=2B4C3F 
+ring-ver-color=2B4C3F 
+inside-ver-color=0A1929 
+text-ver-color=2E8B92 
+ring-wrong-color=F5B7C4 
+text-wrong-color=F5B7C4 
+inside-wrong-color=0A1929 
+inside-clear-color=0A1929 
+text-clear-color=2E8B92 
+ring-clear-color=2E8B92 
+line-clear-color=2E8B92 
+line-wrong-color=0A1929 
+bs-hl-color=2E8B92 
+effect-blur=9x4
+effect-vignette=0.5:0.5
+ignore-empty-password
+datestr=%a, %B %e
+timestr=%I:%M %p

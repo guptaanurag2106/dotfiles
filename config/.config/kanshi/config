@@ -1,0 +1,12 @@
+profile nomad {
+    output eDP-1 enable
+}
+
+profile both {
+    output HDMI-A-1 enable position 0,0
+    output eDP-1 enable position 0,1080
+}
+
+profile ext {
+    output HDMI-A-1 enable position 0,0
+}

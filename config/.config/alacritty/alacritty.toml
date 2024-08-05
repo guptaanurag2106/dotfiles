@@ -1,0 +1,20 @@
+[window]
+opacity = 1
+padding.x = 10
+padding.y = 10
+
+[shell]
+program = "/bin/zsh"
+
+[scrolling]
+history = 100000
+
+[colors.primary]
+background = '#111111'
+
+[font]
+normal.family = "Inconsolata Nerd Font"
+bold.family = "Inconsolata Nerd Font"
+italic.family = "Inconsolata Nerd Font"
+bold_italic.family = "Inconsolata Nerd Font"
+size = 15
