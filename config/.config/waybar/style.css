@@ -37,7 +37,7 @@ window#waybar {
 }
 
 #clock, #battery, #idle_inhibitor, #pulseaudio, #mode, #tray, #cpu, #memory,
-#window, #custom-power, #custom-dunst, #custom-temperature, #backlight, #disk, #custom-audio, #custom-scratchpad{
+#window, #custom-power, #custom-dunst, #custom-temperature, #backlight, #disk, #custom-audio, #custom-scratchpad, #keyboard-state{
     color: #d8dee9;
     margin: 0 5px;
 }

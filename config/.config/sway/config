@@ -11,6 +11,7 @@ exec_always ~/dotfiles/config/.config/sway/scripts/start_applets.sh
 exec_always pkill battery_notif; exec ~/dotfiles/config/.config/sway/scripts/battery_notif.sh
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 output * bg ~/dotfiles/config/.config/wallpaper.jpg fill
+exec_always killall swayidle
 #exec /usr/libexec/polkit-gnome-authentication-agent-1 &
 exec lxpolkit &
 
@@ -65,10 +66,11 @@ bindswitch --reload --locked lid:off output eDP-1 enable
 
 ### Idle configuration
 exec swayidle -w \
-     timeout 300 'swaylock -f -c 000000' \
-     timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
-     before-sleep 'swaylock -f -c 000000'\
-     before-sleep 'playerctl pause; swaylock'
+    timeout 300 'swaylock -f -c 000000' \
+    timeout 600 'swaymsg "output * dpms off"' \
+    timeout 900 'systemctl suspend' \
+    resume 'swaymsg "output * dpms on"' \
+    before-sleep 'swaylock -f -c 000000; playerctl pause; swaymsg "output * dpms off"'
 
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
@@ -88,7 +90,11 @@ input "type:touchpad" {
   accel_profile adaptive
 }
 #input type:keyboard xkb_capslock enabled
-input type:keyboard xkb_numlock enabled
+input "type:keyboard" {
+    xkb_numlock enabled
+    xkb_options caps:swapescape
+}
+
 
 bindgesture swipe:right workspace prev
 bindgesture swipe:left workspace next

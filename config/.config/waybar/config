@@ -1,11 +1,10 @@
 [
 {
-    "layer": "bottom", // Waybar at top layer
-    "position": "bottom", // Waybar position (top|bottom|left|right)
+    "layer": "bottom",
+    "position": "bottom",
     //"height": 32,
     //"width": 1350,
-    //"spacing": 5,
-    // Choose the order of the modules
+    "spacing": 1,
     "modules-left": [
         "sway/workspaces",
         "custom/separator",
@@ -97,7 +96,7 @@
         "tooltip": false
     },
     "cpu": {
-        "format": "{usage}% {avg_frequency}MHz"
+        "format": "{load} {usage}% {avg_frequency}MHz"
     },
     "memory": {
         "format": "{used:.2f}GiB"
@@ -113,18 +112,15 @@
         "on-scroll-down": "light -U 5",
         "format": "{icon}  {percent}%",
         "format-icons": ["", ""],
-        //"format-icons": ["","","",""],
         "tooltip": false
     },
     "battery": {
         "states": {
-            // "good": 95,
+            "good": 80,
             "warning": 30,
             "critical": 15
         },
         "format": "{icon}  {capacity}%",
-        // "format-good": "", // An empty format will hide the module
-        // "format-full": "",
         "format-charging": " {capacity}%",
         "format-icons": [
             "",
@@ -196,7 +192,7 @@
     "custom/audio": {
         "format": "{}",
         "signal": 8,
-        "interval": "once",
+        "interval": 5,
         "exec": "/home/tanz/.config/sway/scripts/audio.sh",
         "on-click": "pavucontrol",
     },
@@ -213,12 +209,9 @@
     },
     "clock": {
         "tooltip-format": "<big>{:%B:%Y}</big>\n\n<tt><small>{calendar}</small></tt>",
-        //"tooltip-format": "{:%A %B %d %Y | %H:%M}",
-        //"format": " {:%a %d %b  %I:%M %p}",	//12 hour format
         "format": "{:%a %d/%m %H:%M}",
         "format-alt": " {:%H:%M}",
         "timezone": "Asia/Kolkata",
-        //"max-length": 200
         "interval": 5,
         "tooltip": true
     },
