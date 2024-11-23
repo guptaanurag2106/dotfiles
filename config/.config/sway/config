@@ -7,10 +7,10 @@
 set $mod Mod4
 exec_always pkill kanshi; exec kanshi
 exec_always pkill flameshot; exec flameshot
-exec_always ~/dotfiles/config/.config/sway/scripts/start_applets.sh
-exec_always pkill battery_notif; exec ~/dotfiles/config/.config/sway/scripts/battery_notif.sh
+exec_always ~/.config/sway/scripts/start_applets.sh
+exec_always pkill battery_notif; exec ~/.config/sway/scripts/battery_notif.sh
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg ~/dotfiles/config/.config/wallpaper.jpg fill
+output * bg ~/.config/wallpaper.jpg fill
 exec_always killall swayidle
 #exec /usr/libexec/polkit-gnome-authentication-agent-1 &
 exec lxpolkit &
@@ -120,14 +120,14 @@ bindsym $mod+Return exec $term
 bindsym $mod+q kill
 
 # Start your launcher
-bindsym $mod+d exec wofi --show drun
+bindsym $mod+d exec rofi -show drun
 # bindsym $mod+d exec dmenu_run
 
 # Lock screen
-bindsym $mod+Escape exec ~/dotfiles/config/.config/sway/scripts/lock_screen.sh
-bindsym $mod+Shift+q exec nwgbar
+bindsym $mod+Escape exec ~/.config/sway/scripts/lock_screen.sh
+bindsym $mod+Shift+q exec ~/.config/sway/scripts/powermenu.sh
 
-bindsym $mod+Shift+s exec ~/dotfiles/config/.config/sway/scripts/start_apps.sh
+bindsym $mod+Shift+s exec ~/.config/sway/scripts/start_apps.sh
 
 # Drag floating windows by holding down $mod and left mouse button.
 # Resize them with right mouse button + $mod.
@@ -311,7 +311,7 @@ bindsym ctrl+$mod+m exec dunstctl set-paused toggle
 # Clipman
 exec clipman restore
 exec wl-paste -n -t text --watch clipman store --histpath="~/.cache/clipman.json" >> /tmp/clipman-log.txt 2>&1 &
-bindsym $mod+x exec clipman pick -t wofi --histpath="~/.cache/clipman.json" --notify
+bindsym $mod+x exec clipman pick -t rofi --histpath="~/.cache/clipman.json" --notify
 
 
 # Screenshots

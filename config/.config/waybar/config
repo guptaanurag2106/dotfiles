@@ -203,7 +203,7 @@
         "format-wifi": " ",
         "format-ethernet": "  {ifname}: {ipaddr}/{cidr}",
         "format-disconnected": "⚠  Disconnected",
-        // "on-click": "connman-gtk",
+        "on-click": "~/.config/waybar/scripts/rofi_wifi_menu.sh",
         "tooltip-format": "{ifname}: {ipaddr}",
         "tooltip-format-wifi": "{essid} ({signalStrength}%): {ipaddr}"
     },
@@ -227,7 +227,7 @@
     },
     "custom/power": {
         "format": " ⏻ ",
-        "on-click": "nwgbar",
+        "on-click": "~/.config/waybar/scripts/powermenu.sh",
         "tooltip": false,
     },
     "custom/separator": {
