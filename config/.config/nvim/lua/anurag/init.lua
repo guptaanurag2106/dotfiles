@@ -29,7 +29,7 @@ end
 function OpenScratchBuffer()
     local bufnr = vim.api.nvim_create_buf(false, true)
     vim.api.nvim_set_current_buf(bufnr)
-    vim.api.nvim_command('setlocal buftype=nofile bufhidden=hide noswapfile nonumber norelativenumber')
+    vim.api.nvim_command('setlocal buftype=nofile bufhidden=hide noswapfile relativenumber')
     vim.api.nvim_command('au BufUnload <buffer> bd!')
 end
 

@@ -1,7 +1,7 @@
 configuration {
  modi: "window,drun,ssh,combi";
- font: "hack 10";
+ font: "Inconsolata Nerd Font";
  combi-modi: "window,drun,ssh";
  }
-@theme "./themes/tokynoight.rasi"
+@theme "./themes/one-dark.rasi"
 

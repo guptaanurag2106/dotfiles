@@ -4,10 +4,10 @@
 CHOSEN=$(printf "Lock\nSuspend\nReboot\nShutdown\nLog Out" | rofi -dmenu -i)
 
 case "$CHOSEN" in
-	"Lock") swaylock ;;
+	"Lock") swaylock -f -c 000000 ;;
 	"Suspend") systemctl suspend ;;
-	"Reboot") reboot ;;
-	"Shutdown") poweroff ;;
+	"Reboot") systemctl reboot ;;
+	"Shutdown") systemctl -i poweroff ;;
 	"Log Out") swaymsg exit ;;
 	*) exit 1 ;;
 esac
