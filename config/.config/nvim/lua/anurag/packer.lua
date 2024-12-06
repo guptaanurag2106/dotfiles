@@ -7,41 +7,46 @@ return require("packer").startup(function(use)
     -- Packer can manage itself
     use("wbthomason/packer.nvim")
 
+
+    -- Navigation
     use({
         "nvim-telescope/telescope.nvim",
         requires = { { "nvim-lua/plenary.nvim" } },
     })
-
-    use("nvim-treesitter/nvim-treesitter", { run = ":TSUpdate" })
-    use("nvim-treesitter/playground")
-    use("nvim-treesitter/nvim-treesitter-context")
-
-    use("theprimeagen/harpoon")
-    use("mbbill/undotree")
-    use("tpope/vim-fugitive")
-    use("tpope/vim-rhubarb")
-    use( "lewis6991/gitsigns.nvim")
-    use("sindrets/diffview.nvim")
-
-    use("williamboman/mason.nvim")
-    use("williamboman/mason-lspconfig.nvim")
-    use("neovim/nvim-lspconfig")
     use({
-        "stevearc/conform.nvim",
+        "stevearc/oil.nvim",
         config = function()
-            require("conform").setup({
-                formatters_by_ft = {
-                    lua = { "stylua" },
-                    python = { "ruff" },
-                    cpp = { "clang-format" },
-                    c = { "clang-format" },
-                    go = { "gofmt" },
-                    bash = { "beautysh" },
-                    javascript = { "prettierd", "prettier", stop_after_first = true },
+            require("oil").setup({
+                columns = { "icon" },
+                keymaps = {
+                    ["<C-h>"] = false,
+                    ["<M-h>"] = "actions.select_split",
+                },
+                view_options = {
+                    show_hidden = true,
                 },
             })
         end,
     })
+    use("theprimeagen/harpoon")
+
+    --Syntax Highlight
+    use("nvim-treesitter/nvim-treesitter", { run = ":TSUpdate" })
+    use("nvim-treesitter/playground")
+    use("nvim-treesitter/nvim-treesitter-context")
+    use("RRethy/vim-illuminate")
+
+    --Git
+    use("tpope/vim-fugitive")
+    use("tpope/vim-rhubarb")
+    use( "lewis6991/gitsigns.nvim")
+    use("sindrets/diffview.nvim")
+    use("mbbill/undotree")
+
+    --LSP/DAP
+    use("williamboman/mason.nvim")
+    use("williamboman/mason-lspconfig.nvim")
+    use("neovim/nvim-lspconfig")
     use({
         "crispgm/nvim-go",
         requires = {
@@ -51,7 +56,6 @@ return require("packer").startup(function(use)
             require("go").setup({})
         end,
     })
-
     use("mfussenegger/nvim-dap")
     use({
         "jay-babu/mason-nvim-dap.nvim",
@@ -117,32 +121,6 @@ return require("packer").startup(function(use)
             end, { silent = true })
         end,
     })
-
-    use({
-        "folke/neodev.nvim",
-        config = function()
-            require("neodev").setup({})
-        end,
-    })
-
-    use({
-        "stevearc/oil.nvim",
-        config = function()
-            require("oil").setup({
-                columns = { "icon" },
-                keymaps = {
-                    ["<C-h>"] = false,
-                    ["<M-h>"] = "actions.select_split",
-                },
-                view_options = {
-                    show_hidden = true,
-                },
-            })
-        end,
-    })
-
-    use("RRethy/vim-illuminate")
-
     use({
         "j-hui/fidget.nvim",
         config = function()
@@ -155,13 +133,6 @@ return require("packer").startup(function(use)
     use("ellisonleao/gruvbox.nvim")
     use("folke/tokyonight.nvim")
     use("navarasu/onedark.nvim")
-
-    use({
-        "stevearc/dressing.nvim",
-        config = function()
-            require("dressing").setup({})
-        end,
-    })
     use({
         "nvim-lualine/lualine.nvim",
         requires = { "nvim-tree/nvim-web-devicons", opt = true },
@@ -169,6 +140,22 @@ return require("packer").startup(function(use)
             require("lualine").setup({})
         end,
     })
+    use({
+        "stevearc/dressing.nvim",
+        config = function()
+            require("dressing").setup({})
+        end,
+    })
+
+    --Dev
+    use("vimwiki/vimwiki")
+    use({
+        "folke/neodev.nvim",
+        config = function()
+            require("neodev").setup({})
+        end,
+    })
+
 
     -- Comments
     use({
@@ -187,6 +174,7 @@ return require("packer").startup(function(use)
         end,
     })
 
+    --Proj Manage
     use({
         "folke/trouble.nvim",
         requires = "nvim-tree/nvim-web-devicons",
@@ -194,14 +182,12 @@ return require("packer").startup(function(use)
             require("trouble").setup({})
         end,
     })
-
     use({
         "hedyhli/outline.nvim",
         config = function()
             require("outline").setup({})
         end,
     })
-
     use("folke/zen-mode.nvim")
 
     -- use {
