@@ -19,13 +19,8 @@ return require("packer").startup(function(use)
     use("theprimeagen/harpoon")
     use("mbbill/undotree")
     use("tpope/vim-fugitive")
-    use({
-        "airblade/vim-gitgutter",
-        -- config = function()
-        --     require("vim-gitgutter").setup()
-        -- end
-    })
-    -- Packer
+    use("tpope/vim-rhubarb")
+    use( "lewis6991/gitsigns.nvim")
     use("sindrets/diffview.nvim")
 
     use("williamboman/mason.nvim")
