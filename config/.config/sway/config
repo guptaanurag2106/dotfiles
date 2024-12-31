@@ -78,13 +78,13 @@ exec_always swayidle -w \
 # resumed. It will also lock your screen before your computer goes to sleep.
 
 ### Input configuration
-#
 
+# tap with 1 finger = left click, 2 fingers = right click, 3 fingers = middle click
 input "type:touchpad" {
   dwt disabled
   dwtp disabled
   tap enabled
-  tap_button_map lrm  # tap with 1 finger = left click, 2 fingers = right click, 3 fingers = middle click
+  tap_button_map lrm
   natural_scroll enabled
   middle_emulation enabled
   pointer_accel 0.3
@@ -128,7 +128,7 @@ bindsym $mod+d exec rofi -show drun
 bindsym $mod+Escape exec ~/.config/sway/scripts/lock_screen.sh
 bindsym $mod+Shift+q exec ~/.config/sway/scripts/powermenu.sh
 
-bindsym $mod+Shift+s exec ~/.config/sway/scripts/start_apps.sh
+# bindsym $mod+Shift+s exec ~/.config/sway/scripts/start_apps.sh
 
 # Drag floating windows by holding down $mod and left mouse button.
 # Resize them with right mouse button + $mod.

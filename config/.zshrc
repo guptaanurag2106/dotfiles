@@ -29,6 +29,8 @@ if [ -d "$HOME/.cargo/bin" ] ; then
    export PATH="$HOME/.cargo/bin:$PATH"
 fi
 export PATH="$HOME/.config/emacs/bin:$PATH"
+export PATH="$HOME/Documents/dev/projects/cpp_libs/emsdk:$PATH"
+export PATH="$HOME/Documents/dev/projects/cpp_libs/emsdk/upstream/emscripten:$PATH"
 
 # general use aliases 
 alias ls='exa' # just replace ls by exa and allow all other exa arguments
