@@ -11,7 +11,12 @@ return require("packer").startup(function(use)
     -- Navigation
     use({
         "nvim-telescope/telescope.nvim",
-        requires = { { "nvim-lua/plenary.nvim" } },
+        requires = { { "nvim-lua/plenary.nvim" },
+            { "nvim-telescope/telescope-fzf-native.nvim", build = "make" }
+        },
+        config = function()
+            require("telescope").load_extension("fzf")
+        end
     })
     use({
         "stevearc/oil.nvim",
@@ -39,7 +44,7 @@ return require("packer").startup(function(use)
     --Git
     use("tpope/vim-fugitive")
     use("tpope/vim-rhubarb")
-    use( "lewis6991/gitsigns.nvim")
+    use("lewis6991/gitsigns.nvim")
     use("sindrets/diffview.nvim")
     use("mbbill/undotree")
 
@@ -149,12 +154,12 @@ return require("packer").startup(function(use)
 
     --Dev
     use("vimwiki/vimwiki")
-    use({
-        "folke/neodev.nvim",
-        config = function()
-            require("neodev").setup({})
-        end,
-    })
+    -- use({
+    --     "folke/neodev.nvim",
+    --     config = function()
+    --         require("neodev").setup({})
+    --     end,
+    -- })
 
 
     -- Comments

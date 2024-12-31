@@ -1,7 +1,5 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
--- go to explorer on pressing <leader>pv in normal (n) mode
-
 -- Removed via oil.nvim
 -- vim.keymap.set("n", "<leader>pf", vim.cmd('Ex'))
 

@@ -4,9 +4,9 @@ profile nomad {
 
 profile both {
     output HDMI-A-1 {
-        mode 3840*2160@30Hz
+        position 0,0
     }
-    output eDP-1 enable position 0,1080
+    output eDP-1 enable position 2560,0
 }
 
 profile ext {

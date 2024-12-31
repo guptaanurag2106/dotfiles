@@ -61,7 +61,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
                 focusable = false,
                 style = "minimal",
                 border = "rounded",
-                source = "always",
+                source = true,
                 header = "",
                 prefix = "",
             },
@@ -87,22 +87,13 @@ cmp.setup({
             require("luasnip").lsp_expand(args.body)
         end,
     },
-    -- sources = {
-    --     { name = "buffer",                 dup = 0 },
-    --     { name = "nvim_lsp_signature_help" },
-    --     { name = "nvim_lsp",               dup = 0 },
-    --     { name = "luasnip",                dup = 0 },
-    --     { name = "path",                   dup = 0 },
-    -- },
-    sources = cmp.config.sources({
+    sources = {
         { name = "nvim_lsp_signature_help" },
         { name = "nvim_lsp",               keyword_length = 1 },
         { name = "luasnip" },
         { name = "path" },
-        { name = "nvim_lua" }
-    }, {
         { name = 'buffer' },
-    }),
+    },
     mapping = cmp.mapping.preset.insert({
         ["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
         ["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
