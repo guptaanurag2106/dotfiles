@@ -2,7 +2,7 @@ export ZSH="/home/tanz/.oh-my-zsh"
 export XDG_CURRENT_DESKTOP=sway
 export EDITOR=vim
 
-ZSH_THEME="fwalch"
+ZSH_THEME="clean"
 
 
 plugins=(
