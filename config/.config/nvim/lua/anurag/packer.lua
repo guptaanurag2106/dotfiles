@@ -1,4 +1,4 @@
--- This file can be loaded by calling `lua require("plugins")` from your init.vim
+-- This file can be loaded by calling `lua require("plugins")` from your init.vimpack
 
 -- Only required if you have packer configured as `opt`
 vim.cmd([[packadd packer.nvim]])
@@ -136,7 +136,6 @@ return require("packer").startup(function(use)
     -- Theme
     use("nvim-tree/nvim-web-devicons")
     use("ellisonleao/gruvbox.nvim")
-    use("folke/tokyonight.nvim")
     use("navarasu/onedark.nvim")
     use({
         "nvim-lualine/lualine.nvim",
@@ -160,6 +159,9 @@ return require("packer").startup(function(use)
     --         require("neodev").setup({})
     --     end,
     -- })
+    use({
+        "folke/which-key.nvim",
+   })
 
 
     -- Comments

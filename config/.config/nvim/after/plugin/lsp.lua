@@ -2,27 +2,40 @@ vim.api.nvim_create_autocmd("LspAttach", {
     group = vim.api.nvim_create_augroup("UserLSPAttach", { clear = true }),
     callback = function(event)
         local opts = { buffer = event.buf }
-        vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
-        vim.keymap.set("n", "gD", function() vim.lsp.buf.declaration() end, opts)
-        vim.keymap.set("n", "gi", function() vim.lsp.buf.implementation() end, opts)
-        vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
-        vim.keymap.set("n", "<leader>ws", function() vim.lsp.buf.workspace_symbol() end, opts)
-        vim.keymap.set("n", "<leader>vwa", function() vim.lsp.buf.add_workspace_folder() end, opts)
-        vim.keymap.set("n", "<leader>ds", function() vim.lsp.buf.document_symbol() end, opts)
-        vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
+        vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end,
+            { desc = "Go to definition", buffer = opts.buffer })
+        vim.keymap.set("n", "gD", function() vim.lsp.buf.declaration() end,
+            { desc = "Go to declaration", buffer = opts.buffer })
+        vim.keymap.set("n", "gi", function() vim.lsp.buf.implementation() end,
+            { desc = "Go to implementation", buffer = opts.buffer })
+        vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end,
+            { desc = "Show hover information", buffer = opts.buffer })
+        vim.keymap.set("n", "<leader>ws", function() vim.lsp.buf.workspace_symbol() end,
+            { desc = "Search workspace symbols", buffer = opts.buffer })
+        vim.keymap.set("n", "<leader>vwa", function() vim.lsp.buf.add_workspace_folder() end,
+            { desc = "Add workspace folder", buffer = opts.buffer })
+        vim.keymap.set("n", "<leader>ds", function() vim.lsp.buf.document_symbol() end,
+            { desc = "Search document symbols", buffer = opts.buffer })
+        vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end,
+            { desc = "Show diagnostics", buffer = opts.buffer })
         -- Using trouble for it
         -- vim.keymap.set("n", "<leader>co", function() vim.diagnostic.setloclist() end, opts)
-        vim.keymap.set("n", "]d", function() vim.diagnostic.goto_next() end, opts)
-        vim.keymap.set("n", "[d", function() vim.diagnostic.goto_prev() end, opts)
-        vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end, opts)
-        vim.keymap.set("n", "<leader>rr", function() vim.lsp.buf.references() end, opts)
-        vim.keymap.set("n", "<leader>rn", function() vim.lsp.buf.rename() end, opts)
-        vim.keymap.set("n", "<leader>td", function() vim.lsp.buf.type_definition() end, opts)
-        vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
-        vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format { async = true } end, opts)
-        vim.keymap.set("n", "<leader>cf", function()
-            require("conform").format({ bufnr = opts.buf })
-        end)
+        vim.keymap.set("n", "]d", function() vim.diagnostic.goto_next() end,
+            { desc = "Go to next diagnostic", buffer = opts.buffer })
+        vim.keymap.set("n", "[d", function() vim.diagnostic.goto_prev() end,
+            { desc = "Go to previous diagnostic", buffer = opts.buffer })
+        vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end,
+            { desc = "Trigger code action", buffer = opts.buffer })
+        vim.keymap.set("n", "<leader>rr", function() vim.lsp.buf.references() end,
+            { desc = "Show references", buffer = opts.buffer })
+        vim.keymap.set("n", "<leader>rn", function() vim.lsp.buf.rename() end,
+            { desc = "Rename symbol", buffer = opts.buffer })
+        vim.keymap.set("n", "<leader>td", function() vim.lsp.buf.type_definition() end,
+            { desc = "Go to type definition", buffer = opts.buffer })
+        vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end,
+            { desc = "Show signature help", buffer = opts.buffer })
+        vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format { async = true } end,
+            { desc = "Format document", buffer = opts.buffer })
 
         local client = vim.lsp.get_client_by_id(event.data.client_id)
         -- The following two autocommands are used to highlight references of the
@@ -50,10 +63,19 @@ vim.api.nvim_create_autocmd("LspAttach", {
         -- code, if the language server you are using supports them
         --
         -- This may be unwanted, since they displace some of your code
+        -- -- Automatically format on save
+        vim.api.nvim_create_autocmd("BufWritePre", {
+            group = vim.api.nvim_create_augroup("LSPFormatOnSave", { clear = true }),
+            buffer = event.buf,                      -- Ensures this applies to the specific buffer
+            callback = function()
+                vim.lsp.buf.format({ async = true }) -- Runs the format asynchronously
+            end,
+        })
+
         if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
             vim.keymap.set("n", "<leader>th", function()
                 vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-            end, opts)
+            end, { desc = "Turn on inlay hints", buffer = opts.buffer })
         end
         vim.diagnostic.config({
             update_in_insert = true,
@@ -176,4 +198,3 @@ require("mason-lspconfig").setup({
         end
     },
 })
-

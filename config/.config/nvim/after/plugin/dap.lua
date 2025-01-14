@@ -37,25 +37,24 @@ dap.configurations.c = {
 
 dap.configurations.cpp = dap.configurations.c
 
-vim.keymap.set("n", "<leader>b", dap.toggle_breakpoint)
-vim.keymap.set("n", "<leader>gb", dap.run_to_cursor)
+vim.keymap.set("n", "<leader>b", dap.toggle_breakpoint, { desc = "Debug | Toggle Breakpoint" })
+vim.keymap.set("n", "<leader>gb", dap.run_to_cursor, { desc = "Debug | Run to Cursor" })
 -- vim.keymap.set("n", "<leader>dB",
 --     dap.set_breakpoint(vim.fn.input('Breakpoint condition: ')),
 --     { desc = "DAP | Breakpoint Condition", silent = true }
 -- )
-vim.keymap.set("n", "<leader>dl", function() dap.set_breakpoint(nil, nil, vim.fn.input('Breakpoint condition: ')) end)
-
+vim.keymap.set("n", "<leader>dl", function() dap.set_breakpoint(nil, nil, vim.fn.input('Breakpoint condition: ')) end, { desc = "Debug | Set Breakpoint with Condition" })
 
 vim.keymap.set("n", "<leader>?", function()
     require("dapui").eval(nil, { enter = true })
-end)
+end, { desc = "Debug | Evaluate Expression" })
 
-vim.keymap.set("n", "<F1>", dap.continue)
-vim.keymap.set("n", "<F2>", dap.step_into)
-vim.keymap.set("n", "<F3>", dap.step_over)
-vim.keymap.set("n", "<F4>", dap.step_out)
-vim.keymap.set("n", "<F5>", dap.step_back)
-vim.keymap.set("n", "<F12>", dap.restart)
+vim.keymap.set("n", "<F1>", dap.continue, { desc = "Debug | Continue" })
+vim.keymap.set("n", "<F2>", dap.step_into, { desc = "Debug | Step Into" })
+vim.keymap.set("n", "<F3>", dap.step_over, { desc = "Debug | Step Over" })
+vim.keymap.set("n", "<F4>", dap.step_out, { desc = "Debug | Step Out" })
+vim.keymap.set("n", "<F5>", dap.step_back, { desc = "Debug | Step Back" })
+vim.keymap.set("n", "<F12>", dap.restart, { desc = "Debug | Restart" })
 
-vim.keymap.set("n", "<leader>dt", dapui.toggle)
-vim.keymap.set("n", "<leader>dr", function() dapui.open({ reset = true }) end)
+vim.keymap.set("n", "<leader>dt", dapui.toggle, { desc = "Debug UI | Toggle" })
+vim.keymap.set("n", "<leader>dr", function() dapui.open({ reset = true }) end, { desc = "Debug UI | Reset & Open" })

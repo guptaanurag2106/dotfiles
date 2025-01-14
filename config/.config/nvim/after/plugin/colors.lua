@@ -5,13 +5,13 @@ function Colors(color)
     vim.cmd.colorscheme(color)
     if color == "gruvbox" then
         require("gruvbox").setup({
-            italic = {
-                strings = false,
-                emphasis = false,
-                comments = true,
-                operators = false,
-                folds = true,
-            }
+            -- italic = {
+            --     strings = false,
+            --     emphasis = false,
+            --     comments = true,
+            --     operators = false,
+            --     folds = true,
+            -- }
         })
     end
 

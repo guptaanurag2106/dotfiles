@@ -8,9 +8,9 @@ vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "Find existing
 vim.keymap.set("n", "<C-p>", builtin.git_files, {})
 vim.keymap.set("n", "<leader>/", builtin.current_buffer_fuzzy_find,
     { desc = "Fuzzily search in current buffer (Telescope)" })
-vim.keymap.set("n", "<leader>ss", function()
-    builtin.grep_string({ search = vim.fn.input("Grep >") }); -- need ripgrep for this
-end, { desc = "Grep string (Telescope)" })
+-- vim.keymap.set("n", "<leader>ss", function()
+--     builtin.grep_string({ search = vim.fn.input("Grep >") }); -- need ripgrep for this
+-- end, { desc = "Grep string (Telescope)" })
 vim.keymap.set("n", "<leader>fs", builtin.lsp_document_symbols, { desc = "Find Symbols (Telescope)" })
 vim.keymap.set("n", "<leader>gc", builtin.git_commits, { desc = "Search Git Commits (Telescope)" })
 
@@ -60,5 +60,4 @@ local live_adv_grep = function(opts)
     }):find()
 end
 
-vim.keymap.set("n", "<leader>sg", live_adv_grep)
-
+vim.keymap.set("n", "<leader>sg", live_adv_grep, { desc = "Advanced Grep (Telescope)" })
