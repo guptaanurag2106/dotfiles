@@ -11,7 +11,8 @@ vim.keymap.set("n", "<leader>/", builtin.current_buffer_fuzzy_find,
 -- vim.keymap.set("n", "<leader>ss", function()
 --     builtin.grep_string({ search = vim.fn.input("Grep >") }); -- need ripgrep for this
 -- end, { desc = "Grep string (Telescope)" })
-vim.keymap.set("n", "<leader>fs", builtin.lsp_document_symbols, { desc = "Find Symbols (Telescope)" })
+vim.keymap.set("n", "<leader>fs", builtin.lsp_document_symbols, { desc = "Find Document Symbols (Telescope)" })
+vim.keymap.set("n", "<leader>fws", builtin.lsp_workspace_symbols, { desc = "Find Workspace Symbols (Telescope)" })
 vim.keymap.set("n", "<leader>gc", builtin.git_commits, { desc = "Search Git Commits (Telescope)" })
 
 

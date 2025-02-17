@@ -10,12 +10,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
             { desc = "Go to implementation", buffer = opts.buffer })
         vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end,
             { desc = "Show hover information", buffer = opts.buffer })
-        vim.keymap.set("n", "<leader>ws", function() vim.lsp.buf.workspace_symbol() end,
-            { desc = "Search workspace symbols", buffer = opts.buffer })
+        -- vim.keymap.set("n", "<leader>ws", function() vim.lsp.buf.workspace_symbol() end,
+        --     { desc = "Search workspace symbols", buffer = opts.buffer })
         vim.keymap.set("n", "<leader>vwa", function() vim.lsp.buf.add_workspace_folder() end,
             { desc = "Add workspace folder", buffer = opts.buffer })
-        vim.keymap.set("n", "<leader>ds", function() vim.lsp.buf.document_symbol() end,
-            { desc = "Search document symbols", buffer = opts.buffer })
+        -- vim.keymap.set("n", "<leader>ds", function() vim.lsp.buf.document_symbol() end,
+        --     { desc = "Search document symbols", buffer = opts.buffer })
         vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end,
             { desc = "Show diagnostics", buffer = opts.buffer })
         -- Using trouble for it
@@ -59,10 +59,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
         --     })
         -- end
 
-        -- The following autocommand is used to enable inlay hints in your
-        -- code, if the language server you are using supports them
-        --
-        -- This may be unwanted, since they displace some of your code
         -- -- Automatically format on save
         vim.api.nvim_create_autocmd("BufWritePre", {
             group = vim.api.nvim_create_augroup("LSPFormatOnSave", { clear = true }),
@@ -72,6 +68,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
             end,
         })
 
+        -- The following autocommand is used to enable inlay hints in your
+        -- code, if the language server you are using supports them
+        --
+        -- This may be unwanted, since they displace some of your code
         if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
             vim.keymap.set("n", "<leader>th", function()
                 vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
@@ -89,8 +89,27 @@ vim.api.nvim_create_autocmd("LspAttach", {
             },
             virtual_text = true
         })
+
+
+        vim.g.zig_fmt_autosave = 0
+        vim.g.zig_fmt_parse_errors = 0
+
+        -- vim.api.nvim_create_autocmd('BufWritePre', {
+        --     pattern = { "*.zig", "*.zon" },
+        --     callback = function(ev)
+        --         vim.lsp.buf.code_action({
+        --             context = { only = { "source.organizeImports" } },
+        --             apply = true,
+        --         })
+        --         vim.lsp.buf.code_action({
+        --             context = { only = { "source.fixAll" } },
+        --             apply = true,
+        --         })
+        --     end
+        -- })
     end,
 })
+
 
 vim.api.nvim_create_autocmd("LspDetach", {
     group = vim.api.nvim_create_augroup("UserLSPDetach", { clear = true }),
@@ -134,12 +153,12 @@ cmp.setup.cmdline(':', {
         { name = 'path' },
         { name = "cmdline",         max_item_count = 10, dup = 0 },
     }, {
-        -- {
-        --     name = 'cmdline',
-        --     option = {
-        --         ignore_cmds = { 'Man', '!' }
-        --     }
-        -- }
+        {
+            name = 'cmdline',
+            option = {
+                ignore_cmds = { '!' }
+            }
+        }
     })
 })
 
@@ -150,7 +169,7 @@ local lsp_capabilities = vim.tbl_deep_extend("force", {},
 
 require("mason").setup({})
 require("mason-lspconfig").setup({
-    ensure_installed = { "rust_analyzer", "clangd", "lua_ls", "gopls" },
+    ensure_installed = { "rust_analyzer", "clangd", "lua_ls", "gopls", "zls" },
     handlers = {
         function(server_name)
             require("lspconfig")[server_name].setup({
@@ -191,10 +210,29 @@ require("mason-lspconfig").setup({
                         usePlaceholders = true,
                         analyses = {
                             unusedparams = true,
+                        },
+                        ui = {
+                            diagnostics = {
+                                -- Disable diagnostics popup
+                                show_diagnostics = false
+                            }
                         }
                     }
                 }
             })
-        end
+        end,
+        ['zls'] = function()
+            require("lspconfig").zls.setup({
+                capabilities = lsp_capabilities,
+                cmd = { "/home/tanz/Documents/software/zls/zig-out/bin/zls" },
+                settings = {
+                    zls = {
+                        -- enable_build_on_save = true,
+
+                        zig_exe_path = "/usr/bin/zig",
+                    }
+                }
+            })
+        end,
     },
 })
