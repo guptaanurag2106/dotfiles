@@ -8,10 +8,10 @@ set $mod Mod4
 exec_always pkill kanshi; exec kanshi
 exec_always pkill flameshot; exec flameshot
 exec_always ~/.config/sway/scripts/start_applets.sh
-exec_always pkill battery_notif; exec ~/.config/sway/scripts/battery_notif.sh
+exec_always ~/.config/sway/scripts/battery_notif.sh
 #exec --no-startup-id swaylock --daemonize
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg ~/.config/wallpaper.jpg fill
+# output * bg ~/.config/wallpaper.jpg fill
 #exec /usr/libexec/polkit-gnome-authentication-agent-1 &
 
 ### Variables

@@ -10,7 +10,7 @@ program = "/bin/zsh"
 history = 100000
 
 [colors.primary]
-background = '#111111'
+background = '#000000'
 
 [font]
 normal.family = "Inconsolata Nerd Font"

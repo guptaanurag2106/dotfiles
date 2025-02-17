@@ -1,10 +1,10 @@
 function Colors(color)
     -- color = color or "gruvbox"
-    -- color = color or "tokyonight-storm"
     color = color or "onedark"
     vim.cmd.colorscheme(color)
     if color == "gruvbox" then
         require("gruvbox").setup({
+            contrast = "hard"
             -- italic = {
             --     strings = false,
             --     emphasis = false,
@@ -31,5 +31,8 @@ function Colors(color)
         vim.api.nvim_set_hl(0, name, { bg = "none" })
     end
 end
+
+vim.g.gruvbox_contrast_dark = 'hard'
+vim.g.gruvbox_contrast_light = 'hard'
 
 Colors()

@@ -2,7 +2,7 @@ export ZSH="/home/tanz/.oh-my-zsh"
 export XDG_CURRENT_DESKTOP=sway
 export EDITOR=vim
 
-ZSH_THEME="clean"
+ZSH_THEME="robbyrussell"
 
 
 plugins=(
@@ -45,3 +45,4 @@ alias lS='exa -1' # one column by just names
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# export TERM=tmux-256color

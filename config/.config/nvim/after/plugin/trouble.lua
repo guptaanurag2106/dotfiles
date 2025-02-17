@@ -6,8 +6,11 @@ vim.keymap.set("n", "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<
     { silent = true, noremap = true, desc = "Buffer Diagnostics (Trouble)" }
 )
 
-vim.keymap.set("n", "<leader>xs", "<cmd>Trouble symbols toggle focus=false<cr>",
-    { silent = true, noremap = true, desc = "Symbols (Trouble)" }
+-- vim.keymap.set("n", "<leader>xs", "<cmd>Trouble symbols toggle focus=false<cr>",
+--     { silent = true, noremap = true, desc = "Symbols (Trouble)" }
+-- )
+vim.keymap.set("n", "<leader>xs", "<cmd>Outline<cr>",
+    { silent = true, noremap = true, desc = "Symbols (Outline)" }
 )
 
 vim.keymap.set("n", "<leader>xl", "<cmd>Trouble loclist toggle<cr>",

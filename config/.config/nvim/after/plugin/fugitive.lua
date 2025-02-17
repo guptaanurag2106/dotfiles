@@ -1,4 +1,4 @@
-vim.keymap.set("n", "<leader>gs", vim.cmd.Git);
+vim.keymap.set("n", "<leader>gs", vim.cmd.Git, {desc = "Open Git"});
 
 local User_Fugitive = vim.api.nvim_create_augroup("UserFugitive", {})
 
