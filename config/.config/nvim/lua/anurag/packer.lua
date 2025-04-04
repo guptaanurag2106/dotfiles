@@ -161,7 +161,7 @@ return require("packer").startup(function(use)
     -- })
     use({
         "folke/which-key.nvim",
-   })
+    })
 
 
     -- Comments

@@ -67,8 +67,7 @@ output "LG Electronics LG QHD 0x00011B7E" {
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
 ### Idle configuration
-exec_always swayidle -w \
-    timeout 300 'swaylock -f -c 000000'
+exec --no-startup-id pgrep -x swayidle || swayidle -w timeout 300 'swaylock -f -c 000000'
     # timeout 600 'swaymsg "output * dpms off" && systemctl suspend' \
     # resume 'swaymsg "output * dpms on"' \
     # before-sleep 'swaylock -f -c 000000; playerctl pause; swaymsg "output * dpms off"'
@@ -121,7 +120,7 @@ bindsym $mod+Return exec $term
 bindsym $mod+q kill
 
 # Start your launcher
-bindsym $mod+d exec rofi -show drun
+bindsym $mod+d exec rofi -show drun -drun-show-actions
 # bindsym $mod+d exec dmenu_run
 
 # Lock screen
@@ -302,7 +301,7 @@ bindsym --locked XF86AudioPlay exec playerctl play-pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
-exec_always dunst
+exec --no-startup-id pgrep -x dunst || dunst &
 #
 # dunstctl notifs
 #

@@ -34,7 +34,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
             { desc = "Go to type definition", buffer = opts.buffer })
         vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end,
             { desc = "Show signature help", buffer = opts.buffer })
-        vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format { async = true } end,
+        vim.keymap.set("n", "<leader>fd", function() vim.lsp.buf.format { async = true } end,
             { desc = "Format document", buffer = opts.buffer })
 
         local client = vim.lsp.get_client_by_id(event.data.client_id)
@@ -224,14 +224,14 @@ require("mason-lspconfig").setup({
         ['zls'] = function()
             require("lspconfig").zls.setup({
                 capabilities = lsp_capabilities,
-                cmd = { "/home/tanz/Documents/software/zls/zig-out/bin/zls" },
-                settings = {
-                    zls = {
-                        -- enable_build_on_save = true,
-
-                        zig_exe_path = "/usr/bin/zig",
-                    }
-                }
+                -- cmd = { "/home/tanz/Documents/software/zls/zig-out/bin/zls" },
+                -- settings = {
+                --     zls = {
+                --         -- enable_build_on_save = true,
+                --
+                --         zig_exe_path = "/usr/bin/zig",
+                --     }
+                -- }
             })
         end,
     },
