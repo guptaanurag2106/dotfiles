@@ -18,21 +18,7 @@ return require("packer").startup(function(use)
             require("telescope").load_extension("fzf")
         end
     })
-    use({
-        "stevearc/oil.nvim",
-        config = function()
-            require("oil").setup({
-                columns = { "icon" },
-                keymaps = {
-                    ["<C-h>"] = false,
-                    ["<M-h>"] = "actions.select_split",
-                },
-                view_options = {
-                    show_hidden = true,
-                },
-            })
-        end,
-    })
+    use("stevearc/oil.nvim")
     use("theprimeagen/harpoon")
 
     --Syntax Highlight
@@ -214,4 +200,12 @@ return require("packer").startup(function(use)
     --         end
     --     end,
     -- }
+
+
+    use({
+        "/home/tanz/Documents/dev/projects/run.nvim/",
+        config = function()
+            require("run").setup({})
+        end
+    })
 end)
