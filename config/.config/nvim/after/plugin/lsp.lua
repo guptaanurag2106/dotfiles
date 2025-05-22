@@ -19,7 +19,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
         vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end,
             { desc = "Show diagnostics", buffer = opts.buffer })
         -- Using trouble for it
-        -- vim.keymap.set("n", "<leader>co", function() vim.diagnostic.setloclist() end, opts)
+        --NOTE:setloclist not viewloclist vim.keymap.set("n", "<leader>co", function() vim.diagnostic.setloclist() end, opts)
         vim.keymap.set("n", "]d", function() vim.diagnostic.goto_next() end,
             { desc = "Go to next diagnostic", buffer = opts.buffer })
         vim.keymap.set("n", "[d", function() vim.diagnostic.goto_prev() end,

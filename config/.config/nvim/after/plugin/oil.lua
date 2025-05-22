@@ -15,21 +15,11 @@ end
 
 local detail = false
 require("oil").setup({
-    config = function()
-        require("oil").setup({
-            columns = { "icon" },
-            keymaps = {
-                ["<C-h>"] = false,
-                ["<M-h>"] = "actions.select_split",
-            },
-            view_options = {
-                show_hidden = true,
-            },
-        })
-    end,
     win_options = {
         winbar = "%!v:lua.get_oil_winbar()",
     },
+    show_hidden = true,
+    columns = { "icon" },
     keymaps = {
         ["gd"] = {
             desc = "Toggle file detail view",
@@ -42,5 +32,7 @@ require("oil").setup({
                 end
             end,
         },
+        ["<C-h>"] = false,
+        ["<M-h>"] = "actions.select_split",
     },
 })
