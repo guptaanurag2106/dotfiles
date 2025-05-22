@@ -11,7 +11,7 @@ exec_always ~/.config/sway/scripts/start_applets.sh
 exec_always ~/.config/sway/scripts/battery_notif.sh
 #exec --no-startup-id swaylock --daemonize
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-# output * bg ~/.config/wallpaper.jpg fill
+ output * bg ~/.config/wallpaper.jpg fill
 #exec /usr/libexec/polkit-gnome-authentication-agent-1 &
 
 ### Variables
@@ -315,7 +315,5 @@ bindsym $mod+x exec clipman pick -t rofi --histpath="~/.cache/clipman.json" --no
 # Screenshots
 bindsym $mod+print exec grim - | swappy -f -
 bindsym print exec grim -g "$(slurp)" - | swappy -f -
-
-exec ~/.config/sway/scripts/wallpaper.sh
 
 include /etc/sway/config.d/*
