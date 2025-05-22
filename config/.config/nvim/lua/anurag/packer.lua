@@ -35,8 +35,8 @@ return require("packer").startup(function(use)
     use("mbbill/undotree")
 
     --LSP/DAP
-    use("williamboman/mason.nvim")
-    use("williamboman/mason-lspconfig.nvim")
+    use({ "williamboman/mason.nvim", tag = "stable" })
+    use({ "williamboman/mason-lspconfig.nvim", tag = "stable" })
     use("neovim/nvim-lspconfig")
     use({
         "crispgm/nvim-go",
@@ -204,8 +204,11 @@ return require("packer").startup(function(use)
 
     use({
         "/home/tanz/Documents/dev/projects/run.nvim/",
+        requires = { { "nvim-lua/plenary.nvim" } },
         config = function()
-            require("run").setup({})
+            require("run").setup({
+                ask_confirmation = false
+            })
         end
     })
 end)

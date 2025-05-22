@@ -38,4 +38,5 @@ vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50
-vim.opt.colorcolumn = "100"
+vim.opt.colorcolumn = "80"
+vim.g.c_syntax_for_h = 1 -- Use C syntax for `.h` files, not C++
