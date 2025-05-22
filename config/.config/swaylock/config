@@ -3,7 +3,7 @@ image=$HOME/.config/wallpaper.jpg
 daemonize
 clock
 show-failed-attempts
-font="Inter"
+font="Inconsolata Nerd Font"
 indicator
 indicator-caps-lock
 indicator-radius=120

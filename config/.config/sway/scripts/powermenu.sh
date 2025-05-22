@@ -1,7 +1,7 @@
 #!/bin/sh
 
 
-CHOSEN=$(printf "Lock\nSuspend\nReboot\nShutdown\nLog Out" | rofi -dmenu -i)
+CHOSEN=$(printf "Lock\nSuspend\nReboot\nShutdown\nLog Out" | rofi -dmenu -i -show-icons -icon-theme "Papirus")
 
 case "$CHOSEN" in
 	"Lock") swaylock -f -c 000000 ;;

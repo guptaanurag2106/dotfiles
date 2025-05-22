@@ -139,62 +139,14 @@
       "return-type": "json",
       "interval": 5
     },
-    //"pulseaudio#sink": {
-    //    "format": "{icon} {volume}%",
-    //    "format-bluetooth": "{icon} {volume}%",
-    //    "format-bluetooth-muted": "{icon} muted",
-    //    // "format-muted": "{icon} muted",
-    //    // "format-source": "",
-    //    // "format-source-muted": "",
-    //    "format-icons": {
-    //        "headphone": "",
-    //        "hands-free": "",
-    //        "headset": "",
-    //        "phone": "",
-    //        "portable": "",
-    //        "car": "",
-    //        "default": [
-    //            "",
-    //            "",
-    //            ""
-    //        ]
-    //    },
-    //    "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
-    //    "on-click-right": "pavucontrol",
-    //    "on-scroll-up": "",
-    //    "on-scroll-down": "",
-    //},
-    //"pulseaudio#source": {
-    //    "format": "{format_source}",
-    //    "format-bluetooth": "{format_source}",
-    //    "format-bluetooth-muted": "{format_source}",
-    //    "format-muted": "{format_source}",
-    //    "format-source": " {volume}%",
-    //    "format-source-muted": " {volume}%",
-    //    "format-icons": {
-    //        "headphone": "",
-    //        "hands-free": "",
-    //        "headset": "",
-    //        "phone": "",
-    //        "portable": "",
-    //        "car": "",
-    //        "default": [
-    //            "",
-    //            "",
-    //            ""
-    //        ]
-    //    },
-    //    "on-click": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
-    //    "on-scroll-up": "",
-    //    "on-scroll-down": "",
-    //    "tooltip": false
-    //},
     "custom/audio": {
         "format": "{}",
         "signal": 8,
         "interval": 1,
         "exec": "/home/tanz/.config/sway/scripts/audio.sh",
         "on-click": "pavucontrol",
+        "on-scroll-up": "wpctl set-volume -l 1.5 @DEFAULT_SINK@ 5%+",
+        "on-scroll-down": "wpctl set-volume -l 1.5 @DEFAULT_SINK@ 5%-"
     },
     "network": {
         // "interface": "wlp2s0", // (Optional) To force the use of this interface
@@ -227,7 +179,7 @@
     },
     "custom/power": {
         "format": " ⏻ ",
-        "on-click": "~/.config/waybar/scripts/powermenu.sh",
+        "on-click": "~/.config/sway/scripts/powermenu.sh",
         "tooltip": false,
     },
     "custom/separator": {

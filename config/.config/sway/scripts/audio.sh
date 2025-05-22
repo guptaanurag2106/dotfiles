@@ -1,6 +1,6 @@
 #!/bin/bash
 
-current_volume=$(/usr/bin/wpctl get-volume @DEFAULT_AUDIO_SINK@)
+current_volume=$(wpctl get-volume @DEFAULT_SINK@)
 
 volume="$(echo $current_volume | cut -f 2 -d " " | sed 's/\.//g')"
 

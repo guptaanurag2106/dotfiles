@@ -67,10 +67,15 @@ output "LG Electronics LG QHD 0x00011B7E" {
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
 ### Idle configuration
-exec --no-startup-id pgrep -x swayidle || swayidle -w timeout 300 'swaylock -f -c 000000'
-    # timeout 600 'swaymsg "output * dpms off" && systemctl suspend' \
-    # resume 'swaymsg "output * dpms on"' \
-    # before-sleep 'swaylock -f -c 000000; playerctl pause; swaymsg "output * dpms off"'
+# exec --no-startup-id pgrep -x swayidle || swayidle -w timeout 300 'swaylock -f -c 000000' \
+#     timeout 600 'swaymsg "output * dpms off" && systemctl suspend' \
+#     resume 'swaymsg "output * dpms on"' \
+#     before-sleep 'swaylock -f -c 000000; playerctl pause; swaymsg "output * dpms off"'
+exec swayidle -w \
+         timeout 300 'swaylock -f -c 000000' \
+         timeout 600 'swaymsg "output * dpms off"' \
+              resume 'swaymsg "output * dpms on"' \
+         before-sleep 'swaylock -f -c 000000'
 
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
@@ -124,10 +129,9 @@ bindsym $mod+d exec rofi -show drun -drun-show-actions
 # bindsym $mod+d exec dmenu_run
 
 # Lock screen
-bindsym $mod+Escape exec ~/.config/sway/scripts/lock_screen.sh
+bindsym $mod+Escape exec swaylock -f -c 000000
 bindsym $mod+Shift+q exec ~/.config/sway/scripts/powermenu.sh
 
-# bindsym $mod+Shift+s exec ~/.config/sway/scripts/start_apps.sh
 
 # Drag floating windows by holding down $mod and left mouse button.
 # Resize them with right mouse button + $mod.
@@ -284,24 +288,16 @@ bindsym XF86MonBrightnessDown exec light -U 5
 
 # Volume keys
 
-bindsym $mod+m exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
-bindsym XF86AudioRaiseVolume exec "wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+; pkill -RTMIN+8 waybar"
-bindsym XF86AudioLowerVolume exec "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-; pkill -RTMIN+8 waybar"
-bindsym XF86AudioMute exec "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle; pkill -RTMIN+8 waybar"
-
-# Mute audio
-#bindsym $mod+m exec pactl set-sink-mute @DEFAULT_SINK@ toggle
-#bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%; pkill -RTMIN+8 waybar
-#bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%; pkill -RTMIN+8 waybar
-#bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle; pkill -RTMIN+8 waybar
-
+bindsym $mod+m exec wpctl set-mute @DEFAULT_SOURCE@ toggle
+bindsym XF86AudioRaiseVolume exec "~/.config/sway/scripts/wp-volume.sh 5%+"
+bindsym XF86AudioLowerVolume exec "~/.config/sway/scripts/wp-volume.sh 5%-"
+bindsym XF86AudioMute exec  "~/.config/sway/scripts/wp-volume.sh toggle-mute"
 
 bindsym --locked XF86AudioPlay exec playerctl play-pause
-#bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
-exec --no-startup-id pgrep -x dunst || dunst &
+exec --no-startup-id dunst 
 #
 # dunstctl notifs
 #
@@ -320,6 +316,6 @@ bindsym $mod+x exec clipman pick -t rofi --histpath="~/.cache/clipman.json" --no
 bindsym $mod+print exec grim - | swappy -f -
 bindsym print exec grim -g "$(slurp)" - | swappy -f -
 
-# exec ~/.config/sway/scripts/wallpaper.sh
+exec ~/.config/sway/scripts/wallpaper.sh
 
 include /etc/sway/config.d/*
