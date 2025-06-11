@@ -1,17 +1,16 @@
-# Default config for sway
+# Default config for swayswa
 #
 # Copy this to ~/.config/sway/config and edit it to your liking.
 #
 # Read `man 5 sway` for a complete reference.
-# exec_always ~/.config/sway/scripts/autotiling.sh
 set $mod Mod4
-exec_always pkill kanshi; exec kanshi
-exec_always pkill flameshot; exec flameshot
+
+exec_always --no-startup-id pgrep kanshi || kanshi
 exec_always ~/.config/sway/scripts/start_applets.sh
-exec_always ~/.config/sway/scripts/battery_notif.sh
-#exec --no-startup-id swaylock --daemonize
+exec_always ~/.config/scripts/battery_notif.sh
+# exec_always ~/.config/sway/scripts/disable_gnome_notif.sh
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
- output * bg ~/.config/wallpaper.jpg fill
+output * bg ~/.config/wallpaper.jpg fill
 #exec /usr/libexec/polkit-gnome-authentication-agent-1 &
 
 ### Variables
@@ -34,7 +33,7 @@ gaps outer 0
 smart_gaps on
 
 # Configure the default border:
-default_border pixel 4
+default_border pixel 6
 smart_borders on
 
 for_window [shell="xwayland"] title_format "[XWayland] %title"
@@ -75,7 +74,7 @@ exec swayidle -w \
          timeout 300 'swaylock -f -c 000000' \
          timeout 600 'swaymsg "output * dpms off"' \
               resume 'swaymsg "output * dpms on"' \
-         before-sleep 'swaylock -f -c 000000'
+         before-sleep 'swaylock -f -c 000000; playerctl pause'
 
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
@@ -122,7 +121,8 @@ bindgesture pinch:inward+right move right
 bindsym $mod+Return exec $term
 
 # Kill focused window
-bindsym $mod+q kill
+bindsym $mod+Shift+q kill
+bindsym $mod+ctrl+k exec ~/.config/scripts/launcher-kill.sh
 
 # Start your launcher
 bindsym $mod+d exec rofi -show drun -drun-show-actions
@@ -130,7 +130,7 @@ bindsym $mod+d exec rofi -show drun -drun-show-actions
 
 # Lock screen
 bindsym $mod+Escape exec swaylock -f -c 000000
-bindsym $mod+Shift+q exec ~/.config/sway/scripts/powermenu.sh
+bindsym $mod+q exec ~/.config/scripts/powermenu.sh
 
 
 # Drag floating windows by holding down $mod and left mouse button.
@@ -289,22 +289,25 @@ bindsym XF86MonBrightnessDown exec light -U 5
 # Volume keys
 
 bindsym $mod+m exec wpctl set-mute @DEFAULT_SOURCE@ toggle
-bindsym XF86AudioRaiseVolume exec "~/.config/sway/scripts/wp-volume.sh 5%+"
-bindsym XF86AudioLowerVolume exec "~/.config/sway/scripts/wp-volume.sh 5%-"
-bindsym XF86AudioMute exec  "~/.config/sway/scripts/wp-volume.sh toggle-mute"
+bindsym XF86AudioRaiseVolume exec "~/.config/scripts/wp-volume.sh 5%+"
+bindsym XF86AudioLowerVolume exec "~/.config/scripts/wp-volume.sh 5%-"
+bindsym XF86AudioMute exec  "~/.config/scripts/wp-volume.sh toggle-mute"
 
 bindsym --locked XF86AudioPlay exec playerctl play-pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
-exec --no-startup-id dunst 
 #
 # dunstctl notifs
 #
+exec_always --no-startup-id pgrep dunst || dunst
+# exec_always --no-startup-id sh -c 'pgrep dunst || dunst'
 bindsym ctrl+$mod+space exec dunstctl close-all
 bindsym ctrl+$mod+h exec dunstctl history-pop
 bindsym ctrl+$mod+period exec dunstctl action
 bindsym ctrl+$mod+m exec dunstctl set-paused toggle
+
+bindsym ctrl+$mod+w exec "~/.config/scripts/wl-sunset.sh"
 
 # Clipman
 exec clipman restore

@@ -59,7 +59,7 @@
     },
     "sway/window": {
         "format": "{title}",
-        "max-length": 20,
+        "max-length": 50,
         "tooltip": true
     },
     "mpd": { "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ ",
@@ -99,7 +99,7 @@
         "format": "{load} {usage}% {avg_frequency}MHz"
     },
     "memory": {
-        "format": "{used:.2f}GiB"
+        "format": "{percentage}%"
     },
     "disk": {
         "interval": 30,
@@ -143,10 +143,10 @@
         "format": "{}",
         "signal": 8,
         "interval": 1,
-        "exec": "/home/tanz/.config/sway/scripts/audio.sh",
+        "exec": "/home/tanz/.config/scripts/audio.sh",
         "on-click": "pavucontrol",
-        "on-scroll-up": "wpctl set-volume -l 1.5 @DEFAULT_SINK@ 5%+",
-        "on-scroll-down": "wpctl set-volume -l 1.5 @DEFAULT_SINK@ 5%-"
+        "on-scroll-up": "~/.config/scripts/wp-volume.sh 5%+",
+        "on-scroll-down": "~/.config/scripts/wp-volume.sh 5%-"
     },
     "network": {
         // "interface": "wlp2s0", // (Optional) To force the use of this interface
@@ -179,7 +179,7 @@
     },
     "custom/power": {
         "format": " ⏻ ",
-        "on-click": "~/.config/sway/scripts/powermenu.sh",
+        "on-click": "~/.config/scripts/powermenu.sh",
         "tooltip": false,
     },
     "custom/separator": {
