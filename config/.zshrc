@@ -10,6 +10,7 @@ plugins=(
   zsh-autosuggestions
   zsh-syntax-highlighting
   tmux
+  fzf-tab
   # zsh-vi-mode
   z
 )
@@ -32,6 +33,7 @@ export PATH="$HOME/.config/emacs/bin:$PATH"
 export PATH="$HOME/Documents/dev/projects/cpp_libs/emsdk:$PATH"
 export PATH="$HOME/Documents/dev/projects/cpp_libs/emsdk/upstream/emscripten:$PATH"
 export PATH="$HOME/Documents/software/gf:$PATH"
+export PATH="${PATH}:${HOME}/.local/bin/"
 
 # general use aliases 
 alias ls='exa' # just replace ls by exa and allow all other exa arguments
@@ -42,6 +44,7 @@ alias la='ls -lbhHigUmuSa' # all list
 alias lx='ls -lbhHigUmuSa@' # all list and extended
 alias tree='exa --tree' # tree view
 alias lS='exa -1' # one column by just names
+alias vim="nvim" # because
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

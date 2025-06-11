@@ -18,7 +18,9 @@ require("oil").setup({
     win_options = {
         winbar = "%!v:lua.get_oil_winbar()",
     },
-    show_hidden = true,
+    view_options = {
+        show_hidden = true,
+    },
     columns = { "icon" },
     keymaps = {
         ["gd"] = {

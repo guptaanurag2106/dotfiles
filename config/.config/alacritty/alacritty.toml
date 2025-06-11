@@ -13,8 +13,10 @@ history = 100000
 background = '#000000'
 
 [font]
-normal.family = "Inconsolata Nerd Font"
+normal.family = "Inconsolata Nerd Font Mono"
 bold.family = "Inconsolata Nerd Font"
+bold.style = "Bold"
 italic.family = "Inconsolata Nerd Font"
 bold_italic.family = "Inconsolata Nerd Font"
+bold_italic.style = "Bold"
 size = 15
