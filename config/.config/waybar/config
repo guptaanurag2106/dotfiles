@@ -48,7 +48,7 @@
     "custom/scratchpad": {
       "interval": 1,
       "return-type": "json",
-      "exec": "~/.config/waybar/scripts/scratchpad.sh",
+      "exec": "~/.config/scripts/scratchpad.sh",
       "exec-if": "exit 0",
       "on-click": "swaymsg scratchpad show",
       "on-click-right": "swaymsg move window to scratchpad",
@@ -134,7 +134,7 @@
         "tooltip-format": "{time}"
     },
     "custom/temperature": {
-      "exec": "~/.config/waybar/scripts/cpu_temp.sh",
+      "exec": "~/.config/scripts/cpu_temp.sh",
       "format": "{}",
       "return-type": "json",
       "interval": 5
@@ -155,7 +155,7 @@
         "format-wifi": " ",
         "format-ethernet": "  {ifname}: {ipaddr}/{cidr}",
         "format-disconnected": "⚠  Disconnected",
-        "on-click": "~/.config/waybar/scripts/rofi_wifi_menu.sh",
+        "on-click": "~/.config/scripts/rofi_wifi_menu.sh",
         "tooltip-format": "{ifname}: {ipaddr}",
         "tooltip-format-wifi": "{essid} ({signalStrength}%): {ipaddr}"
     },
@@ -168,7 +168,7 @@
         "tooltip": true
     },
     "custom/dunst": {
-        "exec": "~/.config/waybar/scripts/dunst.sh",
+        "exec": "~/.config/scripts/dunst.sh",
         "on-click": "dunstctl set-paused toggle",
         "restart-interval": 1,
         "tooltip": false,
