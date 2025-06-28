@@ -49,3 +49,4 @@ vim.g.vimwiki_list = {
         path = '~/Documents/dev/lab',
     }
 }
+vim.opt.matchpairs:append("<:>")

@@ -300,8 +300,8 @@ bindsym XF86AudioPrev exec playerctl previous
 #
 # dunstctl notifs
 #
-exec_always --no-startup-id pgrep dunst || dunst
-# exec_always --no-startup-id sh -c 'pgrep dunst || dunst'
+# exec_always --no-startup-id pgrep dunst || dunst
+exec dunst &
 bindsym ctrl+$mod+space exec dunstctl close-all
 bindsym ctrl+$mod+h exec dunstctl history-pop
 bindsym ctrl+$mod+period exec dunstctl action
