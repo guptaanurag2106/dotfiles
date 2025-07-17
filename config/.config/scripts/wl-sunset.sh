@@ -2,7 +2,7 @@
 
 
 while true; do
-    swaymsg -t subscribe '["window"]' | jq 'select(.change).container | if (.app_id == "org.mozilla.firefox" or .app_id == "microsoft-edge") then halt_error(127 - .fullscreen_mode) else halt end' > /dev/null 2>&1
+    swaymsg -t subscribe '["window"]' | jq 'select(.change).container | if (.app_id == "firefox" or .app_id == "microsoft-edge") then halt_error(127 - .fullscreen_mode) else halt end' > /dev/null 2>&1
     return_code=$?
     echo "$return_code"
     if [ $return_code -eq 126 ]; then

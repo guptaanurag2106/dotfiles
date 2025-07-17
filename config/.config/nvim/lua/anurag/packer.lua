@@ -139,12 +139,20 @@ return require("packer").startup(function(use)
 
     --Dev
     use("vimwiki/vimwiki")
-    -- use({
-    --     "folke/neodev.nvim",
-    --     config = function()
-    --         require("neodev").setup({})
-    --     end,
-    -- })
+
+    use({
+        'folke/lazydev.nvim',
+        ft = 'lua', -- only load on lua files
+        config = function()
+            require('lazydev').setup {
+                library = {
+                    -- Load luvit types when the `vim.uv` word is found
+                    { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+                },
+            }
+        end,
+    })
+
     use({
         "folke/which-key.nvim",
     })

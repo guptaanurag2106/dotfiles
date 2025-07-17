@@ -3,7 +3,7 @@ opacity = 1
 padding.x = 10
 padding.y = 10
 
-[shell]
+[terminal.shell]
 program = "/bin/zsh"
 
 [scrolling]
@@ -20,3 +20,5 @@ italic.family = "Inconsolata Nerd Font"
 bold_italic.family = "Inconsolata Nerd Font"
 bold_italic.style = "Bold"
 size = 15
+
+[terminal]

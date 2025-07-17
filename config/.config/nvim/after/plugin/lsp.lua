@@ -188,12 +188,15 @@ require("mason-lspconfig").setup({
                             callSnippet = "Replace"
                         },
                         diagnostics = {
-                            globals = { "vim" },
+                            globals = { "vim", 'require' },
                         },
                         workspace = {
                             library = {
                                 vim.env.VIMRUNTIME,
                             }
+                        },
+                        telemetry = {
+                            enable = false,
                         },
                     }
                 }
@@ -216,7 +219,10 @@ require("mason-lspconfig").setup({
                                 -- Disable diagnostics popup
                                 show_diagnostics = false
                             }
-                        }
+                        },
+                        telemetry = {
+                            enable = false,
+                        },
                     }
                 }
             })
