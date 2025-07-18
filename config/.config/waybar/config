@@ -6,12 +6,13 @@
     //"width": 1350,
     "spacing": 1,
     "modules-left": [
+        "custom/arch",
         "sway/workspaces",
         "custom/separator",
         "custom/scratchpad",
         "sway/mode",
         "custom/separator",
-        "mpd",
+        //"mpd",
         "sway/window",
     ],
     "modules-center": [
@@ -38,6 +39,10 @@
         "custom/dunst",
         "custom/power"
     ],
+    "custom/arch": {
+        "format": "   ",
+        "tooltip": false
+    },
     "sway/workspaces": {
         "strip": 20,
         "disable-scroll": false,
@@ -62,7 +67,8 @@
         "max-length": 50,
         "tooltip": true
     },
-    "mpd": { "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ ",
+    "mpd": {
+        "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ ",
         "format-disconnected": "Disconnected ",
         "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
         "unknown-tag": "N/A",
@@ -96,20 +102,21 @@
         "tooltip": false
     },
     "cpu": {
-        "format": "{load} {usage}% {avg_frequency}MHz"
+        "format": "{load} {usage}% {avg_frequency}GHz",
+        "interval": 5
     },
     "memory": {
         "format": "{percentage}%"
     },
     "disk": {
-        "interval": 30,
+        "interval": 5,
         "format": "{used}",
         "path": "/"
     },
     "backlight": {
         "device": "intel_backlight",
-        "on-scroll-up": "light -A 5",
-        "on-scroll-down": "light -U 5",
+        "on-scroll-up": "brightnessctl set +5%",
+        "on-scroll-down": "brightnessctl set 5%-",
         "format": "{icon}  {percent}%",
         "format-icons": ["", ""],
         "tooltip": false
@@ -130,7 +137,7 @@
             ""
         ],
         "tooltip": true,
-        "interval": 10,
+        "interval": 5,
         "tooltip-format": "{time}"
     },
     "custom/temperature": {
@@ -169,7 +176,7 @@
     },
     "custom/dunst": {
         "exec": "~/.config/scripts/dunst.sh",
-        "on-click": "dunstctl set-paused toggle",
+        "on-click": "~/.config/scripts/focus.sh",
         "restart-interval": 1,
         "tooltip": false,
     },

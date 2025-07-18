@@ -5,10 +5,10 @@
 # Read `man 5 sway` for a complete reference.
 set $mod Mod4
 
-exec_always --no-startup-id pgrep kanshi || kanshi
+#exec_always --no-startup-id pgrep kanshi || kanshi
 exec_always ~/.config/sway/scripts/start_applets.sh
 exec_always ~/.config/scripts/battery_notif.sh
-exec_always "~/.config/scripts/wl-sunset.sh"
+exec_always "pgrep wlsunset || bash ~/.config/scripts/wl-sunset.sh"
 # exec_always ~/.config/sway/scripts/disable_gnome_notif.sh
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 output * bg ~/.config/wallpaper.jpg fill
@@ -44,7 +44,7 @@ for_window [app_id="qalculate-gtk"] floating enable
 for_window [app_id="blueman-manager"] floating enable
 for_window [app_id="firefox" title="^Picture-in-Picture$"] \
     floating enable, move position 1400 700, resize set width 20 ppt height 22 ppt, sticky enable
-    for_window [app_id="firefox" title="Firefox — Sharing Indicator"] floating enable
+for_window [app_id="firefox" title="Firefox — Sharing Indicator"] floating enable
 for_window [app_id="firefox" title="Firefox — Sharing Indicator"] no_focus
 for_window [app_id="firefox" title="Firefox — Sharing Indicator"] move position 0px 105px
 for_window [title="Picture-in-picture"] floating enable
@@ -62,6 +62,7 @@ bindswitch --reload --locked lid:off output eDP-1 enable
 #   output HDMI-A-1 resolution 1920x1080 position 1920,0
 output "LG Electronics LG QHD 0x00011B7E" {
     mode 2560x1440@143.999Hz
+    pos 0 0
 }
 #
 # You can get the names of your outputs by running: swaymsg -t get_outputs
@@ -126,6 +127,7 @@ bindsym $mod+Shift+q kill
 bindsym $mod+ctrl+k exec ~/.config/scripts/launcher-kill.sh
 
 # Start your launcher
+# bindsym $mod+d exec rofi -show drun -drun-show-actions
 bindsym $mod+d exec rofi -show drun -drun-show-actions
 # bindsym $mod+d exec dmenu_run
 
@@ -284,9 +286,10 @@ bar {
 ###
 ### Screen brightness
 ###
-bindsym XF86MonBrightnessUp exec light -A 5
-bindsym XF86MonBrightnessDown exec light -U 5
-
+#bindsym XF86MonBrightnessUp exec light -A 5
+#bindsym XF86MonBrightnessDown exec light -U 5
+bindsym XF86MonBrightnessUp exec brightnessctl set +5%
+bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
 # Volume keys
 
 bindsym $mod+m exec wpctl set-mute @DEFAULT_SOURCE@ toggle
@@ -302,22 +305,22 @@ bindsym XF86AudioPrev exec playerctl previous
 # dunstctl notifs
 #
 # exec_always --no-startup-id pgrep dunst || dunst
-exec dunst &
-bindsym ctrl+$mod+space exec dunstctl close-all
-bindsym ctrl+$mod+h exec dunstctl history-pop
-bindsym ctrl+$mod+period exec dunstctl action
-bindsym ctrl+$mod+m exec dunstctl set-paused toggle
+#exec dunst &
+exec mako
+bindsym ctrl+$mod+m exec makoctl mode -t do-not-disturb
+bindsym ctrl+$mod+space exec makoctl dismiss -a
+bindsym ctrl+$mod+h exec makoctl restore
+#bindsym ctrl+$mod+space exec dunstctl close-all
+#bindsym ctrl+$mod+h exec dunstctl history-pop
+#bindsym ctrl+$mod+period exec dunstctl action
+#bindsym ctrl+$mod+m exec dunstctl set-paused toggle
 
 bindsym ctrl+$mod+w exec "~/.config/scripts/wl-sunset.sh"
 
 # Clipman
-exec clipman restore
-exec wl-paste -n -t text --watch clipman store --histpath="~/.cache/clipman.json" >> /tmp/clipman-log.txt 2>&1 &
-bindsym $mod+x exec clipman pick -t rofi --histpath="~/.cache/clipman.json" --notify
-
-
-# Screenshots
-bindsym $mod+print exec grim - | swappy -f -
-bindsym print exec grim -g "$(slurp)" - | swappy -f -
+#exec clipman restore
+exec wl-paste --type image --watch cliphist store
+exec wl-paste --type text --watch cliphist store
+bindsym $mod+x exec exec cliphist list | wofi -S dmenu | cliphist decode | wl-copy
 
 include /etc/sway/config.d/*

@@ -1,0 +1,135 @@
+* {
+    selected-normal-foreground:  #333333;
+    foreground:                  rgba (200, 200, 200, 90%);
+    normal-foreground:           @foreground;
+    selected-urgent-foreground:  rgba ( 255, 195, 156, 100 % );
+    urgent-foreground:           rgba ( 243, 132, 61, 100 % );
+    alternate-urgent-foreground: @urgent-foreground;
+    active-foreground:           rgba ( 38, 139, 210, 100 % );
+    alternate-active-foreground: @active-foreground;
+    selected-active-foreground:  rgba ( 32, 81, 113, 100 % );
+    background:                  rgba(36, 36, 36, 90%);
+    alternate-normal-foreground: @foreground;
+    normal-background:           rgba (36, 36, 36, 90%);
+    alternate-normal-background: @normal-background;
+    selected-normal-background:  rgba(182, 155, 241, 70 %);
+    border-color:                rgba (200, 200, 200, 90%);
+    separatorcolor:              rgba (144, 205, 250, 70 % );
+    urgent-background:           transparent;
+    alternate-urgent-background: @urgent-background;
+    selected-urgent-background:  rgba ( 38, 139, 210, 100 % );
+    background-color:            @background;
+    active-background:           rgba ( 0, 255, 0, 100 % );
+    alternate-active-background: @active-background;
+    selected-active-background:  rgba(182, 155, 241, 70 %);
+}
+window {
+    font: "Inconsolata Nerd Font Mono 16";
+    background-color: rgba (36, 36, 36, 90%);
+    border:           0;
+    border-radius:    10;
+    padding:          8;
+    width:            30%;
+    max-height:       20%;
+}
+textbox {
+    text-color: @foreground;
+}
+listview {
+    border:       2px solid 0px 0px ;
+    border-color: @separatorcolor;
+    spacing:      0px ;
+    scrollbar:    true;
+    padding:      10;
+}
+element {
+    padding: 6px ;
+    border-radius: 5;
+    spacing: 10;
+    margin: 3;
+}
+element-text {
+    background-color: inherit;
+    text-color:       inherit;
+}
+element.normal.normal {
+    background-color: @normal-background;
+    text-color:       @normal-foreground;
+}
+element.normal.urgent {
+    background-color: @urgent-background;
+    text-color:       @urgent-foreground;
+}
+element.normal.active {
+    background-color: @active-background;
+    text-color:       @active-foreground;
+}
+element.selected.normal {
+    background-color: @selected-normal-background;
+    text-color:       @selected-normal-foreground;
+}
+element.selected.urgent {
+    background-color: @selected-urgent-background;
+    text-color:       @selected-urgent-foreground;
+}
+element.selected.active {
+    background-color: @selected-active-background;
+    text-color:       @selected-active-foreground;
+}
+element.alternate.normal {
+    background-color: @alternate-normal-background;
+    text-color:       @alternate-normal-foreground;
+}
+element.alternate.urgent {
+    background-color: @alternate-urgent-background;
+    text-color:       @alternate-urgent-foreground;
+}
+element.alternate.active {
+    background-color: @alternate-active-background;
+    text-color:       @alternate-active-foreground;
+}
+scrollbar {
+    width:        4px ;
+    border:       0;
+    handle-width: 8px ;
+    padding:      0;
+}
+mode-switcher {
+    border:       2px dash 0px 0px ;
+    border-color: @separatorcolor;
+}
+button.selected {
+    background-color: @selected-normal-background;
+    text-color:       @selected-normal-foreground;
+}
+button {
+    background-color: @background;
+    text-color:       @foreground;
+}
+inputbar {
+    spacing:    0;
+    text-color: @normal-foreground;
+    padding:    1px ;
+}
+case-indicator {
+    spacing:    0;
+    text-color: @normal-foreground;
+}
+entry {
+    spacing:    10;
+    text-color: @normal-foreground;
+}
+prompt {
+    spacing:    0;
+    text-color: @normal-foreground;
+}
+inputbar {
+    children:   [ prompt,textbox-prompt-colon,entry,case-indicator ];
+    padding: 10;
+}
+textbox-prompt-colon {
+    expand:     false;
+    str:        ":";
+    margin:     0px 0.3em 0em 0em ;
+    text-color: @normal-foreground;
+}

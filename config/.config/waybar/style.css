@@ -15,13 +15,15 @@ window#waybar {
 
 #workspaces button {
     padding: 0 5px;
-    border-radius: 0px;
-    color: #ffffff;
-    background-color: #5f676a;
+    border: 0;
+    outline: 0;
+    border-radius: 0;
+    color: #000000;
+    background-color: rgba(144, 205, 250, 0.4);
 }
 
 #workspaces button.focused {
-    background-color: #285577;
+    background-color: rgba(182, 155, 241, 0.5);
 }
 
 #workspaces button.urgent {
@@ -29,11 +31,11 @@ window#waybar {
 }
 
 #workspaces button.active {
-    background-color: #285577;
+    background-color: rgba(0, 0, 0, 1);
 }
 
 #workspaces button:hover {
-    background: #5e81ac;
+    background: rgba(182, 155, 241, 1);
 }
 
 #clock, #battery, #idle_inhibitor, #pulseaudio, #mode, #tray, #cpu, #memory,

@@ -2,18 +2,9 @@ configuration {
  modi: "window,drun,ssh,combi";
  font: "Inconsolata Nerd Font";
  combi-modi: "window,drun,ssh";
+ fixed-num-lines: false;
+ show-icons: false;
+
  }
-//@theme "./themes/one-dark.rasi"
-
-
-//@theme "/usr/share/rofi/themes/fullscreen-preview.rasi"
-
-//@theme "/usr/share/rofi/themes/sidebar.rasi"
-
-//@theme "/usr/share/rofi/themes/sidebar-v2.rasi"
-
-//@theme "/home/tanz/.config/rofi/themes/one-dark.rasi"
-
-//@theme "/usr/share/rofi/themes/fullscreen-preview.rasi"
-
-@theme "/home/tanz/.config/rofi/themes/one-dark.rasi"
+@theme "./themes/custom.rasi"
+// @theme "/usr/share/rofi/themes/glue_pro_blue.rasi"

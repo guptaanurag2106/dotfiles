@@ -4,7 +4,7 @@
 options=$(pactl -f json list sinks | jq -r '.[] | .description')
 
 # Let the user select a description
-selection=$(echo "$options" | rofi -dmenu -i -p "Output:")
+selection=$(echo "$options" | rofi -dmenu -i -p "Output")
 
 # Extract the corresponding sink name
 sink_name=$(pactl -f json list sinks | jq -r --arg sink_pretty_name "$selection" '.[] | select(.description == $sink_pretty_name) | .name')
