@@ -24,8 +24,27 @@ return require("packer").startup(function(use)
     --Syntax Highlight
     use("nvim-treesitter/nvim-treesitter", { run = ":TSUpdate" })
     use("nvim-treesitter/playground")
-    use("nvim-treesitter/nvim-treesitter-context")
-    use("RRethy/vim-illuminate")
+    use({
+        "nvim-treesitter/nvim-treesitter-context",
+        config = function()
+            require 'treesitter-context'.setup {
+                enable = true,            -- Enable this plugin (Can be enabled/disabled later via commands)
+                multiwindow = false,      -- Enable multiwindow support.
+                max_lines = 0,            -- How many lines the window should span. Values <= 0 mean no limit.
+                min_window_height = 0,    -- Minimum editor window height to enable context. Values <= 0 mean no limit.
+                line_numbers = true,
+                multiline_threshold = 20, -- Maximum number of lines to show for a single context
+                trim_scope = 'outer',     -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+                mode = 'cursor',          -- Line used to calculate context. Choices: 'cursor', 'topline'
+                -- Separator between context and content. Should be a single character string, like '-'.
+                -- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
+                separator = nil,
+                zindex = 20,     -- The Z-index of the context window
+                on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
+            }
+        end
+    })
+    -- use("RRethy/vim-illuminate")
 
     --Git
     use("tpope/vim-fugitive")
@@ -36,17 +55,17 @@ return require("packer").startup(function(use)
 
     --LSP/DAP
     use({ "williamboman/mason.nvim", tag = "stable" })
-    use({ "williamboman/mason-lspconfig.nvim", tag = "stable" })
+    -- use({ "williamboman/mason-lspconfig.nvim", tag = "stable" })
     use("neovim/nvim-lspconfig")
-    use({
-        "crispgm/nvim-go",
-        requires = {
-            "leoluz/nvim-dap-go",
-        },
-        config = function()
-            require("go").setup({})
-        end,
-    })
+    -- use({
+    --     "crispgm/nvim-go",
+    --     requires = {
+    --         "leoluz/nvim-dap-go",
+    --     },
+    --     config = function()
+    --         require("go").setup({})
+    --     end,
+    -- })
     use("mfussenegger/nvim-dap")
     use({
         "jay-babu/mason-nvim-dap.nvim",
@@ -121,8 +140,8 @@ return require("packer").startup(function(use)
 
     -- Theme
     use("nvim-tree/nvim-web-devicons")
-    use("ellisonleao/gruvbox.nvim")
     use("navarasu/onedark.nvim")
+    use 'Mofiqul/vscode.nvim'
     use({
         "nvim-lualine/lualine.nvim",
         requires = { "nvim-tree/nvim-web-devicons", opt = true },
@@ -130,15 +149,12 @@ return require("packer").startup(function(use)
             require("lualine").setup({})
         end,
     })
-    use({
-        "stevearc/dressing.nvim",
-        config = function()
-            require("dressing").setup({})
-        end,
-    })
-
-    --Dev
-    use("vimwiki/vimwiki")
+    -- use({
+    --     "stevearc/dressing.nvim",
+    --     config = function()
+    --         require("dressing").setup({})
+    --     end,
+    -- })
 
     use({
         'folke/lazydev.nvim',
@@ -153,9 +169,9 @@ return require("packer").startup(function(use)
         end,
     })
 
-    use({
-        "folke/which-key.nvim",
-    })
+    -- use({
+    --     "folke/which-key.nvim",
+    -- })
 
 
     -- Comments
@@ -183,12 +199,12 @@ return require("packer").startup(function(use)
             require("trouble").setup({})
         end,
     })
-    use({
-        "hedyhli/outline.nvim",
-        config = function()
-            require("outline").setup({})
-        end,
-    })
+    -- use({
+    --     "hedyhli/outline.nvim",
+    --     config = function()
+    --         require("outline").setup({})
+    --     end,
+    -- })
     use("folke/zen-mode.nvim")
 
     -- use {

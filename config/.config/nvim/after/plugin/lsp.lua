@@ -44,20 +44,20 @@ vim.api.nvim_create_autocmd("LspAttach", {
         --
         -- When you move your cursor, the highlights will be cleared (the second autocommand).
         --  using outline.nvim plugin for this
-        -- if client and client.server_capabilities.documentHighlightProvider then
-        --     local highlight_augroup = vim.api.nvim_create_augroup("UserLSPHighlight", { clear = false })
-        --     vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-        --         buffer = event.buf,
-        --         group = highlight_augroup,
-        --         callback = vim.lsp.buf.document_highlight,
-        --     })
-        --
-        --     vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-        --         buffer = event.buf,
-        --         group = highlight_augroup,
-        --         callback = vim.lsp.buf.clear_references,
-        --     })
-        -- end
+        if client and client.server_capabilities.documentHighlightProvider then
+            local highlight_augroup = vim.api.nvim_create_augroup("UserLSPHighlight", { clear = false })
+            vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+                buffer = event.buf,
+                group = highlight_augroup,
+                callback = vim.lsp.buf.document_highlight,
+            })
+
+            vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+                buffer = event.buf,
+                group = highlight_augroup,
+                callback = vim.lsp.buf.clear_references,
+            })
+        end
 
         -- -- Automatically format on save
         vim.api.nvim_create_autocmd("BufWritePre", {
@@ -133,7 +133,14 @@ cmp.setup({
         { name = "nvim_lsp",               keyword_length = 1 },
         { name = "luasnip" },
         { name = "path" },
-        { name = 'buffer' },
+        {
+            name = 'buffer',
+            option = {
+                get_bufnrs = function()
+                    return vim.api.nvim_list_bufs()
+                end
+            }
+        },
     },
     mapping = cmp.mapping.preset.insert({
         ["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
@@ -152,93 +159,75 @@ cmp.setup.cmdline(':', {
         { name = "cmdline_history", dup = 0 },
         { name = 'path' },
         { name = "cmdline",         max_item_count = 10, dup = 0 },
-    }, {
-        {
-            name = 'cmdline',
-            option = {
-                ignore_cmds = { '!' }
-            }
-        }
     })
 })
 
--- local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+require("mason").setup({})
 local lsp_capabilities = vim.tbl_deep_extend("force", {},
     vim.lsp.protocol.make_client_capabilities(),
     require("cmp_nvim_lsp").default_capabilities())
 
-require("mason").setup({})
-require("mason-lspconfig").setup({
-    ensure_installed = { "rust_analyzer", "clangd", "lua_ls", "gopls", "zls" },
-    handlers = {
-        function(server_name)
-            require("lspconfig")[server_name].setup({
-                capabilities = lsp_capabilities,
-            })
-        end,
-        ["lua_ls"] = function()
-            require("lspconfig").lua_ls.setup({
-                capabilities = lsp_capabilities,
-                settings = {
-                    Lua = {
-                        runtime = {
-                            version = "LuaJIT"
-                        },
-                        completion = {
-                            callSnippet = "Replace"
-                        },
-                        diagnostics = {
-                            globals = { "vim", 'require' },
-                        },
-                        workspace = {
-                            library = {
-                                vim.env.VIMRUNTIME,
-                            }
-                        },
-                        telemetry = {
-                            enable = false,
-                        },
-                    }
+local lspconfig = require("lspconfig")
+
+lspconfig.gopls.setup {
+    capabilities = lsp_capabilities,
+    cmd = { "gopls" },
+    filetypes = { "go", "gomod", "gowork", "gotmpl" },
+    settings = {
+        -- env = {
+        --     GOEXPERIMENT = "rangefunc",
+        -- },
+        formatting = {
+            gofumpt = true,
+        },
+        gopls = {
+            completeUnimported = true,
+            usePlaceholders = true,
+            staticcheck = true,
+            analyses = {
+                unusedvariable = true,
+                unreachable = true,
+            },
+            -- ui = {
+            --     diagnostics = {
+            --         -- Disable diagnostics popup
+            --         show_diagnostics = false
+            --     }
+            -- },
+        }
+    }
+}
+
+lspconfig.lua_ls.setup {
+    capabilities = lsp_capabilities,
+    settings = {
+        Lua = {
+            runtime = {
+                version = "LuaJIT"
+            },
+            completion = {
+                callSnippet = "Replace"
+            },
+            diagnostics = {
+                globals = { "vim", 'require' },
+            },
+            workspace = {
+                library = {
+                    vim.env.VIMRUNTIME,
                 }
-            })
-        end,
-        ['gopls'] = function()
-            require("lspconfig").gopls.setup({
-                capabilities = lsp_capabilities,
-                cmd = { "gopls" },
-                filetypes = { "go", "gomod", "gowork", "gotmpl" },
-                settings = {
-                    gopls = {
-                        completeUnimported = true,
-                        usePlaceholders = true,
-                        analyses = {
-                            unusedparams = true,
-                        },
-                        ui = {
-                            diagnostics = {
-                                -- Disable diagnostics popup
-                                show_diagnostics = false
-                            }
-                        },
-                        telemetry = {
-                            enable = false,
-                        },
-                    }
-                }
-            })
-        end,
-        ['zls'] = function()
-            require("lspconfig").zls.setup({
-                capabilities = lsp_capabilities,
-                -- cmd = { "/home/tanz/Documents/software/zls/zig-out/bin/zls" },
-                -- settings = {
-                --     zls = {
-                --         -- enable_build_on_save = true,
-                --
-                --         zig_exe_path = "/usr/bin/zig",
-                --     }
-                -- }
-            })
-        end,
-    },
-})
+            },
+            telemetry = {
+                enable = false,
+            },
+        }
+    }
+}
+
+lspconfig.clangd.setup {
+    capabilities = lsp_capabilities,
+}
+
+lspconfig.zls.setup {
+    capabilities = lsp_capabilities,
+}
