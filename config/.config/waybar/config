@@ -1,7 +1,7 @@
 [
 {
     "layer": "bottom",
-    "position": "bottom",
+    "position": "top",
     //"height": 32,
     //"width": 1350,
     "spacing": 1,
@@ -28,16 +28,16 @@
         "custom/separator",
         "disk",
         "custom/separator",
-        "battery",
-        "custom/separator",
         "backlight",
+        "custom/separator",
+        "battery",
         "custom/separator",
         "custom/audio",
         "custom/separator",
         "network",
-        "tray",
         "custom/dunst",
-        "custom/power"
+        "tray",
+        "custom/power",
     ],
     "custom/arch": {
         "format": "   ",
@@ -127,7 +127,7 @@
             "warning": 30,
             "critical": 15
         },
-        "format": "{icon}  {capacity}%",
+        "format": "{icon} {capacity}%",
         "format-charging": " {capacity}%",
         "format-icons": [
             "",

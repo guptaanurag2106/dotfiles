@@ -38,7 +38,7 @@ default_border pixel 6
 smart_borders on
 
 for_window [shell="xwayland"] title_format "[XWayland] %title"
-for_window [app_id="org.gnome.Nautilus"] floating enable
+for_window [app_id="nemo"] floating enable
 for_window [app_id="xpad"] floating enable, resize set width 30 ppt height 30 ppt,sticky enable
 for_window [app_id="qalculate-gtk"] floating enable
 for_window [app_id="blueman-manager"] floating enable
@@ -73,10 +73,10 @@ output "LG Electronics LG QHD 0x00011B7E" {
 #     resume 'swaymsg "output * dpms on"' \
 #     before-sleep 'swaylock -f -c 000000; playerctl pause; swaymsg "output * dpms off"'
 exec swayidle -w \
-         timeout 300 'swaylock -f -c 000000' \
-         timeout 600 'swaymsg "output * dpms off"' \
-              resume 'swaymsg "output * dpms on"' \
-         before-sleep 'swaylock -f -c 000000; playerctl pause'
+      timeout 300 'swaylock -f -c 000000' \
+      timeout 900 'swaymsg "output * dpms off"' \
+      resume 'swaymsg "output * dpms on"' \
+      before-sleep 'swaylock -f -c 000000; playerctl stop' \
 
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
@@ -128,7 +128,7 @@ bindsym $mod+ctrl+k exec ~/.config/scripts/launcher-kill.sh
 
 # Start your launcher
 # bindsym $mod+d exec rofi -show drun -drun-show-actions
-bindsym $mod+d exec rofi -show drun -drun-show-actions
+bindsym $mod+d exec rofi -show drun -drun-show-actions -show-icons
 # bindsym $mod+d exec dmenu_run
 
 # Lock screen
@@ -321,6 +321,6 @@ bindsym ctrl+$mod+w exec "~/.config/scripts/wl-sunset.sh"
 #exec clipman restore
 exec wl-paste --type image --watch cliphist store
 exec wl-paste --type text --watch cliphist store
-bindsym $mod+x exec exec cliphist list | wofi -S dmenu | cliphist decode | wl-copy
+bindsym $mod+x exec exec cliphist list | rofi -i -dmenu -display-columns 2 | cliphist decode | wl-copy
 
 include /etc/sway/config.d/*

@@ -231,3 +231,7 @@ lspconfig.clangd.setup {
 lspconfig.zls.setup {
     capabilities = lsp_capabilities,
 }
+
+lspconfig.pyright.setup {
+    capabilities = lsp_capabilities,
+}

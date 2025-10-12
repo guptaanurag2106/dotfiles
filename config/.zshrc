@@ -1,6 +1,6 @@
 export ZSH="/home/tanz/.oh-my-zsh"
 export XDG_CURRENT_DESKTOP=sway
-export EDITOR=vim
+export EDITOR=nvim
 
 ZSH_THEME="robbyrussell"
 
@@ -9,7 +9,7 @@ plugins=(
   git
   zsh-autosuggestions
   zsh-syntax-highlighting
-  tmux
+#  tmux
   fzf-tab
   # zsh-vi-mode
   z
@@ -24,29 +24,32 @@ if type rg &> /dev/null; then
   export FZF_DEFAULT_OPTS='-m --height 50% --border'
 fi
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh
 
 if [ -d "$HOME/.cargo/bin" ] ; then
    export PATH="$HOME/.cargo/bin:$PATH"
 fi
-export PATH="$HOME/.config/emacs/bin:$PATH"
-export PATH="$HOME/Documents/dev/projects/cpp_libs/emsdk:$PATH"
-export PATH="$HOME/Documents/dev/projects/cpp_libs/emsdk/upstream/emscripten:$PATH"
-export PATH="$HOME/Documents/software/gf:$PATH"
+#export PATH="$HOME/.config/emacs/bin:$PATH"
+#export PATH="$HOME/Documents/dev/projects/cpp_libs/emsdk:$PATH"
+#export PATH="$HOME/Documents/dev/projects/cpp_libs/emsdk/upstream/emscripten:$PATH"
+export PATH="$HOME/opt/gf:$PATH"
 export PATH="${PATH}:${HOME}/.local/bin/"
+export PATH="${PATH}:${HOME}/go/bin/"
 
-# general use aliases 
-alias ls='exa' # just replace ls by exa and allow all other exa arguments
-alias l='ls -lbF' #   list, size, type
-alias ll='ls -la' # long, all
-alias llm='ll --sort=modified' # list, long, sort by modification date
-alias la='ls -lbhHigUmuSa' # all list
-alias lx='ls -lbhHigUmuSa@' # all list and extended
-alias tree='exa --tree' # tree view
-alias lS='exa -1' # one column by just names
-alias vim="nvim" # because
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+if [ -d "$HOME/.nvm" ]; then
+	export NVM_DIR="$HOME/.nvm"
+	[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+	[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+fi
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/tanz/opt/raylib-5.5_linux_amd64/lib
+
 # export TERM=tmux-256color
+help() {
+  local cmd
+  cmd="$(uwu "$@")" || return
+  vared -p "" -c cmd
+  print -s -- "$cmd"
+  eval "$cmd"
+}

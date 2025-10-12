@@ -2,15 +2,15 @@
     color: #d8dee9;
     border: 0;
     outline: 0;
-    padding: 0;
+    padding: 1px 0;
     margin: 0;
-    font-family: 'Inconsolata Nerd Font', 'Inter Medium';
+    font-family: 'Inconsolata Nerd Font Propo', 'Inter Medium';
     font-size: 15px;
     font-weight: 900;
 }
 
 window#waybar {
-    background: #000000;
+    background: transparent;
 }
 
 #workspaces button {
@@ -39,7 +39,7 @@ window#waybar {
 }
 
 #clock, #battery, #idle_inhibitor, #pulseaudio, #mode, #tray, #cpu, #memory,
-#window, #custom-power, #custom-dunst, #custom-temperature, #backlight, #disk, #custom-audio, #custom-scratchpad, #keyboard-state{
+#window, #custom-dunst, #custom-temperature, #backlight, #disk, #custom-audio, #custom-scratchpad, #keyboard-state{
     color: #d8dee9;
     margin: 0 5px;
 }
@@ -113,7 +113,7 @@ window#waybar {
 }
 
 #custom-power {
-    color: #d08770;
+    color: #980002;
 }
 
 #mode {
