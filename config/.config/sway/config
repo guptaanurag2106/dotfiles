@@ -8,7 +8,7 @@ set $mod Mod4
 #exec_always --no-startup-id pgrep kanshi || kanshi
 exec_always ~/.config/sway/scripts/start_applets.sh
 exec_always ~/.config/scripts/battery_notif.sh
-exec_always "pgrep wlsunset || bash ~/.config/scripts/wl-sunset.sh"
+exec_always "pgrep wlsunset || ~/.config/scripts/wl-sunset.sh"
 # exec_always ~/.config/sway/scripts/disable_gnome_notif.sh
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 output * bg ~/.config/wallpaper.jpg fill

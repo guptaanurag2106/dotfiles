@@ -11,9 +11,9 @@
         "custom/separator",
         "custom/scratchpad",
         "sway/mode",
-        "custom/separator",
+        "custom/separator"
         //"mpd",
-        "sway/window",
+        //"sway/window",
     ],
     "modules-center": [
         "clock",
@@ -178,6 +178,7 @@
         "exec": "~/.config/scripts/dunst.sh",
         "on-click": "~/.config/scripts/focus.sh",
         "restart-interval": 1,
+        "interval": 10,
         "tooltip": false,
     },
     "tray": {

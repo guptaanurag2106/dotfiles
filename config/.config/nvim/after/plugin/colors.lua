@@ -1,19 +1,6 @@
 function Colours(colour)
-    colour = colour or "onedark"
+    colour = colour or "vscode"
     vim.cmd.colorscheme(colour)
-
-    if colour == "gruvbox" then
-        require("gruvbox").setup({
-            contrast = "hard"
-            -- italic = {
-            --     strings = false,
-            --     emphasis = false,
-            --     comments = true,
-            --     operators = false,
-            --     folds = true,
-            -- }
-        })
-    end
 
     local highlights = {
         "Normal",
@@ -22,13 +9,16 @@ function Colours(colour)
         "NonText",
         "SpecialKey",
         "VertSplit",
+        "DiffviewVertSplit",
+        "NormalNC",
         "SignColumn",
         "EndOfBuffer",
-        "TablineFill"
+        "TablineFill",
+        "TablineSel"
     }
     --
     for _, name in pairs(highlights) do
-        vim.api.nvim_set_hl(0, name, { bg = "none" })
+        vim.api.nvim_set_hl(0, name, { bg = "#000000" })
     end
 end
 
