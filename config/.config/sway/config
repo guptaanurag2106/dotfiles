@@ -38,9 +38,6 @@ default_border pixel 6
 smart_borders on
 
 for_window [shell="xwayland"] title_format "[XWayland] %title"
-for_window [app_id="nemo"] floating enable
-for_window [app_id="xpad"] floating enable, resize set width 30 ppt height 30 ppt,sticky enable
-for_window [app_id="qalculate-gtk"] floating enable
 for_window [app_id="blueman-manager"] floating enable
 for_window [app_id="firefox" title="^Picture-in-Picture$"] \
     floating enable, move position 1400 700, resize set width 20 ppt height 22 ppt, sticky enable
@@ -324,3 +321,4 @@ exec wl-paste --type text --watch cliphist store
 bindsym $mod+x exec exec cliphist list | rofi -i -dmenu -display-columns 2 | cliphist decode | wl-copy
 
 include /etc/sway/config.d/*
+include ./config.d/*

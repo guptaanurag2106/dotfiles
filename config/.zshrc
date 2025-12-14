@@ -18,6 +18,7 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#666666"
 export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+export XDG_CONFIG_HOME=~/.config
 
 if type rg &> /dev/null; then
   export FZF_DEFAULT_COMMAND='rg --files'
@@ -36,6 +37,7 @@ fi
 export PATH="$HOME/opt/gf:$PATH"
 export PATH="${PATH}:${HOME}/.local/bin/"
 export PATH="${PATH}:${HOME}/go/bin/"
+export PATH="${PATH}:${HOME}/.cargo/bin"
 
 
 if [ -d "$HOME/.nvm" ]; then
@@ -53,3 +55,4 @@ help() {
   print -s -- "$cmd"
   eval "$cmd"
 }
+
