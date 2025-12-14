@@ -140,8 +140,8 @@ return require("packer").startup(function(use)
 
     -- Theme
     use("nvim-tree/nvim-web-devicons")
-    use("navarasu/onedark.nvim")
     use 'Mofiqul/vscode.nvim'
+
     use({
         "nvim-lualine/lualine.nvim",
         requires = { "nvim-tree/nvim-web-devicons", opt = true },

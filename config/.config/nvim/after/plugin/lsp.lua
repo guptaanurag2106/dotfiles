@@ -59,12 +59,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
             })
         end
 
-        -- -- Automatically format on save
         vim.api.nvim_create_autocmd("BufWritePre", {
             group = vim.api.nvim_create_augroup("LSPFormatOnSave", { clear = true }),
-            buffer = event.buf,                      -- Ensures this applies to the specific buffer
+            buffer = event.buf,
             callback = function()
-                vim.lsp.buf.format({ async = true }) -- Runs the format asynchronously
+                vim.lsp.buf.format({ async = true })
             end,
         })
 
@@ -77,6 +76,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
                 vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
             end, { desc = "Turn on inlay hints", buffer = opts.buffer })
         end
+
         vim.diagnostic.config({
             update_in_insert = true,
             float = {
@@ -89,7 +89,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
             },
             virtual_text = true
         })
-
 
         vim.g.zig_fmt_autosave = 0
         vim.g.zig_fmt_parse_errors = 0
@@ -109,7 +108,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
         -- })
     end,
 })
-
 
 vim.api.nvim_create_autocmd("LspDetach", {
     group = vim.api.nvim_create_augroup("UserLSPDetach", { clear = true }),
@@ -162,25 +160,16 @@ cmp.setup.cmdline(':', {
     })
 })
 
-
 require("mason").setup({})
 local lsp_capabilities = vim.tbl_deep_extend("force", {},
     vim.lsp.protocol.make_client_capabilities(),
     require("cmp_nvim_lsp").default_capabilities())
 
-local lspconfig = require("lspconfig")
-
-lspconfig.gopls.setup {
+vim.lsp.config("gopls", {
     capabilities = lsp_capabilities,
     cmd = { "gopls" },
     filetypes = { "go", "gomod", "gowork", "gotmpl" },
     settings = {
-        -- env = {
-        --     GOEXPERIMENT = "rangefunc",
-        -- },
-        formatting = {
-            gofumpt = true,
-        },
         gopls = {
             completeUnimported = true,
             usePlaceholders = true,
@@ -189,17 +178,21 @@ lspconfig.gopls.setup {
                 unusedvariable = true,
                 unreachable = true,
             },
-            -- ui = {
-            --     diagnostics = {
-            --         -- Disable diagnostics popup
-            --         show_diagnostics = false
-            --     }
-            -- },
-        }
+            formatting = {
+                gofumpt = true,  -- Enables gofumpt for stricter formatting
+            },
+            -- Enable or disable diagnostics popup (e.g., floating window)
+            ui = {
+                diagnostics = {
+                    show_diagnostics = false,
+                }
+            },
+        },
     }
-}
+})
+vim.lsp.enable("gopls")
 
-lspconfig.lua_ls.setup {
+vim.lsp.config("lua_ls", {
     capabilities = lsp_capabilities,
     settings = {
         Lua = {
@@ -214,24 +207,61 @@ lspconfig.lua_ls.setup {
             },
             workspace = {
                 library = {
-                    vim.env.VIMRUNTIME,
-                }
+                    vim.env.VIMRUNTIME,  -- Allow Lua workspace to include runtime
+                    [vim.fn.expand("$VIMRUNTIME/lua")] = true,  -- Support Neovim Lua API
+                },
             },
             telemetry = {
                 enable = false,
             },
         }
     }
-}
+})
+vim.lsp.enable("lua_ls")
 
-lspconfig.clangd.setup {
+vim.lsp.config("clangd", {
     capabilities = lsp_capabilities,
-}
+    cmd = {
+        "clangd",
+        "--background-index",
+        "--clang-tidy",
+        "--completion-style=detailed",
+        "--header-insertion=iwyu",
+        "--suggest-missing-includes",
+    },
+    init_options = {
+        clangdFileStatus = true,
+        usePlaceholders = true,
+        completeUnimported = true,
+    },
+})
+vim.lsp.enable("clangd")
 
-lspconfig.zls.setup {
+vim.lsp.config("zls", {
     capabilities = lsp_capabilities,
-}
+    settings = {
+        zls = {
+            enable = true,
+            diagnostics = {
+                enable = true,
+                severityLevels = { "error", "warning", "info", "hint" },
+            },
+        },
+    },
+})
+vim.lsp.enable("zls")
 
-lspconfig.pyright.setup {
+vim.lsp.config("pyright", {
     capabilities = lsp_capabilities,
-}
+    settings = {
+        python = {
+            analysis = {
+                typeCheckingMode = "basic",  -- Can be "off", "basic", or "strict"
+                diagnosticMode = "workspace",  -- Can be "openFilesOnly" or "workspace"
+                autoSearchPaths = true,
+                useLibraryCodeForTypes = true,  -- Use library code for type inference
+            },
+        },
+    }
+})
+vim.lsp.enable("pyright")
