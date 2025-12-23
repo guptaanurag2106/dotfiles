@@ -1,6 +1,6 @@
 export ZSH="/home/tanz/.oh-my-zsh"
 export XDG_CURRENT_DESKTOP=sway
-export EDITOR=nvim
+export EDITOR=vim
 
 ZSH_THEME="robbyrussell"
 
@@ -31,13 +31,11 @@ source /usr/share/fzf/completion.zsh
 if [ -d "$HOME/.cargo/bin" ] ; then
    export PATH="$HOME/.cargo/bin:$PATH"
 fi
-#export PATH="$HOME/.config/emacs/bin:$PATH"
-#export PATH="$HOME/Documents/dev/projects/cpp_libs/emsdk:$PATH"
-#export PATH="$HOME/Documents/dev/projects/cpp_libs/emsdk/upstream/emscripten:$PATH"
+if [ -d "$HOME/go/bin" ] ; then
+   export PATH="$HOME/go/bin:$PATH"
+fi
 export PATH="$HOME/opt/gf:$PATH"
 export PATH="${PATH}:${HOME}/.local/bin/"
-export PATH="${PATH}:${HOME}/go/bin/"
-export PATH="${PATH}:${HOME}/.cargo/bin"
 
 
 if [ -d "$HOME/.nvm" ]; then
@@ -48,7 +46,7 @@ fi
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/tanz/opt/raylib-5.5_linux_amd64/lib
 
 # export TERM=tmux-256color
-help() {
+help2() {
   local cmd
   cmd="$(uwu "$@")" || return
   vared -p "" -c cmd
@@ -56,3 +54,4 @@ help() {
   eval "$cmd"
 }
 
+alias todo='task "(due:today or status:pending)" sort:priority-,urgency- limit:5'

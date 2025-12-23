@@ -8,11 +8,12 @@ set $mod Mod4
 #exec_always --no-startup-id pgrep kanshi || kanshi
 exec_always ~/.config/sway/scripts/start_applets.sh
 exec_always ~/.config/scripts/battery_notif.sh
-exec_always "pgrep wlsunset || ~/.config/scripts/wl-sunset.sh"
+exec_always ~/.config/scripts/wl-sunset.sh
 # exec_always ~/.config/sway/scripts/disable_gnome_notif.sh
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 output * bg ~/.config/wallpaper.jpg fill
 #exec /usr/libexec/polkit-gnome-authentication-agent-1 &
+exec_always --no-startup-id xremap ~/.config/xremap/config.yml --device $(readlink -f /dev/tablet)
 
 ### Variables
 #
@@ -95,7 +96,7 @@ input "type:touchpad" {
 #input type:keyboard xkb_capslock enabled
 input "type:keyboard" {
     xkb_numlock enabled
-    xkb_options caps:swapescape
+    # xkb_options caps:swapescape
 }
 
 
@@ -312,7 +313,7 @@ bindsym ctrl+$mod+h exec makoctl restore
 #bindsym ctrl+$mod+period exec dunstctl action
 #bindsym ctrl+$mod+m exec dunstctl set-paused toggle
 
-bindsym ctrl+$mod+w exec "~/.config/scripts/wl-sunset.sh"
+# bindsym ctrl+$mod+w exec "~/.config/scripts/wl-sunset.sh"
 
 # Clipman
 #exec clipman restore
@@ -321,4 +322,3 @@ exec wl-paste --type text --watch cliphist store
 bindsym $mod+x exec exec cliphist list | rofi -i -dmenu -display-columns 2 | cliphist decode | wl-copy
 
 include /etc/sway/config.d/*
-include ./config.d/*
