@@ -22,10 +22,16 @@ return {
                         { desc = "Go to implementation", buffer = opts.buffer })
                     vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end,
                         { desc = "Show hover information", buffer = opts.buffer })
+                    -- vim.keymap.set("n", "<leader>ws", function() vim.lsp.buf.workspace_symbol() end,
+                    --     { desc = "Search workspace symbols", buffer = opts.buffer })
                     vim.keymap.set("n", "<leader>vwa", function() vim.lsp.buf.add_workspace_folder() end,
                         { desc = "Add workspace folder", buffer = opts.buffer })
+                    -- vim.keymap.set("n", "<leader>ds", function() vim.lsp.buf.document_symbol() end,
+                    --     { desc = "Search document symbols", buffer = opts.buffer })
                     vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end,
                         { desc = "Show diagnostics", buffer = opts.buffer })
+                    -- Using trouble for it
+                    --NOTE:setloclist not viewloclist vim.keymap.set("n", "<leader>co", function() vim.diagnostic.setloclist() end, opts)
                     vim.keymap.set("n", "]d", function() vim.diagnostic.goto_next() end,
                         { desc = "Go to next diagnostic", buffer = opts.buffer })
                     vim.keymap.set("n", "[d", function() vim.diagnostic.goto_prev() end,
@@ -56,10 +62,20 @@ return {
                     end
 
                     if client and client.supports_method("textDocument/formatting") then
-                         local format_augroup = vim.api.nvim_create_augroup("UserLSPFormat", { clear = false })
-                         vim.api.nvim_clear_autocmds({ group = format_augroup, buffer = event.buf })
-                         vim.api.nvim_create_autocmd("BufWritePre",
-                            { buffer = event.buf, group = format_augroup, callback = function() vim.lsp.buf.format({ bufnr = event.buf, async = false }) end })
+                        local format_augroup = vim.api.nvim_create_augroup("UserLSPFormat", { clear = false })
+                        vim.api.nvim_clear_autocmds({ group = format_augroup, buffer = event.buf })
+                        vim.api.nvim_create_autocmd("BufWritePre",
+                            {
+                                buffer = event.buf,
+                                group = format_augroup,
+                                callback = function()
+                                    vim.lsp.buf.format({
+                                        bufnr =
+                                            event.buf,
+                                        async = false
+                                    })
+                                end
+                            })
                     end
 
                     if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
