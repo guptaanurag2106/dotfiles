@@ -23,13 +23,15 @@ while true; do
             sleep 15
         elif [[ $BATTERY_LEVEL -le 20 ]]; then
             notify-send --app-name="Battery" -i battery-020 -u normal -t 5000 "Battery low!" "${BATTERY_LEVEL}%"
-            sleep 60
+            sleep 30
         fi
 
     elif { [[ $BATTERY_STATUS == "Charging" || $BATTERY_STATUS == "Full" ]] && [[ $BATTERY_LEVEL -eq 100 ]] && [[ $NOTIFICATION_FULL -eq 0 ]]; }; then
         notify-send --app-name="Battery" -i battery-100 -u low -t 5000 "Battery full!" "${BATTERY_LEVEL}%"
         NOTIFICATION_FULL=1
+        sleep 30
+    else
+        sleep 30
     fi
 
-    sleep 30
 done

@@ -128,16 +128,7 @@ return {
                         analyses = {
                             unusedvariable = true,
                             unreachable = true,
-                        },
-                        formatting = {
-                            gofumpt = true, -- Enables gofumpt for stricter formatting
-                        },
-                        -- Enable or disable diagnostics popup (e.g., floating window)
-                        ui = {
-                            diagnostics = {
-                                show_diagnostics = false,
-                            }
-                        },
+                        }
                     },
                 }
             })

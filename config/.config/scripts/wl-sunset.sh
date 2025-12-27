@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/bash
 
 while true; do
     # swaymsg -t subscribe '["window"]' | jq 'select(.change).container | if (.app_id == "firefox" or .app_id == "microsoft-edge" or .app_id == "vlc" or .name == "Krita") then halt_error(127 - .fullscreen_mode) else halt end' > /dev/null 2>&1

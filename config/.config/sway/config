@@ -6,14 +6,15 @@
 set $mod Mod4
 
 #exec_always --no-startup-id pgrep kanshi || kanshi
-exec_always ~/.config/sway/scripts/start_applets.sh
-exec_always ~/.config/scripts/battery_notif.sh
-exec_always ~/.config/scripts/wl-sunset.sh
+exec_always --no-startup-id ~/.config/sway/scripts/start_applets.sh
+exec_always --no-startup-id ~/.config/scripts/battery_notif.sh
+exec_always --no-startup-id ~/.config/scripts/wl-sunset.sh
 # exec_always ~/.config/sway/scripts/disable_gnome_notif.sh
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg ~/.config/wallpaper.jpg fill
+output * bg ~/.config/wallpaper1.png fill
 #exec /usr/libexec/polkit-gnome-authentication-agent-1 &
-exec_always --no-startup-id xremap ~/.config/xremap/config.yml --device $(readlink -f /dev/tablet)
+exec_always --no-startup-id xremap ~/.config/xremap/config.yml --watch=device --device /dev/tablet
+exec_always --no-startup-id '~/.config/sway/scripts/absmap.py ~/.config/sway/scripts/basic.yml'
 
 ### Variables
 #
@@ -304,7 +305,7 @@ bindsym XF86AudioPrev exec playerctl previous
 #
 # exec_always --no-startup-id pgrep dunst || dunst
 #exec dunst &
-exec mako
+exec_always mako
 bindsym ctrl+$mod+m exec makoctl mode -t do-not-disturb
 bindsym ctrl+$mod+space exec makoctl dismiss -a
 bindsym ctrl+$mod+h exec makoctl restore

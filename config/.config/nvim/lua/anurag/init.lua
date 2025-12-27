@@ -68,3 +68,8 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.opt_local.formatoptions:remove({ "c", "r", "o" })
     end,
 })
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = "*.py",          -- Apply only to Python files
+    command = "%s/\\s\\+$//e", -- Remove trailing spaces
+})

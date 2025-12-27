@@ -1,10 +1,10 @@
 [
 {
     "layer": "bottom",
-    "position": "top",
+    "position": "bottom",
     //"height": 32,
     //"width": 1350,
-    "spacing": 1,
+    "spacing": 0,
     "modules-left": [
         "custom/arch",
         "sway/workspaces",
@@ -40,8 +40,9 @@
         "custom/power",
     ],
     "custom/arch": {
-        "format": "   ",
-        "tooltip": false
+        "format": "  ",
+        "tooltip": true,
+        "tooltip-format": "btw"
     },
     "sway/workspaces": {
         "strip": 20,
@@ -51,7 +52,7 @@
         "numeric-first": false,
     },
     "custom/scratchpad": {
-      "interval": 1,
+      "interval": 3,
       "return-type": "json",
       "exec": "~/.config/scripts/scratchpad.sh",
       "exec-if": "exit 0",
@@ -103,13 +104,15 @@
     },
     "cpu": {
         "format": "{load} {usage}% {avg_frequency}GHz",
-        "interval": 5
+        "interval": 5,
+        "on-click": "alacritty -e btop"
     },
     "memory": {
-        "format": "{percentage}%"
+        "format": "{percentage}%",
+        "interval": 5
     },
     "disk": {
-        "interval": 5,
+        "interval": 10,
         "format": "{used}",
         "path": "/"
     },
@@ -144,7 +147,7 @@
       "exec": "~/.config/scripts/cpu_temp.sh",
       "format": "{}",
       "return-type": "json",
-      "interval": 5
+      "interval": 10
     },
     "custom/audio": {
         "format": "{}",
@@ -171,14 +174,13 @@
         "format": "{:%a %d/%m %H:%M}",
         "format-alt": " {:%H:%M}",
         "timezone": "Asia/Kolkata",
-        "interval": 5,
         "tooltip": true
     },
     "custom/dunst": {
         "exec": "~/.config/scripts/dunst.sh",
-        "on-click": "~/.config/scripts/focus.sh",
+        "on-click": "gomind --pomodoro",
         "restart-interval": 1,
-        "interval": 10,
+        "interval": 2,
         "tooltip": false,
     },
     "tray": {
