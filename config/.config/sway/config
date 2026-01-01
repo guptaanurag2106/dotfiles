@@ -125,6 +125,8 @@ bindsym $mod+Return exec $term
 bindsym $mod+Shift+q kill
 bindsym $mod+ctrl+k exec ~/.config/scripts/launcher-kill.sh
 
+bindsym $mod+ctrl+w exec ~/go/bin/gomind --pomodoro
+
 # Start your launcher
 # bindsym $mod+d exec rofi -show drun -drun-show-actions
 bindsym $mod+d exec rofi -show drun -drun-show-actions -show-icons

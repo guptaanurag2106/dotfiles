@@ -43,7 +43,6 @@ if [ -d "$HOME/.nvm" ]; then
 	[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 	[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 fi
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/tanz/opt/raylib-5.5_linux_amd64/lib
 
 # export TERM=tmux-256color
 help2() {
@@ -55,3 +54,4 @@ help2() {
 }
 
 alias todo='task "(due:today or status:pending)" sort:priority-,urgency- limit:5'
+[[ -f ~/.profile ]] && source ~/.profile

@@ -90,10 +90,25 @@ return {
     {
         'mfussenegger/nvim-lint',
         config = function()
-            require('lint').linters_by_ft = {
+            local lint = require('lint')
+            local golangcilint = lint.linters.golangcilint
+            golangcilint.args = {
+                "run",
+                "--output.json.path",
+                "stdout",
+                "--issues-exit-code=0",
+                "--show-stats=false",
+                function()
+                    return vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":h")
+                end,
+            }
+            lint.linters_by_ft = {
                 c = { 'clangtidy' },
                 cpp = { 'clangtidy' },
                 python = { 'flake8' },
+                lua = { 'luac' },
+                json = { "jq" },
+                go = { "golangcilint" },
             }
         end,
     },

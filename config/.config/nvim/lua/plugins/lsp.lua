@@ -122,15 +122,38 @@ return {
                 filetypes = { "go", "gomod", "gowork", "gotmpl" },
                 settings = {
                     gopls = {
-                        completeUnimported = true,
-                        usePlaceholders = true,
-                        staticcheck = true,
+                        codelenses = {
+                            gc_details = false,
+                            generate = true,
+                            regenerate_cgo = true,
+                            run_govulncheck = true,
+                            test = true,
+                            tidy = true,
+                            upgrade_dependency = true,
+                            vendor = true,
+                        },
+                        hints = {
+                            assignVariableTypes = true,
+                            compositeLiteralFields = true,
+                            compositeLiteralTypes = true,
+                            constantValues = true,
+                            functionTypeParameters = true,
+                            parameterNames = true,
+                            rangeVariableTypes = true,
+                        },
                         analyses = {
-                            unusedvariable = true,
-                            unreachable = true,
-                        }
+                            unusedparams = true,
+                            unusedwrite = true,
+                            nilness = true,
+                        },
+                        gofumpt = true,
+                        semanticTokens = true,
+                        staticcheck = true,
+                        usePlaceholders = true,
+                        completeUnimported = true,
+                        directoryFilters = { "-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules" },
                     },
-                }
+                },
             })
             vim.lsp.enable("gopls")
 
@@ -181,8 +204,20 @@ return {
 
             vim.lsp.config("zls", {
                 capabilities = lsp_capabilities,
+                root_markers = { "zls.json", "build.zig", ".git" },
                 settings = {
                     zls = {
+                        -- Whether to enable build-on-save diagnostics
+                        --
+                        -- Further information about build-on save:
+                        -- https://zigtools.org/zls/guides/build-on-save/
+                        enable_build_on_save = true,
+
+                        -- Neovim already provides basic syntax highlighting
+                        semantic_tokens = "partial",
+
+                        -- omit the following line if `zig` is in your PATH
+                        zig_exe_path = "/sbin/zig",
                         enable = true,
                         diagnostics = {
                             enable = true,

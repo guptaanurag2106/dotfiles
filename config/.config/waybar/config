@@ -178,8 +178,6 @@
     },
     "custom/dunst": {
         "exec": "~/.config/scripts/dunst.sh",
-        "on-click": "gomind --pomodoro",
-        "restart-interval": 1,
         "interval": 2,
         "tooltip": false,
     },
