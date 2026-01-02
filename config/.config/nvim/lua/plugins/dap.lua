@@ -89,6 +89,16 @@ return {
     },
     {
         'mfussenegger/nvim-lint',
+        lazy = true,
+        keys = {
+            {
+                "<leader>fl",
+                function()
+                    require("lint").try_lint()
+                end,
+                desc = "Lint document",
+            },
+        },
         config = function()
             local lint = require('lint')
             local golangcilint = lint.linters.golangcilint

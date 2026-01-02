@@ -21,6 +21,7 @@ vim.opt.expandtab = true
 vim.opt.encoding = "utf-8"
 
 vim.opt.smartindent = true
+vim.opt.autoindent = true
 
 vim.opt.wrap = false
 
@@ -37,16 +38,18 @@ vim.opt.scrolloff = 8
 vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 
+-- vim.opt.cmdheight = 2                -- Set height to prevent 'press enter to continue'  Set command-line height to 2 rows. Gives more room for messages and reduces "Press ENTER" pauses.
+vim.o.backspace = "indent,eol,start" -- allow backspace on indent, end of line or insert mode start position
+vim.o.jumpoptions = "view"           -- save 'view' when jumping
+vim.o.ruler = true
+vim.o.showmatch = true
+
+vim.o.foldenable = true
+
+vim.wo.list = true
+
 vim.opt.updatetime = 300
 vim.opt.colorcolumn = "80"
 vim.g.c_syntax_for_h = 1 -- Use C syntax for `.h` files, not C++
 
-vim.g.vimwiki_list = {
-    {
-        path = '~/vimwiki/',
-    },
-    {
-        path = '~/Documents/dev/lab',
-    }
-}
 vim.opt.matchpairs:append("<:>")

@@ -48,8 +48,8 @@ return {
                         { desc = "Show signature help", buffer = opts.buffer })
                     vim.keymap.set("n", "<leader>fd", function() vim.lsp.buf.format { async = true } end,
                         { desc = "Format document", buffer = opts.buffer })
-                    vim.keymap.set("n", "<leader>fl", function() require("lint").try_lint() end,
-                        { desc = "Lint document", buffer = opts.buffer })
+                    -- vim.keymap.set("n", "<leader>fl", function() require("lint").try_lint() end,
+                    --     { desc = "Lint document", buffer = opts.buffer })
 
                     local client = vim.lsp.get_client_by_id(event.data.client_id)
                     if client and client.server_capabilities.documentHighlightProvider then
@@ -114,7 +114,7 @@ return {
 
             local lsp_capabilities = vim.tbl_deep_extend("force", {},
                 vim.lsp.protocol.make_client_capabilities(),
-                require("cmp_nvim_lsp").default_capabilities())
+                require('blink.cmp').get_lsp_capabilities())
 
             vim.lsp.config("gopls", {
                 capabilities = lsp_capabilities,
@@ -268,48 +268,105 @@ return {
         end
     },
     {
-        "hrsh7th/nvim-cmp",
-        event = { "InsertEnter", "CmdlineEnter" },
-        dependencies = {
-            "hrsh7th/cmp-nvim-lsp",
-            "hrsh7th/cmp-buffer",
-            "hrsh7th/cmp-cmdline",
-            "hrsh7th/cmp-path",
-            "saadparwaiz1/cmp_luasnip",
-            "hrsh7th/cmp-nvim-lsp-signature-help",
+        "saghen/blink.cmp",
+        -- use a release version when you want prebuilt fuzzy binaries
+        version = "*",
+        opts_extend = {
+            "sources.completion.enabled_providers",
+            "sources.compat",
+            "sources.default",
         },
-        config = function()
-            local cmp = require("cmp")
-            local cmp_select = { behavior = cmp.SelectBehavior.Select }
-
-            cmp.setup({
-                snippet = { expand = function(args) require("luasnip").lsp_expand(args.body) end },
-                sources = {
-                    { name = "nvim_lsp_signature_help" },
-                    { name = "nvim_lsp",               keyword_length = 1 },
-                    { name = "luasnip" },
-                    { name = "path" },
-                    { name = 'buffer',                 option = { get_bufnrs = function() return vim.api.nvim_list_bufs() end } },
+        dependencies = {
+            "rafamadriz/friendly-snippets",
+            {
+                "saghen/blink.compat",
+                optional = false,
+                opts = {},
+                version = not vim.g.lazyvim_blink_main and "*",
+            },
+        },
+        event = { "InsertEnter", "CmdlineEnter" },
+        opts = {
+            fuzzy = { implementation = "lua" },
+            snippets = {
+                preset = "default",
+            },
+            appearance = { use_nvim_cmp_as_default = false, nerd_font_variant = "mono" },
+            completion = {
+                documentation = { auto_show = true },
+                ghost_text = { enabled = false },
+                menu = {
+                    draw = {
+                        treesitter = { "lsp" },
+                    },
                 },
-                mapping = cmp.mapping.preset.insert({
-                    ["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
-                    ["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
-                    ["<C-y>"] = cmp.mapping.confirm({ select = true }),
-                    ["<C-Space>"] = cmp.mapping.complete(),
-                    ["<C-f>"] = cmp.mapping.scroll_docs(4),
-                    ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-                }),
-            })
-
-            cmp.setup.cmdline(':', {
-                mapping = cmp.mapping.preset.cmdline(),
-                sources = cmp.config.sources({
-                    { name = "cmdline_history", dup = 0 },
-                    { name = 'path' },
-                    { name = "cmdline",         max_item_count = 10, dup = 0 },
-                })
-            })
-        end
+                accept = { auto_brackets = { enabled = true } },
+            },
+            sources = {
+                default = { 'lsp', 'path', 'snippets', 'buffer' },
+                providers = {
+                    lsp = {
+                        name = "lsp",
+                        enabled = true,
+                        module = "blink.cmp.sources.lsp",
+                        min_keyword_length = 0,
+                        async = true,
+                    },
+                    path = {
+                        name = "Path",
+                        module = "blink.cmp.sources.path",
+                        fallbacks = { "snippets", "buffer" },
+                        opts = {
+                            trailing_slash = false,
+                            label_trailing_slash = true,
+                            get_cwd = function(context)
+                                return vim.fn.expand(("#%d:p:h"):format(context.bufnr))
+                            end,
+                            show_hidden_files_by_default = true,
+                        },
+                    },
+                    buffer = {
+                        name = "Buffer",
+                        enabled = true,
+                        max_items = 100,
+                        module = "blink.cmp.sources.buffer",
+                        min_keyword_length = 1,
+                        opts = {
+                            get_bufnrs = function()
+                                return vim.api.nvim_list_bufs()
+                            end,
+                        },
+                    },
+                    snippets = {
+                        name = "snippets",
+                        enabled = true,
+                        max_items = 15,
+                        min_keyword_length = 2,
+                        module = "blink.cmp.sources.snippets",
+                    },
+                },
+            },
+            keymap = {
+                preset = "default",
+                ["<C-k>"] = { 'snippet_forward', 'fallback' },
+                ["<C-j>"] = { 'snippet_backward', 'fallback' },
+            },
+            signature = { enabled = true, window = { show_documentation = true } },
+            cmdline = {
+                enabled = true,
+                keymap = { preset = "inherit" },
+                sources = { 'path', 'cmdline' },
+                completion = {
+                    list = { selection = { preselect = false } },
+                    menu = {
+                        auto_show = function(ctx)
+                            return vim.fn.getcmdtype() == ":"
+                        end,
+                    },
+                    ghost_text = { enabled = true },
+                },
+            },
+        },
     },
     {
         "L3MON4D3/LuaSnip",
