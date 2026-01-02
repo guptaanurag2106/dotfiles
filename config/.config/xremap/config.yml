@@ -1,0 +1,34 @@
+modmap:
+  - name: Krita holdable buttons
+    window:
+      only: [/Krita/]
+    remap:
+      BTN_2:
+        skip_key_event: true
+        press: [{ press: leftbrace }]
+        repeat: [{ repeat: leftbrace }]
+        release: [{ release: leftbrace }]
+
+      BTN_3:
+        skip_key_event: true
+        press: [{ press: rightbrace }]
+        repeat: [{ repeat: rightbrace }]
+        release: [{ release: rightbrace }]
+
+keymap:
+  - name: Xournal++ pad
+    application:
+      only: com.github.xournalpp.xournalpp
+    remap:
+      BTN_0: C-z
+      BTN_1: C-Shift-z
+      BTN_2: C-c
+      BTN_3: C-v
+
+  - name: Global pad
+    remap:
+      BTN_0: C-z
+      BTN_1: C-Shift-z
+      BTN_2: C-c
+      BTN_3: C-v
+

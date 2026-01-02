@@ -1,0 +1,22 @@
+device:
+  # Find your device name using `ls -l /dev/input/by-id` or `cat /proc/bus/input/devices`
+  name: HUION Huion Tablet_H952 Touch Strip
+
+axis: ABS_RX
+
+settings:
+  velocity_threshold: 1.0
+  acceleration: false
+  cooldown: 30
+  key_delay: 10 # Delay between key press and release in ms
+  history_size: 6 # Number of samples to keep for velocity/acceleration calculation, range of ev_abs?
+  grab: true
+
+gestures:
+  up:
+    action:
+      keys: [KEY_PAGEUP]
+  
+  down:
+    action:
+      keys: KEY_PAGEDOWN # keys can be a list or just a keycode for a single key
