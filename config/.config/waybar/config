@@ -109,7 +109,7 @@
     },
     "memory": {
         "format": "{percentage}%",
-        "interval": 5
+        "interval": 3
     },
     "disk": {
         "interval": 10,

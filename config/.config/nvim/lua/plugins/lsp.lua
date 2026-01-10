@@ -268,9 +268,8 @@ return {
         end
     },
     {
+        -- :Lazy build blink.cmp
         "saghen/blink.cmp",
-        -- use a release version when you want prebuilt fuzzy binaries
-        version = "*",
         opts_extend = {
             "sources.completion.enabled_providers",
             "sources.compat",
@@ -291,13 +290,14 @@ return {
             snippets = {
                 preset = "default",
             },
-            appearance = { use_nvim_cmp_as_default = false, nerd_font_variant = "mono" },
+            -- appearance = { use_nvim_cmp_as_default = false, nerd_font_variant = "mono" },
             completion = {
                 documentation = { auto_show = true },
                 ghost_text = { enabled = false },
                 menu = {
+                    -- auto_show_delay_ms = 200,
                     draw = {
-                        treesitter = { "lsp" },
+                        -- treesitter = { "lsp" },
                     },
                 },
                 accept = { auto_brackets = { enabled = true } },

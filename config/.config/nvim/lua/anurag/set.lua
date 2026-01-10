@@ -42,7 +42,7 @@ vim.opt.isfname:append("@-@")
 vim.o.backspace = "indent,eol,start" -- allow backspace on indent, end of line or insert mode start position
 vim.o.jumpoptions = "view"           -- save 'view' when jumping
 vim.o.ruler = true
-vim.o.showmatch = true
+-- vim.o.showmatch = true
 
 vim.o.foldenable = true
 
