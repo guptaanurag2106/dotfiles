@@ -55,3 +55,18 @@ help2() {
 
 alias todo='task "(due:today or status:pending)" sort:priority-,urgency- limit:5'
 [[ -f ~/.profile ]] && source ~/.profile
+
+loadsecrets() {
+  local env_file="$HOME/.env"
+
+  if [[ -f "$env_file" ]]; then
+    set -a
+    source "$env_file"
+    set +a
+    echo "Loaded environment from $env_file"
+  else
+    echo "No .env file found in $(pwd)"
+    return 1
+  fi
+}
+

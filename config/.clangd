@@ -1,3 +1,17 @@
 CompileFlags:
   Add: [-Wall, -Wextra]
 
+---
+
+If:
+  Language: C
+CompileFlags:
+  Add: [-std=c11]
+
+---
+
+If:
+  Language: Cpp
+CompileFlags:
+  Add: [-std=c++17]
+
