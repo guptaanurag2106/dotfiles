@@ -29,6 +29,7 @@ return {
             highlight = { enable = true },
             indent = { enable = true },
             autotag = { enable = true },
+            matchup = { enable = true },
             ensure_installed = {
                 "c",
                 "cpp",

@@ -69,6 +69,38 @@ return {
             },
         },
         config = function()
+            local actions = require("telescope.actions")
+            require("telescope").setup({
+                ---------------------------------------------------------------------
+                -- Defaults apply to *all* pickers ----------------------------------
+                ---------------------------------------------------------------------
+                defaults = {
+                    prompt_prefix = "🔍 ",
+                    mappings = { i = { ["<Esc>"] = actions.close } },
+                    file_ignore_patterns = {
+                        "^%.git/", -- keep .git ignored
+                        "^%.idea/",
+                        "^%.vscode/",
+                        "^%.venv/",
+                        "^node_modules/",
+                        "^%.cache/",
+                        "%.DS_Store$",
+                    },
+                },
+                pickers = {
+                    -- :Telescope find_files
+                    find_files = {
+                        hidden = true, -- include dot‑files / dot‑dirs
+                        follow = true, -- follow symlinks
+                        no_ignore = false, -- still respect .gitignore & friends
+                        find_command = {
+                            "rg",
+                            "--files",
+                            "--hidden",
+                        },
+                    },
+                },
+            })
             require("telescope").load_extension("fzf")
         end,
     },

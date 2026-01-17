@@ -1,14 +1,6 @@
 require("anurag.remap")
 require("anurag.set")
-
--- Highlight on yanking text
-vim.api.nvim_create_autocmd('TextYankPost', {
-    desc = 'Highlight when yanking text',
-    group = vim.api.nvim_create_augroup('HighlightYank', { clear = true }),
-    callback = function()
-        vim.hl.on_yank({ timeout = 150 })
-    end,
-})
+require("anurag.autocmds")
 
 P = function(v)
     print(vim.inspect(v))
@@ -53,27 +45,6 @@ vim.api.nvim_create_user_command('Scratch', OpenScratchBuffer, {})
 -- Create a keymap to save the scratch buffer
 vim.api.nvim_set_keymap('n', '<leader>sb', ':lua SaveScratchBuffer()<CR>', { noremap = true, silent = true })
 
-vim.api.nvim_create_autocmd("FileType", { -- open help in vertical split
-    pattern = "help",
-    command = "wincmd L"
-})
-
-vim.api.nvim_create_autocmd("VimResized", { -- resize splits to be equal on term resize
-    command = "wincmd ="
-})
-
-vim.api.nvim_create_autocmd("FileType", {
-    group = vim.api.nvim_create_augroup("no_auto_comment", {}),
-    callback = function()
-        vim.opt_local.formatoptions:remove({ "c", "r", "o" })
-    end,
-})
-
-vim.api.nvim_create_autocmd("BufWritePre", {
-    pattern = "*.py",          -- Apply only to Python files
-    command = "%s/\\s\\+$//e", -- Remove trailing spaces
-})
-
 function Colours(colour)
     colour = colour or "vscode"
     vim.cmd.colorscheme(colour)
@@ -97,4 +68,3 @@ function Colours(colour)
         vim.api.nvim_set_hl(0, name, { bg = "#000000" })
     end
 end
-

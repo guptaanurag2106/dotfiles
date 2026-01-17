@@ -1,6 +1,7 @@
 -- help vim.opt, --help option-list
 
 vim.opt.mouse = 'a'
+vim.opt.hidden = true -- allow switching of buffers without saving
 vim.opt.breakindent = true -- useless as disabled wrap
 vim.opt.nu = true
 vim.opt.relativenumber = true
@@ -27,6 +28,7 @@ vim.opt.wrap = false
 
 vim.opt.swapfile = false
 vim.opt.backup = false
+vim.opt.writebackup = false
 vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 vim.opt.undofile = true
 
@@ -46,10 +48,20 @@ vim.o.ruler = true
 
 vim.o.foldenable = true
 
-vim.wo.list = true
+-- vim.wo.list = true
 
 vim.opt.updatetime = 300
 vim.opt.colorcolumn = "80"
 vim.g.c_syntax_for_h = 1 -- Use C syntax for `.h` files, not C++
 
 vim.opt.matchpairs:append("<:>")
+
+-- Better split behavior
+vim.opt.splitkeep = "screen"
+
+-- Live substitution preview (uncomment to enable)
+-- vim.opt.inccommand = "split"
+
+-- Reduce command line noise (uncomment to enable)
+-- vim.opt.shortmess:append("c")
+
