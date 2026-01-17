@@ -53,7 +53,9 @@ help2() {
   eval "$cmd"
 }
 
-alias todo='task "(due:today or status:pending)" sort:priority-,urgency- limit:5'
+alias todo='task rc.verbose=nothing rc.color=off rc.annotations=off rc.defaultwidth=0 \
+     shell status:pending due.before:tomorrow sort:urgency-'
+todo
 [[ -f ~/.profile ]] && source ~/.profile
 
 loadsecrets() {
