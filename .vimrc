@@ -120,3 +120,15 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 
 
 set laststatus=2
+
+" Use recursive grep with line numbers
+set grepprg=grep\ -rIn
+
+" Auto-open quickfix after grep
+autocmd QuickFixCmdPost grep copen
+
+" Make :grep silent by default
+cnoreabbrev <expr> grep
+  \ (getcmdtype() == ':' && getcmdline() ==# 'grep')
+  \ ? 'silent grep'
+  \ : 'grep'

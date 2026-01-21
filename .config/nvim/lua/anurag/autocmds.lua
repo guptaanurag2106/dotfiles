@@ -89,3 +89,20 @@ autocmd("TermOpen", {
 --         [=".*ignore"=] = "gitignore",
 --     },
 -- })
+
+vim.opt.grepprg = "rg --vimgrep --no-heading"
+-- After :grep, open quickfix automatically
+vim.api.nvim_create_autocmd("QuickFixCmdPost", {
+  pattern = "grep",
+  callback = function()
+    vim.cmd("copen")
+  end,
+})
+
+-- Make :grep silent by default (no output, no jump)
+vim.cmd([[
+  cnoreabbrev <expr> grep
+    \ (getcmdtype() == ':' && getcmdline() ==# 'grep')
+    \ ? 'silent grep'
+    \ : 'grep'
+]])
