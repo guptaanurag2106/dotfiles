@@ -72,3 +72,5 @@ loadsecrets() {
   fi
 }
 
+alias dns-cloudf='sudo resolvectl dns wlp0s20f3 1.1.1.1'
+alias dns-pihole='sudo resolvectl revert wlp0s20f3'
