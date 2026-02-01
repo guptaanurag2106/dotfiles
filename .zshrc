@@ -6,17 +6,14 @@ ZSH_THEME="robbyrussell"
 
 
 plugins=(
-  git
   zsh-autosuggestions
   zsh-syntax-highlighting
-#  tmux
   fzf-tab
-  # zsh-vi-mode
   z
 )
 
 source $ZSH/oh-my-zsh.sh
-export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#666666"
+#export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#666666"
 export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 export XDG_CONFIG_HOME=~/.config
 

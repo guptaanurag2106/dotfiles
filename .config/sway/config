@@ -11,7 +11,7 @@ exec_always --no-startup-id ~/.config/scripts/battery_notif.sh
 exec_always --no-startup-id ~/.config/scripts/wl-sunset.sh
 # exec_always ~/.config/sway/scripts/disable_gnome_notif.sh
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg ~/.config/wallpaper1.png fill
+output * bg ~/.config/wallpaper.jpg fill
 #exec /usr/libexec/polkit-gnome-authentication-agent-1 &
 exec_always --no-startup-id xremap ~/.config/xremap/config.yml --watch=device --device /dev/tablet
 exec_always --no-startup-id '~/.config/sway/scripts/absmap.py ~/.config/sway/scripts/basic.yml'
@@ -25,7 +25,8 @@ set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
-set $term alacritty
+#set $term alacritty
+set $term foot
 
 ### Output configuration
 #
