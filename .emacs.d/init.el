@@ -162,7 +162,7 @@
     "g i" 'lsp-find-implementation
     "t d" 'lsp-find-type-definition
     "t h" 'lsp-inlay-hints-mode
-    "v d" 'flycheck-list-errors))
+    "v d" 'flymake-show-buffer-diagnostics))
 
 (use-package which-key
   :config
@@ -281,63 +281,50 @@
 
 (setq xref-backend-functions '(lsp-xref-backend))
 
-(setq eldoc-echo-area-use-multiline-p t
-      eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly
-      eldoc-display-functions '(eldoc-display-in-echo-area)
-      eldoc-idle-delay 0.15
-      eldoc-echo-area-prefer-doc-buffer nil
-      eldoc-echo-area-display-truncation-message nil)
+(setq eldoc-echo-area-use-multiline-p t)
+(setq eldoc-display-functions '(eldoc-display-in-echo-area))
 
-(setq help-at-pt-display-when-idle nil)
+(defvar my/last-line -1
+  "Track the last line number we showed diagnostics for.")
 
-;; Diagnostics
-(use-package flycheck
-  :init (global-flycheck-mode)
-  :custom
-  (flycheck-check-syntax-automatically
-   '(save idle-change mode-enabled))
-  :config
-  (setq flycheck-display-errors-delay 0.1
-        flycheck-display-errors-function
-        #'flycheck-display-error-messages-unless-error-list
-        flycheck-indication-mode 'left-fringe))
-(setq lsp-diagnostics-provider :flycheck)
+(defun my/flymake-show-line-diagnostics ()
+  "Show all Flymake diagnostics for the current line in the echo area."
+  (let ((line (line-number-at-pos)))
+    (unless (= line my/last-line)
+      (setq my/last-line line)
+      (let* ((beg (line-beginning-position))
+             (end (line-end-position))
+             (diags (flymake-diagnostics beg end)))
+        (when diags
+          (let ((msg (string-join
+                      (mapcar #'flymake-diagnostic-text diags)
+                      "\n")))
+            (message "%s" msg)))))))
+
+;; Trigger after cursor movement
+(add-hook 'post-command-hook #'my/flymake-show-line-diagnostics)
+
+(add-hook 'lsp-managed-mode-hook #'flymake-mode)
+(add-hook 'lsp-mode-hook #'flymake-mode)
+
+(setq lsp-diagnostics-provider :flymake)
+
 (with-eval-after-load 'evil
+  ;; Go to next/prev diagnostic
   (evil-define-key 'normal 'global
-    (kbd "]d") #'flycheck-next-error
-    (kbd "[d") #'flycheck-previous-error
+    (kbd "]d") #'flymake-goto-next-error
+    (kbd "[d") #'flymake-goto-prev-error
     (kbd "]c") #'next-error
     (kbd "[c") #'previous-error))
+
 
 ;; Git / VCS
 (use-package magit
   :commands (magit-status)
   :defer 1
-  :config
-  ;; Start Magit buffers in normal state
-  (evil-set-initial-state 'magit-mode 'normal)
-  (evil-set-initial-state 'magit-status-mode 'normal)
-  (evil-set-initial-state 'magit-diff-mode 'normal)
-  (evil-set-initial-state 'magit-log-mode 'normal)
-  (evil-set-initial-state 'magit-revision-mode 'normal)
-  (evil-set-initial-state 'magit-process-mode 'normal)
-  (evil-set-initial-state 'magit-process-mode 'emacs)
-
-  ;; Vim-like navigation
-  ;; (evil-define-key 'normal magit-mode-map
-  ;;   (kbd "j") #'magit-goto-next-section
-  ;;   (kbd "k") #'magit-goto-previous-section
-  ;;   (kbd "gg") #'magit-section-forward
-  ;;   (kbd "G")  #'magit-section-backward)
-
-  ;; Better quit behavior
-  (evil-define-key 'normal magit-mode-map
-    (kbd "q") #'magit-mode-bury-buffer)
-
-  ;; Diff scrolling like Vim
-  (evil-define-key 'normal magit-diff-mode-map
-    (kbd "C-d") #'evil-scroll-down
-    (kbd "C-u") #'evil-scroll-up))
+  :after evil
+  :init
+  (evil-collection-init))
 
 ;; Dired
 (setq dired-listing-switches "-alh"
