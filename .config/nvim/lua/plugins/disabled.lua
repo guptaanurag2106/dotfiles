@@ -1,6 +1,4 @@
 return {
-    { "RRethy/vim-illuminate",   enabled = false },
-    { 'rhysd/git-messenger.vim', cmd = 'GitMessenger', enabled = false },
     {
         "crispgm/nvim-go",
         dependencies = {
@@ -11,22 +9,6 @@ return {
         end,
         enabled = false
     },
-    {
-        "stevearc/dressing.nvim",
-        config = function()
-            require("dressing").setup({})
-        end,
-        enabled = false
-    },
-    { "folke/which-key.nvim", enabled = false },
-    {
-        "hedyhli/outline.nvim",
-        config = function()
-            require("outline").setup({})
-        end,
-        enabled = false
-    },
-
     -- Mini.nvim Suite (Surround, AI, Pairs, Starter, etc.)
     {
         "echasnovski/mini.nvim",
@@ -46,19 +28,6 @@ return {
                 return "%2l:%-2v"
             end
         end,
-    },
-
-    -- Session Management
-    {
-        "folke/persistence.nvim",
-        enabled = false,
-        event = "BufReadPre", 
-        config = function() require("persistence").setup() end,
-        keys = {
-            { "<leader>qs", function() require("persistence").load() end, desc = "Restore Session" },
-            { "<leader>ql", function() require("persistence").load({ last = true }) end, desc = "Restore Last Session" },
-            { "<leader>qd", function() require("persistence").stop() end, desc = "Don't Save Current Session" },
-        }
     },
 
     -- Multi-Cursor Editing

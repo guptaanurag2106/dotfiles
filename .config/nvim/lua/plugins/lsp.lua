@@ -202,31 +202,6 @@ return {
             })
             vim.lsp.enable("clangd")
 
-            vim.lsp.config("zls", {
-                capabilities = lsp_capabilities,
-                root_markers = { "zls.json", "build.zig", ".git" },
-                settings = {
-                    zls = {
-                        -- Whether to enable build-on-save diagnostics
-                        --
-                        -- Further information about build-on save:
-                        -- https://zigtools.org/zls/guides/build-on-save/
-                        enable_build_on_save = true,
-
-                        -- Neovim already provides basic syntax highlighting
-                        semantic_tokens = "partial",
-
-                        -- omit the following line if `zig` is in your PATH
-                        zig_exe_path = "/sbin/zig",
-                        enable = true,
-                        diagnostics = {
-                            enable = true,
-                            severityLevels = { "error", "warning", "info", "hint" },
-                        },
-                    },
-                },
-            })
-            vim.lsp.enable("zls")
 
             vim.lsp.config("pyright", {
                 capabilities = lsp_capabilities,
@@ -350,6 +325,7 @@ return {
                 preset = "default",
                 ["<C-k>"] = { 'snippet_forward', 'fallback' },
                 ["<C-j>"] = { 'snippet_backward', 'fallback' },
+                ["<Tab>"] = { "accept", "fallback" },
             },
             signature = { enabled = true, window = { show_documentation = true } },
             cmdline = {

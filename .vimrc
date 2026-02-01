@@ -1,3 +1,6 @@
+set background=dark
+"colorscheme habamax
+"colorscheme slate
 set number relativenumber
 set nu rnu
 nnoremap <esc><esc> :noh<return><esc>
@@ -34,8 +37,8 @@ nmap <leader>w :w!<cr>
 command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
 
 
-" Set 7 lines to the cursor - when moving vertically using j/k
-set so=7
+" Set 8 lines to the cursor - when moving vertically using j/k
+set so=8
 
 " Turn on the Wild menu
 set wildmenu
@@ -69,7 +72,6 @@ set magic
 set showmatch
 
 syntax enable
-set background=dark
 
 " Set regular expression engine automatically
 set regexpengine=0
@@ -115,8 +117,8 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
-" Return to last edit position when opening files (You want this!)
-au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+" Return to last edit position when opening files
+" au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
 
 set laststatus=2
