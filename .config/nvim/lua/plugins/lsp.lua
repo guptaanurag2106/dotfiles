@@ -203,20 +203,28 @@ return {
             vim.lsp.enable("clangd")
 
 
-            vim.lsp.config("pyright", {
+            vim.lsp.config("basedpyright", {
                 capabilities = lsp_capabilities,
                 settings = {
                     python = {
                         analysis = {
-                            typeCheckingMode = "basic",    -- Can be "off", "basic", or "strict"
-                            diagnosticMode = "workspace",  -- Can be "openFilesOnly" or "workspace"
+                            typeCheckingMode = "off",
+                            diagnosticMode = "workspace",
+
                             autoSearchPaths = true,
-                            useLibraryCodeForTypes = true, -- Use library code for type inference
+                            useLibraryCodeForTypes = true,
+
+                            -- Quality-of-life improvements
+                            autoImportCompletions = true,
+                            reportMissingTypeStubs = false,
+                            reportUnknownMemberType = false,
+                            reportUnknownVariableType = false,
                         },
                     },
-                }
+                },
             })
-            vim.lsp.enable("pyright")
+
+            vim.lsp.enable("basedpyright")
 
             vim.lsp.config("rust_analyzer", {
                 capabilities = lsp_capabilities,

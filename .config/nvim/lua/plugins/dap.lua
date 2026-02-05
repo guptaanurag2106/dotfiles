@@ -116,7 +116,7 @@ return {
             lint.linters_by_ft = {
                 c = { 'clangtidy' },
                 cpp = { 'clangtidy' },
-                python = { 'flake8' },
+                python = { 'ruff' },
                 lua = { 'luac' },
                 json = { "jq" },
                 go = { "golangcilint" },
