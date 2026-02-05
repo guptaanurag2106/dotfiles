@@ -1,0 +1,15 @@
+set statusbar-h-padding 0
+set statusbar-v-padding 0
+
+set page-v-padding 5
+
+map u scroll half-up
+map d scroll half-down
+
+map D toggle_page_mode #originally d
+
+# Smooth scrolling
+set scroll-step 50
+
+# Clipboard behaves as expected
+set selection-clipboard clipboard
