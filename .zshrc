@@ -32,7 +32,8 @@ if [ -d "$HOME/go/bin" ] ; then
    export PATH="$HOME/go/bin:$PATH"
 fi
 export PATH="$HOME/opt/gf:$PATH"
-#export PATH="${PATH}:${HOME}/.local/bin/"
+
+export PCMANFM_TERMINAL="foot -e"
 
 
 if [ -d "$HOME/.nvm" ]; then

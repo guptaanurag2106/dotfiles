@@ -1,17 +1,19 @@
 CompileFlags:
-  Add: [-Wall, -Wextra]
+  Add:
+    - -Wall
+    - -Wextra
 
 ---
-
 If:
-  Language: C
+  PathMatch: .*\.(c|h)$
 CompileFlags:
-  Add: [-std=c11]
+  Add:
+    - -std=c17
+    - -xc
 
 ---
-
 If:
-  Language: Cpp
+  PathMatch: .*\.(cpp|hpp|cc|cxx)$
 CompileFlags:
-  Add: [-std=c++17]
-
+  Add:
+    - -std=c++17
