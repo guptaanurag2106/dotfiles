@@ -15,7 +15,7 @@
       gc-cons-percentage 0.6)
 
 ;; prevent automatic package activation here
-(setq package-enable-at-startup nil)  ;; stops package.el from activating before init.el
+;;(setq package-enable-at-startup nil)  ;; stops package.el from activating before init.el
 
 ;; stop frame resize flicker during startup
 (setq frame-inhibit-implied-resize t)  ;; avoids size/geometry changes after frame is made
