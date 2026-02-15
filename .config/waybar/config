@@ -42,7 +42,7 @@
     "custom/arch": {
         "format": "  ",
         "tooltip": true,
-        "tooltip-format": "btw"
+        "tooltip-format": "btw",
     },
     "sway/workspaces": {
         "strip": 20,
@@ -52,7 +52,7 @@
         "numeric-first": false,
     },
     "custom/scratchpad": {
-      "interval": 3,
+      "interval": 5,
       "return-type": "json",
       "exec": "~/.config/scripts/scratchpad.sh",
       "exec-if": "exit 0",
@@ -109,7 +109,7 @@
     },
     "memory": {
         "format": "{percentage}%",
-        "interval": 3
+        "interval": 5
     },
     "disk": {
         "interval": 10,
@@ -117,6 +117,7 @@
         "path": "/"
     },
     "backlight": {
+        "interval": 5,
         "device": "intel_backlight",
         "on-scroll-up": "brightnessctl set +5%",
         "on-scroll-down": "brightnessctl set 5%-",
@@ -178,7 +179,7 @@
     },
     "custom/dunst": {
         "exec": "~/.config/scripts/dunst.sh",
-        "interval": 2,
+        "interval": 5,
         "tooltip": false,
     },
     "tray": {
