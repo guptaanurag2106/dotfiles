@@ -525,7 +525,7 @@
         ("WARNING". "Red")
         ("FIX"    . "Gold")))
 
-(use-package markdown-mode)
+(use-package grip-mode) ;; install grip/go-grip on system as well
 
 (use-package pdf-tools
      :mode ("\\.pdf\\'" . pdf-view-mode)
