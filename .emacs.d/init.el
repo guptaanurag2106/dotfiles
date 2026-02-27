@@ -139,7 +139,8 @@
       evil-want-symbol-word t       ; treat symbols as words
       evil-want-minibuffer t        ; enable evil in minibuffer
       evil-kill-on-visual-paste nil
-      evil-undo-system 'undo-redo)
+      evil-undo-system 'undo-redo
+      evil-search-module 'evil-search)
 
 (use-package evil
      :init
@@ -210,8 +211,9 @@
             (lambda ()
               (interactive)
               (evil-search-next)
-              (evil-scroll-line-to-center)
-              (evil-show-jump)))
+              (evil-scroll-line-to-center 0)
+              ;; (evil-show-jumps)
+              ))
 
       ;; visual paste without replacing register
       (evil-define-key 'visual 'global
@@ -230,6 +232,7 @@
       (define-key evil-visual-state-map (kbd "J") #'evil-move-visual-down)
       (define-key evil-visual-state-map (kbd "K") #'evil-move-visual-up)
       (define-key evil-normal-state-map (kbd "C-c c") #'compile)
+      (define-key evil-normal-state-map (kbd "C-c r") #'recompile)
       (define-key evil-normal-state-map (kbd "-") #'dired-jump))
 
 ;; Syntax tweaks
@@ -248,6 +251,7 @@
        (cond
         ((eq major-mode 'python-mode)
          (when buffer-file-name
+               (save-buffer)
                (call-process "ruff" nil "*ruff*" nil
                      "format" buffer-file-name)
                (revert-buffer t t t)))
