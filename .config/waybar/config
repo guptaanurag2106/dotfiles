@@ -34,8 +34,8 @@
         "custom/separator",
         "custom/audio",
         "custom/separator",
-        "network",
         "custom/dunst",
+        "network",
         "tray",
         "custom/power",
     ],
@@ -187,7 +187,7 @@
       "show-passive-items": true
     },
     "custom/power": {
-        "format": " ⏻ ",
+        "format": "⏻ ",
         "on-click": "~/.config/scripts/powermenu.sh",
         "tooltip": false,
     },
