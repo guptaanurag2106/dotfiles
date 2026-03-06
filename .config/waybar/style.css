@@ -35,8 +35,8 @@
     background: rgba(182, 155, 241, 1);
 }
 
-#clock, #battery, #idle_inhibitor, #pulseaudio, #mode, #tray, #cpu, #memory,
-#window, #custom-dunst, #custom-temperature, #backlight, #disk, #custom-audio, #custom-scratchpad, #keyboard-state{
+#clock, #battery, #idle_inhibitor, #pulseaudio, #mode, #cpu, #memory,
+#window, #custom-dunst, #custom-temperature, #backlight, #disk, #custom-audio, #custom-scratchpad, #keyboard-state, #custom-power{
     color: #d8dee9;
     margin: 0 5px;
 }
@@ -110,7 +110,7 @@
 }
 
 #custom-power {
-    color: #980002;
+    margin-left: 10px;
 }
 
 #mode {
