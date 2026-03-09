@@ -38,7 +38,7 @@
 #clock, #battery, #idle_inhibitor, #pulseaudio, #mode, #cpu, #memory,
 #window, #custom-dunst, #custom-temperature, #backlight, #disk, #custom-audio, #custom-scratchpad, #keyboard-state, #custom-power{
     color: #d8dee9;
-    margin: 0 5px;
+    margin: 0 4px;
 }
 
 #custom-separator {
@@ -80,7 +80,7 @@
 }
 
 #network {
-    margin-left: 5px;
+    margin-left: 4px;
 }
 
 /*
