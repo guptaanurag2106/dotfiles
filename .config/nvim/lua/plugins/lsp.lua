@@ -271,7 +271,7 @@ return {
         opts = {
             fuzzy = { implementation = "lua" },
             snippets = {
-                preset = "default",
+                preset = "luasnip",
             },
             -- appearance = { use_nvim_cmp_as_default = false, nerd_font_variant = "mono" },
             completion = {
