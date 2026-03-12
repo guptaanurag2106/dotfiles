@@ -1,0 +1,71 @@
+# [Created by task 3.4.2 12/14/2025 11:16:55]
+data.location=/home/tanz/.task
+news.version=3.4.2
+
+# To use the default location of the XDG directories,
+# move this configuration file from ~/.taskrc to ~/.config/task/taskrc and update location config as follows:
+
+#data.location=~/.local/share/task
+hooks.location=~/.config/task/hooks
+
+
+# Color theme (uncomment one to use)
+#include light-16.theme
+#include light-256.theme
+#include bubblegum-256.theme
+#include dark-16.theme
+#include dark-256.theme
+#include dark-red-256.theme
+#include dark-green-256.theme
+#include dark-blue-256.theme
+#include dark-violets-256.theme
+#include dark-yellow-green.theme
+#include dark-gray-256.theme
+#include dark-gray-blue-256.theme
+#include solarized-dark-256.theme
+#include solarized-light-256.theme
+#include no-color.theme
+
+uda.taskwarrior-tui.tick-rate=2000
+
+uda.estimate.type=string
+uda.estimate.label=Estimate
+uda.estimate.values=VV,V,H,M,L
+urgency.uda.estimate.VV.coefficient=3.0
+urgency.uda.estimate.V.coefficient=2.0
+urgency.uda.estimate.H.coefficient=1.5
+urgency.uda.estimate.M.coefficient=1.0
+urgency.uda.estimate.L.coefficient=0.0
+urgency.blocking.coefficient=6.0 # blocking other tasks
+urgency.annotations.coefficient=0.5 # has annotations
+urgency.tags.coefficient=0
+
+
+uda.totalactivetime.type=duration
+uda.totalactivetime.label=Total active time
+uda.totalactivetime.values=''
+
+report.next.columns=id,entry,priority,project,recur,scheduled,due,estimate,description,totalactivetime,urgency
+report.next.labels=ID,Added,P,Proj,Rec,Sch,Due,Estimate,Description,Total active time,Urgency
+
+uda.taskwarrior-tui.task-report.next.filter=status:pending
+
+#urgency.user.tag.next.coefficient           15.0 # +next tag
+#urgency.due.coefficient                     12.0 # overdue or near due date
+#urgency.blocking.coefficient                 8.0 # blocking other tasks
+#urgency.uda.priority.H.coefficient           6.0 # high Priority
+#urgency.uda.priority.M.coefficient           3.9 # medium Priority
+#urgency.uda.priority.L.coefficient           1.8 # low Priority
+#urgency.scheduled.coefficient                5.0 # scheduled tasks
+#urgency.active.coefficient                   4.0 # already started tasks
+#urgency.age.coefficient                      2.0 # coefficient for age
+#urgency.annotations.coefficient              1.0 # has annotations
+#urgency.tags.coefficient                     1.0 # has tags
+#urgency.project.coefficient                  1.0 # assigned to any project
+#urgency.user.project.My Project.coefficient  5.0 # assigned to project:"My Project"
+#urgency.waiting.coefficient                 -3.0 # waiting task
+#urgency.blocked.coefficient                 -5.0 # blocked by other tasks
+#max_active_tasks=1
+report.shell.description=Minimal due\/overdue for shell startup
+report.shell.columns=description
+report.shell.labels=
