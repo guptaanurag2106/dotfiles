@@ -14,9 +14,11 @@
 (save-place-mode 1) ;; remember cursor positions in files
 
 (recentf-mode 1) ;; track recently opened files
-(setq recentf-max-saved-items 50)
+(setq recentf-max-saved-items 50
+      recentf-max-menu-items 15
+      recentf-auto-cleanup 'mode)
 
-(winner-mode 1) ;; undo window layout changes
+;; (winner-mode 1) ;; undo window layout changes
 
 (require 'uniquify) ;; unique buffer names like dir/file instead of file<2>
 (setq uniquify-buffer-name-style 'forward)
@@ -26,6 +28,17 @@
 (setq vc-follow-symlinks t) ;; follow symlinks automatically
 
 (setq create-lockfiles nil) ;; do not create lockfiles (#file)
+
+(setq native-comp-async-query-on-exit t) ;; ask to terminate async comps on exit
+
+(setq enable-recursive-minibuffers t) ; Allow nested minibuffers
+
+(setq custom-buffer-done-kill t)
+
+(setq eval-expression-print-length nil
+      eval-expression-print-level nil) ;; Disable truncation of printed s-expressions in the message buffer
+
+(setq kill-do-not-save-duplicates t) ;; Remove duplicates from the kill ring to reduce clutter
 
 ;; Set backup and autosave options
 (make-directory (expand-file-name "autosave/" user-emacs-directory) t)
@@ -109,7 +122,7 @@
 (setq display-buffer-alist
       '(("\\*\\(compilation\\|Warnings\\|Help\\|Messages\\|xref\\|eldoc\\)\\*"
          (display-buffer-reuse-window display-buffer-at-bottom)
-         (window-height . 0.20))))
+         (window-height . 0.25))))
 
 ;;; Dired tweaks
 (setq delete-by-moving-to-trash t) ;; use trash instead of deleting permanently
@@ -162,6 +175,15 @@
       search-upper-case t
       isearch-case-fold-search nil)
 
+;; Remove highlight, keyboard-quit (reuse C-g)
+(defun my/evil-double-escape-nohl ()
+  (interactive)
+ (evil-ex-nohighlight)
+  (keyboard-quit))
+
+(define-key evil-normal-state-map (kbd "C-g")
+            #'my/evil-double-escape-nohl)
+
 ;; Move selected lines
 (defun evil-move-visual-lines (direction)
        (let* ((beg (save-excursion
@@ -206,14 +228,14 @@
 
 
       ;; center after search like vim nzzv
-      (evil-define-key 'normal 'global
-            (kbd "n")
-            (lambda ()
-              (interactive)
-              (evil-search-next)
-              (evil-scroll-line-to-center 0)
-              ;; (evil-show-jumps)
-              ))
+      ;; (evil-define-key 'normal 'global
+      ;;       (kbd "n")
+      ;;       (lambda ()
+      ;;         (interactive)
+      ;;         (evil-search-next)
+      ;;         (evil-scroll-line-to-center 0)
+      ;;         ;; (evil-show-jumps)
+      ;;         ))
 
       ;; visual paste without replacing register
       (evil-define-key 'visual 'global
@@ -243,8 +265,19 @@
 
 (add-hook 'prog-mode-hook #'my/prog-syntax-setup)
 
-;; Leader key
 (require 'project)
+;; (use-package perspective
+;;      :init
+;;      (persp-mode)
+;;      :custom
+;;      (persp-mode-prefix-key (kbd "C-c M-p")))
+
+;; (defun my/project-perspective ()
+;;   (interactive)
+;;   (let ((name (project-name (project-current t))))
+;;     (persp-switch name)))
+
+;; (add-hook 'project-switch-project-hook #'my/project-perspective)
 
 (defun my/format-buffer () ;; run ruff for python files as baseedpyright doesn't support formatting
        (interactive)
@@ -258,6 +291,7 @@
         ((eglot-current-server)
          (eglot-format))))
 
+;; Leader key
 (use-package general
      :after evil
      :config
@@ -328,12 +362,15 @@
      (setq xref-show-xrefs-function #'consult-xref
            xref-show-definitions-function #'consult-xref))
 
+;; (setq xref-show-definitions-function 'xref-show-definitions-completing-read
+;;       xref-show-xrefs-function 'xref-show-definitions-completing-read)
+
 ;;; In-buffer completion
 (use-package corfu
      :custom
-     (corfu-auto nil)
+     (corfu-auto t)
      (corfu-auto-prefix 2)
-     (corfu-auto-delay 0.1)
+     (corfu-auto-delay 0.05)
      (corfu-preview-current nil)
      (corfu-preselect nil)
      (completion-cycle-threshold 3)
@@ -400,7 +437,6 @@
              c-basic-offset 4
              c-ts-mode-indent-style 'k&r)))
 
-
 ;;; Eglot (LSP client)
 (use-package eglot
      :ensure nil
@@ -412,8 +448,10 @@
       . eglot-ensure)
      :custom
      (eglot-autoshutdown t)         ;; kill servers when last buffer closes
+     (eglot-sync-connect )
      (eglot-events-buffer-size 0)   ;; disable noisy event buffer
      (eglot-confirm-server-initiated-edits nil)
+     (eglot-send-changes-idle-time 0.1)
      (eglot-extend-to-xref t) ;; reuse servers when jump to definition in library
 
      :config
@@ -547,10 +585,19 @@
      (lambda ()
        (setq gc-cons-threshold (* 100 1024 1024)
              gc-cons-percentage 0.1)))
+;; Tramp
+(setq tramp-verbose 1)
+(setq tramp-completion-reread-directory-timeout 50)
+(setq tramp-backup-directory-alist backup-directory-alist)
 
 ;; FIX:
 ;; completion not perfect doesnt show all snippets
 ;; J to join line moves cursor (is it better worse? does it matter?)
+;; Mouse scrolling jumps a lot, sometimes jumps and doesnt actually scroll
+;; on opening man pages they dont come to focus
+;; Exit minibuffer when in normal mode not working, can only exit in insert mode
+;; Press K to open doc at point, press K to go into the doc at point but how to move the cursor back from popup
+;; Sticky scroll (see function, if, loop context)
 
 ;; NOTE: i think fixed
 ;; lsp server not stopping after all buffers closed
