@@ -6,8 +6,9 @@
  ;; If there is more than one, they won't work right.
  '(eglot-confirm-server-edits nil nil nil "Customized with use-package eglot")
  '(package-selected-packages
-           '(cape consult corfu eldoc-box evil-collection evil-numbers general grip-mode hl
-                  -todo magit orderless pdf-tools vertico)))
+           '(autothemer cape consult corfu eldoc-box evil-collection evil-numbers general
+                        grip-mode hl-todo magit markdown-mode orderless pdf
+                        -tools perspective vertico)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

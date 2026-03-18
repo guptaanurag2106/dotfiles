@@ -12,7 +12,7 @@
 
 ;; performance: defer garbage collections during startup
 (setq gc-cons-threshold most-positive-fixnum
-      gc-cons-percentage 0.6)
+      gc-cons-percentage 1.0)
 
 ;; prevent automatic package activation here
 ;;(setq package-enable-at-startup nil)  ;; stops package.el from activating before init.el
@@ -27,3 +27,8 @@
 ;; default first frame appearance: start maximized
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
+(set-language-environment "UTF-8")
+
+(setq process-adaptive-read-buffering nil)
+
+(setq auto-mode-case-fold nil)
