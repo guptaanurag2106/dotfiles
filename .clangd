@@ -2,6 +2,18 @@ CompileFlags:
   Add:
     - -Wall
     - -Wextra
+    - -Wpedantic
+    - -Wconversion
+    - -Wsign-conversion
+    - -Wshadow
+    - -Wold-style-definition
+    - -Wcast-align
+    - -Wcast-qual
+    - -Wundef
+    - -Wdouble-promotion
+    - -Wformat=2
+    - -Wimplicit-fallthrough
+    - -Wnull-dereference
 
 ---
 If:
