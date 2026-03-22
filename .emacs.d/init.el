@@ -76,6 +76,10 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
+;; Extras
+(add-to-list 'load-path "~/.emacs.d/extra")
+(load "~/.emacs.d/extra/llvm-mode.el")
+
 ;;; UI basics
 (show-paren-mode 1)
 (setq show-paren-delay 0.1)
@@ -129,7 +133,8 @@
 (setq dired-listing-switches "-alh"
       dired-create-destination-dirs 'ask
       dired-dwim-target t
-      trash-directory "~/.local/share/Trash/files")
+      trash-directory "~/.local/share/Trash/files"
+      wdired-allow-to-change-permissions t)
 (put 'dired-find-alternate-file 'disabled nil)
 
 ;;; Local PATH additions
@@ -177,12 +182,12 @@
 
 ;; Remove highlight, keyboard-quit (reuse C-g)
 (defun my/evil-double-escape-nohl ()
-  (interactive)
- (evil-ex-nohighlight)
-  (keyboard-quit))
+       (interactive)
+       (evil-ex-nohighlight)
+       (keyboard-quit))
 
 (define-key evil-normal-state-map (kbd "C-g")
-            #'my/evil-double-escape-nohl)
+        #'my/evil-double-escape-nohl)
 
 ;; Move selected lines
 (defun evil-move-visual-lines (direction)
@@ -585,6 +590,11 @@
      (lambda ()
        (setq gc-cons-threshold (* 100 1024 1024)
              gc-cons-percentage 0.1)))
+
+(use-package vterm
+     :config
+     (add-hook 'vterm-mode-hook (lambda () (display-line-numbers-mode -1))))
+
 ;; Tramp
 (setq tramp-verbose 1)
 (setq tramp-completion-reread-directory-timeout 50)
