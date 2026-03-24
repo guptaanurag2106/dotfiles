@@ -137,6 +137,7 @@ bindsym $mod+d exec rofi -show drun -drun-show-actions -show-icons
 bindsym $mod+Escape exec swaylock -f -c 000000
 bindsym $mod+q exec ~/.config/scripts/powermenu.sh
 
+bindsym $mod+p exec ~/.config/scripts/startup.sh
 
 # Drag floating windows by holding down $mod and left mouse button.
 # Resize them with right mouse button + $mod.
