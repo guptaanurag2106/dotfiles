@@ -2,14 +2,19 @@ set background=dark
 "colorscheme habamax
 "colorscheme slate
 set number relativenumber
-set nu rnu
 nnoremap <esc><esc> :noh<return><esc>
+nnoremap - :Ex<return>
 set mouse=a
+
+" Use system clipboard when provider support exists
+if has('clipboard') || has('clipboard_provider')
+  set clipboard=unnamed,unnamedplus
+endif
 
 
 "let g:netrw_banner=0        " disable annoying banner
-let g:netrw_browse_split=4  " open in prior window
-let g:netrw_altv=1          " open splits to the right
+"let g:netrw_browse_split=0  " open in prior window
+"let g:netrw_altv=1          " open splits to the right
 let g:netrw_liststyle=3     " tree view
 "let g:netrw_list_hide=netrw_gitignore#Hide()
 "let g:netrw_list_hide.=',\(^\|\s\s\)\zs\.\S\+'
@@ -23,14 +28,17 @@ filetype indent on
 
 " Set to auto read when a file is changed from the outside
 set autoread
-au FocusGained,BufEnter * silent! checktime
+augroup vimrc_autoread
+  autocmd!
+  autocmd FocusGained,BufEnter * silent! checktime
+augroup END
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
 let mapleader = " "
 
 " Fast saving
-nmap <leader>w :w!<cr>
+nnoremap <silent> <leader>w :w!<cr>
 
 " :W sudo saves the file
 " (useful for handling the permission-denied error)
@@ -42,12 +50,15 @@ set so=8
 
 " Turn on the Wild menu
 set wildmenu
+set wildmode=longest:full,full
 
 " Always show current position
 set ruler
 
 " Height of the command bar
 set cmdheight=1
+set splitbelow
+set splitright
 
 " A buffer becomes hidden when it is abandoned
 set hid
@@ -95,7 +106,7 @@ set tabstop=4
 
 " Linebreak on 500 characters
 set lbr
-set tw=500
+set tw=0
 
 set ai "Auto indent
 set si "Smart indent
@@ -112,10 +123,10 @@ vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 
 
 " Smart way to move between windows
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
+nnoremap <C-j> <C-W>j
+nnoremap <C-k> <C-W>k
+nnoremap <C-h> <C-W>h
+nnoremap <C-l> <C-W>l
 
 " Return to last edit position when opening files
 " au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
@@ -127,7 +138,10 @@ set laststatus=2
 set grepprg=grep\ -rIn
 
 " Auto-open quickfix after grep
-autocmd QuickFixCmdPost grep copen
+augroup vimrc_quickfix
+  autocmd!
+  autocmd QuickFixCmdPost grep copen
+augroup END
 
 " Make :grep silent by default
 cnoreabbrev <expr> grep
