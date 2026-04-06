@@ -4,7 +4,13 @@ set background=dark
 set number relativenumber
 nnoremap <esc><esc> :noh<return><esc>
 nnoremap - :Ex<return>
+nnoremap ]q :cnext<return>
+nnoremap [q :cprev<return>
 set mouse=a
+set belloff=all
+set noerrorbells
+set novisualbell
+set t_vb=
 
 " Use system clipboard when provider support exists
 if has('clipboard') || has('clipboard_provider')
