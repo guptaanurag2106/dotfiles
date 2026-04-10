@@ -32,9 +32,9 @@ return {
                         { desc = "Show diagnostics", buffer = opts.buffer })
                     -- Using trouble for it
                     --NOTE:setloclist not viewloclist vim.keymap.set("n", "<leader>co", function() vim.diagnostic.setloclist() end, opts)
-                    vim.keymap.set("n", "]d", function() vim.diagnostic.goto_next() end,
+                    vim.keymap.set("n", "]d", function() vim.diagnostic.jump({ count = 1, float = true }) end,
                         { desc = "Go to next diagnostic", buffer = opts.buffer })
-                    vim.keymap.set("n", "[d", function() vim.diagnostic.goto_prev() end,
+                    vim.keymap.set("n", "[d", function() vim.diagnostic.jump({ count = -1, float = true }) end,
                         { desc = "Go to previous diagnostic", buffer = opts.buffer })
                     vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end,
                         { desc = "Trigger code action", buffer = opts.buffer })
@@ -61,7 +61,7 @@ return {
                             { buffer = event.buf, group = highlight_augroup, callback = vim.lsp.buf.clear_references })
                     end
 
-                    if client and client.supports_method("textDocument/formatting") then
+                    if client and client:supports_method("textDocument/formatting") then
                         local format_augroup = vim.api.nvim_create_augroup("UserLSPFormat", { clear = false })
                         vim.api.nvim_clear_autocmds({ group = format_augroup, buffer = event.buf })
                         vim.api.nvim_create_autocmd("BufWritePre",
@@ -98,7 +98,7 @@ return {
             vim.diagnostic.config({
                 update_in_insert = true,
                 float = { focusable = false, style = "minimal", border = "rounded", source = true, header = "", prefix = "" },
-                virtual_text = true,
+                virtual_text = false,
                 signs = {
                     text = {
                         [vim.diagnostic.severity.ERROR] = "E",
@@ -119,7 +119,7 @@ return {
             vim.lsp.config("gopls", {
                 capabilities = lsp_capabilities,
                 cmd = { "gopls" },
-                filetypes = { "go", "gomod", "gowork", "gotmpl" },
+                filetypes = { "go", "gomod" },
                 settings = {
                     gopls = {
                         codelenses = {
@@ -190,6 +190,12 @@ return {
                     "clangd",
                     "--background-index",
                     "--clang-tidy",
+                    "-j=4",
+                    "--malloc-trim",
+                    "--log=error",
+                    "--cross-file-rename",
+                    "--pch-storage=memory",
+                    "--header-insertion=iwyu",
                     "--completion-style=detailed",
                     "--header-insertion=iwyu",
                     "--suggest-missing-includes",

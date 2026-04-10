@@ -7,14 +7,6 @@ return {
         end
     },
     {
-        'sainnhe/everforest',
-        lazy = false,
-        priority = 1000,
-        config = function()
-            vim.g.everforest_background = 'hard'
-        end
-    },
-    {
         "nvim-lualine/lualine.nvim",
         dependencies = { "nvim-tree/nvim-web-devicons" },
         config = function()
