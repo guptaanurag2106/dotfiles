@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # process_count=$(pgrep "battery_notif" | wc -l)
 process_count=$(pgrep -f "$(basename "$0")" | wc -l)
@@ -12,9 +12,9 @@ NOTIFICATION_FULL=0
 
 while true; do
     # Battery status check
-    BATTERY_STATUS=$(cat /sys/class/power_supply/BAT1/status)
+    BATTERY_STATUS=$(< /sys/class/power_supply/BAT1/status)
     # Battery capacity check
-    BATTERY_LEVEL=$(cat /sys/class/power_supply/BAT1/capacity)
+    BATTERY_LEVEL=$(< /sys/class/power_supply/BAT1/capacity)
 
     if [[ $BATTERY_STATUS == "Discharging" ]]; then
         NOTIFICATION_FULL=0
@@ -23,6 +23,8 @@ while true; do
             sleep 15
         elif [[ $BATTERY_LEVEL -le 20 ]]; then
             notify-send --app-name="Battery" -i battery-020 -u normal -t 5000 "Battery low!" "${BATTERY_LEVEL}%"
+            sleep 30
+        else
             sleep 30
         fi
 
