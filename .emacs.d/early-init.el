@@ -30,5 +30,5 @@
 (set-language-environment "UTF-8")
 
 (setq process-adaptive-read-buffering nil)
-
+(setq frame-inhibit-implied-resize t) ;; useless for a tiling window manager
 (setq auto-mode-case-fold nil)
