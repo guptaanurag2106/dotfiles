@@ -6,17 +6,12 @@ nnoremap <esc><esc> :noh<return><esc>
 nnoremap - :Ex<return>
 nnoremap ]q :cnext<return>
 nnoremap [q :cprev<return>
+set nowrap
 set mouse=a
 set belloff=all
 set noerrorbells
 set novisualbell
 set t_vb=
-
-" Use system clipboard when provider support exists
-if has('clipboard') || has('clipboard_provider')
-  set clipboard=unnamed,unnamedplus
-endif
-
 
 "let g:netrw_banner=0        " disable annoying banner
 "let g:netrw_browse_split=0  " open in prior window
@@ -116,8 +111,6 @@ set tw=0
 
 set ai "Auto indent
 set si "Smart indent
-set wrap "Wrap lines
-
 
 """"""""""""""""""""""""""""""
 " => Visual mode related
