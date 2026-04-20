@@ -73,6 +73,7 @@ return {
                             if vim.bo[event.buf].filetype == "python" then
                                 local file = vim.api.nvim_buf_get_name(event.buf)
                                 if file ~= "" then
+                                    vim.cmd("write")
                                     vim.fn.system({ "ruff", "format", file })
                                     vim.cmd("edit!")
                                 end
