@@ -46,8 +46,11 @@ return {
                         { desc = "Go to type definition", buffer = opts.buffer })
                     vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end,
                         { desc = "Show signature help", buffer = opts.buffer })
-                    vim.keymap.set("n", "<leader>fd", function() vim.lsp.buf.format { async = true } end,
+                    vim.keymap.set("n", "<leader>fd", function() vim.lsp.buf.format({ async = false }) end,
                         { desc = "Format document", buffer = opts.buffer })
+                    vim.keymap.set("n", "<leader>th",
+                        function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end,
+                        { desc = "Turn on inlay hints", buffer = opts.buffer })
                     -- vim.keymap.set("n", "<leader>fl", function() require("lint").try_lint() end,
                     --     { desc = "Lint document", buffer = opts.buffer })
 
@@ -61,28 +64,24 @@ return {
                             { buffer = event.buf, group = highlight_augroup, callback = vim.lsp.buf.clear_references })
                     end
 
-                    if client and client:supports_method("textDocument/formatting") then
-                        local format_augroup = vim.api.nvim_create_augroup("UserLSPFormat", { clear = false })
-                        vim.api.nvim_clear_autocmds({ group = format_augroup, buffer = event.buf })
-                        vim.api.nvim_create_autocmd("BufWritePre",
-                            {
-                                buffer = event.buf,
-                                group = format_augroup,
-                                callback = function()
-                                    vim.lsp.buf.format({
-                                        bufnr =
-                                            event.buf,
-                                        async = false
-                                    })
+                    local format_augroup = vim.api.nvim_create_augroup("UserLSPFormat", { clear = false })
+                    vim.api.nvim_clear_autocmds({ group = format_augroup, buffer = event.buf })
+                    vim.api.nvim_create_autocmd("BufWritePre", {
+                        buffer = event.buf,
+                        group = format_augroup,
+                        callback = function()
+                            if vim.bo[event.buf].filetype == "python" then
+                                local file = vim.api.nvim_buf_get_name(event.buf)
+                                if file ~= "" then
+                                    vim.fn.system({ "ruff", "format", file })
+                                    vim.cmd("edit!")
                                 end
-                            })
-                    end
+                                return
+                            end
 
-                    if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
-                        vim.keymap.set("n", "<leader>th",
-                            function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end,
-                            { desc = "Turn on inlay hints", buffer = opts.buffer })
-                    end
+                            vim.lsp.buf.format({ bufnr = event.buf, async = false })
+                        end,
+                    })
                 end
             })
 
@@ -90,8 +89,6 @@ return {
                 group = vim.api.nvim_create_augroup("UserLSPDetach", { clear = true }),
                 callback = function(event)
                     vim.lsp.buf.clear_references()
-                    vim.api.nvim_clear_autocmds({ group = "UserLSPHighlight", buffer = event.buf })
-                    vim.api.nvim_clear_autocmds({ group = "UserLSPFormat", buffer = event.buf })
                 end
             })
 
@@ -172,8 +169,8 @@ return {
                         },
                         workspace = {
                             library = {
-                                vim.env.VIMRUNTIME,                        -- Allow Lua workspace to include runtime
-                                [vim.fn.expand("$VIMRUNTIME/lua")] = true, -- Support Neovim Lua API
+                                vim.env.VIMRUNTIME,               -- Allow Lua workspace to include runtime
+                                vim.fn.expand("$VIMRUNTIME/lua"), -- Support Neovim Lua API
                             },
                         },
                         telemetry = {
