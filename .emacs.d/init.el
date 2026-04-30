@@ -92,7 +92,14 @@
 ;; theme + font
 (add-to-list 'custom-theme-load-path
      (expand-file-name "themes" user-emacs-directory))
-(load-theme 'gruber-darker t)
+(use-package doom-themes)
+(load-theme 'doom-dark+ t)
+;; (setq frame-background-mode 'dark)
+(custom-set-faces
+ '(default ((t (:background "#101010")))))
+(add-hook 'after-load-theme-hook
+          (lambda ()
+            (set-face-attribute 'default nil :background "#101010")))
 (set-frame-font "Inconsolata Nerd Font Mono 15" nil t)
 
 ;; line & column numbers
@@ -271,8 +278,8 @@
       (evil-define-key 'normal 'global
             (kbd "]d") #'flymake-goto-next-error
             (kbd "[d") #'flymake-goto-prev-error
-            (kbd "]c") #'next-error
-            (kbd "[c") #'previous-error)
+            (kbd "]q") #'next-error
+            (kbd "[q") #'previous-error)
 
 
       (define-key evil-normal-state-map (kbd "C-w s") #'my/split-vertical)
@@ -336,7 +343,7 @@
 
 (require 'project)
 
-(defun my/format-buffer () ;; run ruff for python files as baseedpyright doesn't support formatting
+(defun my/format-buffer () ;; run ruff for python files as basedpyright doesn't support formatting
        (interactive)
        (cond
         ((eq major-mode 'python-mode)
@@ -399,12 +406,13 @@
 (use-package orderless
      :init
      (setq completion-styles '(orderless basic)
-           completion-category-defaults nil
-           completion-category-overrides
-           '((file (styles partial-completion)))
-           completion-ignore-case nil
-           read-buffer-completion-ignore-case t
-           read-file-name-completion-ignore-case t))
+            completion-category-defaults nil
+            completion-category-overrides
+            '((file (styles partial-completion)))
+            completion-ignore-case t
+            orderless-smart-case nil
+            read-buffer-completion-ignore-case t
+            read-file-name-completion-ignore-case t))
 
 (use-package marginalia
      :init
@@ -489,15 +497,6 @@
       (corfu-popupinfo-mode 1)
       (setq corfu-popupinfo-delay 0.2))
 
-(use-package nerd-icons
-     :if (display-graphic-p))
-
-(use-package nerd-icons-corfu
-     :after (nerd-icons corfu)
-     :if (display-graphic-p)
-     :config
-     (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
-
 ;;; Extra completion sources
 (use-package cape
      :init
@@ -530,16 +529,14 @@
 (add-hook 'completion-at-point-functions #'my/yasnippet-capf t)
 
 (defun my/eglot-capf ()
-       (funcall
-        (cape-capf-super
-         (cape-capf-buster #'eglot-completion-at-point)
-         #'my/yasnippet-capf)))
+       (funcall (cape-capf-buster #'eglot-completion-at-point)))
 
 (defun my/eglot-capf-setup ()
        (setq-local completion-at-point-functions
-             (cons #'my/eglot-capf
-                   (remq #'my/eglot-capf
-                         (remq #'eglot-completion-at-point completion-at-point-functions)))))
+             (list #'my/eglot-capf
+                   #'my/yasnippet-capf
+                   #'cape-file
+                   #'cape-dabbrev)))
 
 (add-hook 'eglot-managed-mode-hook #'my/eglot-capf-setup)
 
@@ -552,9 +549,11 @@
 
 (when (treesit-available-p)
   (add-to-list 'major-mode-remap-alist '(go-mode . go-ts-mode))
+  (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
   ;;   (add-to-list 'major-mode-remap-alist '(c-mode . c-ts-mode))
   ;;   (add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode))
-  (add-to-list 'auto-mode-alist '("\\.go\\'" . go-ts-mode)))
+  (add-to-list 'auto-mode-alist '("\\.go\\'" . go-ts-mode))
+  (add-to-list 'auto-mode-alist '("\\.py\\'" . python-ts-mode)))
 
 (add-hook 'c-mode-hook  ;; c-ts-mode not working rightnow
      (lambda ()
@@ -586,7 +585,8 @@
       (c++-ts-mode . eglot-ensure)
       (go-ts-mode . eglot-ensure)
       (go-mode . eglot-ensure)
-      (python-mode . eglot-ensure))
+      (python-mode . eglot-ensure)
+      (python-ts-mode . eglot-ensure))
      :custom
      (eglot-autoshutdown t)         ;; kill servers when last buffer closes
      (eglot-sync-connect nil)
@@ -608,7 +608,7 @@
                "--header-insertion=iwyu"
                "--suggest-missing-includes")))
      (add-to-list 'eglot-server-programs
-          '(python-mode . ("basedpyright-langserver" "--stdio")))
+           '((python-mode python-ts-mode) . ("pyright-langserver" "--stdio")))
 
      (setq-default eglot-workspace-configuration
            `(:clangd (:clangdFileStatus t
@@ -632,16 +632,21 @@
                        :usePlaceholders t
                        :directoryFilters ["-.git" "-.vscode" "-.idea" "-.vscode-test" "-node_modules"]
                        :completeUnimported t)
-              :python (:analysis (:typeCheckingMode "off"
-                                    :diagnosticMode "openFilesOnly"
-                                    :autoSearchPaths t
-                                    :useLibraryCodeForTypes t
-                                    :autoImportCompletions t
-                                    :reportMissingImports t
-                                    :reportUndefinedVariable t
-                                    :reportMissingTypeStubs ,json-false
-                                    :reportUnknownMemberType ,json-false
-                                    :reportUnknownVariableType ,json-false)))))
+              :python (:analysis (:typeCheckingMode "basic"
+                                  :diagnosticMode "openFilesOnly"
+                                  :autoSearchPaths ,json-false
+                                  :useLibraryCodeForTypes ,json-false
+                                  :autoImportCompletions t
+                                  :reportMissingTypeStubs ,json-false
+                                  :reportUnknownMemberType ,json-false
+                                  :reportUnknownVariableType ,json-false
+                                  :exclude ["**/.git"
+                                            "**/__pycache__"
+                                            "**/.mypy_cache"
+                                            "**/.pytest_cache"
+                                            "**/.ruff_cache"
+                                            "**/venv"
+                                            "**/.venv"])))))
 
 (add-hook 'eglot-managed-mode-hook
      (lambda ()
@@ -725,6 +730,7 @@
   :config (magit-todos-mode 1))
 
      
+(use-package markdown-mode)
 (use-package grip-mode) ;; install grip/go-grip on system as well
 
 (use-package pdf-tools
