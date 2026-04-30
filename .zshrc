@@ -52,7 +52,7 @@ help2() {
 }
 
 alias todo='task rc.verbose=nothing rc.color=off rc.annotations=off rc.defaultwidth=0 \
-     shell status:pending due.before:tomorrow sort:urgency-'
+     shell status:pending due.before:tomorrow sort:start-,priority-,project+,due+urgency-'
 todo
 [[ -f ~/.profile ]] && source ~/.profile
 
@@ -72,3 +72,6 @@ loadsecrets() {
 
 alias dns-cloudf='sudo resolvectl dns wlp0s20f3 1.1.1.1'
 alias dns-pihole='sudo resolvectl revert wlp0s20f3'
+
+# opencode
+export PATH=/home/tanz/.opencode/bin:$PATH

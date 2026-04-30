@@ -20,7 +20,7 @@ If:
   PathMatch: .*\.(c|h)$
 CompileFlags:
   Add:
-    - -std=c17
+    - -std=gnu17
     - -xc
 
 ---
