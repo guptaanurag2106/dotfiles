@@ -239,11 +239,11 @@
 
 (defun my/evil-move-visual-down ()
        (interactive)
-       (evil-move-visual-lines 1))
+       (my/evil-move-visual-lines 1))
 
 (defun my/evil-move-visual-up ()
        (interactive)
-       (evil-move-visual-lines -1))
+       (my/evil-move-visual-lines -1))
 
 (defun my/split-vertical ()
        (interactive)
