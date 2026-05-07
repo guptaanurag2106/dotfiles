@@ -205,30 +205,68 @@ return {
                 },
             })
             vim.lsp.enable("clangd")
-
-
-            vim.lsp.config("basedpyright", {
-                capabilities = lsp_capabilities,
+            vim.lsp.config("pylsp", {
+                cmd = { "pylsp" },
+                -- root_markers = {
+                --     "pyproject.toml",
+                --     "setup.py",
+                --     "setup.cfg",
+                --     "requirements.txt",
+                --     ".git",
+                -- },
+                -- flags = {
+                --     debounce_text_changes = 300,
+                -- },
                 settings = {
-                    python = {
-                        analysis = {
-                            typeCheckingMode = "off",
-                            diagnosticMode = "workspace",
-
-                            autoSearchPaths = true,
-                            useLibraryCodeForTypes = true,
-
-                            -- Quality-of-life improvements
-                            autoImportCompletions = true,
-                            reportMissingTypeStubs = false,
-                            reportUnknownMemberType = false,
-                            reportUnknownVariableType = false,
+                    pylsp = {
+                        plugins = {
+                            pyflakes = { enabled = true },
+                            ruff = { enabled = true },
+                            -- jedi_completion = {
+                            --     enabled = true,
+                            --     fuzzy = true,
+                            --     include_params = true,
+                            -- },
+                            -- jedi_definition = { enabled = true },
+                            -- jedi_hover = { enabled = true },
+                            -- jedi_references = { enabled = true },
+                            -- jedi_signature_help = { enabled = true },
+                            -- jedi_symbols = { enabled = true },
                         },
                     },
                 },
             })
 
-            vim.lsp.enable("basedpyright")
+            vim.lsp.enable("pylsp")
+
+            -- vim.lsp.config("pyright", {
+            --     capabilities = lsp_capabilities,
+            --     cmd = { "pyright-langserver", "--stdio" },
+            --     filetypes = { "python" },
+            --     root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", ".git" },
+            --     single_file_support = false,
+            --     settings = {
+            --         python = {
+            --             analysis = {
+            --                 typeCheckingMode = "basic",
+            --                 diagnosticMode = "openFilesOnly",
+            --                 autoImportCompletions = true,
+            --                 autoSearchPaths = false,
+            --                 useLibraryCodeForTypes = true,
+            --                 exclude = {
+            --                     "**/.git",
+            --                     "**/__pycache__",
+            --                     "**/.mypy_cache",
+            --                     "**/.pytest_cache",
+            --                     "**/.ruff_cache",
+            --                     "**/venv",
+            --                     "**/.venv",
+            --                 },
+            --             },
+            --         },
+            --     },
+            -- })
+            -- vim.lsp.enable("pyright")
 
             vim.lsp.config("rust_analyzer", {
                 capabilities = lsp_capabilities,
@@ -264,6 +302,7 @@ return {
         },
         dependencies = {
             "rafamadriz/friendly-snippets",
+            "saghen/blink.lib",
             {
                 "saghen/blink.compat",
                 optional = false,
@@ -343,7 +382,7 @@ return {
             cmdline = {
                 enabled = true,
                 keymap = { preset = "inherit" },
-                sources = { 'path', 'cmdline' },
+                sources = { default = { 'path', 'cmdline' } },
                 completion = {
                     list = { selection = { preselect = false } },
                     menu = {

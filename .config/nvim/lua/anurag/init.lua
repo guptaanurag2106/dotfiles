@@ -51,21 +51,20 @@ function Colours(colour)
 
     local highlights = {
         "Normal", -- Normal background
-        -- "LineNr",
-        -- "Folded",
-        -- "NonText",
-        -- "SpecialKey",
-        -- "VertSplit",
-        -- "DiffviewVertSplit",
+        "LineNr",
+        "Folded",
+        "NonText",
+        "SpecialKey",
+        "VertSplit",
+        "DiffviewVertSplit",
         "NormalNC", -- Normal Non current (split)
-        -- "SignColumn",
+        "SignColumn",
         "EndOfBuffer",
-        -- "TablineFill",
-        -- "TablineSel"
+        "TablineFill",
+        "TablineSel"
     }
     --
     for _, name in pairs(highlights) do
         vim.api.nvim_set_hl(0, name, { bg = "#000000" })
     end
 end
-
