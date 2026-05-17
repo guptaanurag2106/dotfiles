@@ -1,16 +1,12 @@
 return {
     {
-        'p00f/alabaster.nvim',
-        lazy = false,
+        "thimc/gruber-darker.nvim",
         config = function()
-            Colours("alabaster")
+            require("gruber-darker").setup({
+                bold = false,
+                transparent = true
+            })
+            Colours("gruber-darker")
         end
-    },
-    {
-        "nvim-lualine/lualine.nvim",
-        dependencies = { "nvim-tree/nvim-web-devicons" },
-        config = function()
-            require("lualine").setup({})
-        end,
     },
 }

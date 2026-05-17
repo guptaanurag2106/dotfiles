@@ -6,7 +6,22 @@ return {
             { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
         },
         keys = {
-            { "<leader>sf",       function() require("telescope.builtin").find_files() end,                desc = "Find file (Telescope)" },
+            {
+                "<leader>sf",
+                function()
+                    require("telescope.builtin").find_files(
+                        {
+                            hidden = true,
+                            no_ignore = true,
+                            file_ignore_patterns = {
+                                "node_modules",
+                                ".ruff_cache",
+                                ".git/",
+                            }
+                        })
+                end,
+                desc = "Find file (Telescope)"
+            },
             { "<leader>sh",       function() require("telescope.builtin").help_tags() end,                 desc = "Search Help (Telescope)" },
             { "<leader>sk",       function() require("telescope.builtin").keymaps() end,                   desc = "Search Keymaps (Telescope)" },
             { "<leader>sw",       function() require("telescope.builtin").grep_string() end,               desc = "Search current Word (Telescope)" },
@@ -75,7 +90,7 @@ return {
                 -- Defaults apply to *all* pickers ----------------------------------
                 ---------------------------------------------------------------------
                 defaults = {
-                    prompt_prefix = "🔍 ",
+                    prompt_prefix = "  ",
                     mappings = { i = { ["<Esc>"] = actions.close } },
                     file_ignore_patterns = {
                         "^%.git/", -- keep .git ignored
@@ -90,8 +105,8 @@ return {
                 pickers = {
                     -- :Telescope find_files
                     find_files = {
-                        hidden = true, -- include dot‑files / dot‑dirs
-                        follow = true, -- follow symlinks
+                        hidden = true,     -- include dot‑files / dot‑dirs
+                        follow = true,     -- follow symlinks
                         no_ignore = false, -- still respect .gitignore & friends
                         find_command = {
                             "rg",

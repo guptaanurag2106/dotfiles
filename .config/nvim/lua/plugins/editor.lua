@@ -1,36 +1,25 @@
 return {
     {
         "nvim-treesitter/nvim-treesitter",
+        lazy = false,
         build = ":TSUpdate",
         dependencies = {
             {
                 "nvim-treesitter/nvim-treesitter-context",
                 config = function()
                     require('treesitter-context').setup {
-                        enable = true,            -- Enable this plugin (Can be enabled/disabled later via commands)
-                        multiwindow = false,      -- Enable multiwindow support.
-                        max_lines = 0,            -- How many lines the window should span. Values <= 0 mean no limit.
-                        min_window_height = 0,    -- Minimum editor window height to enable context. Values <= 0 mean no limit.
+                        enable = true,        -- Enable this plugin (Can be enabled/disabled later via commands)
                         line_numbers = true,
-                        multiline_threshold = 20, -- Maximum number of lines to show for a single context
-                        trim_scope = 'outer',     -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
-                        mode = 'cursor',          -- Line used to calculate context. Choices: 'cursor', 'topline'
-                        separator = nil,
-                        zindex = 20,
-                        on_attach = nil,
+                        trim_scope = 'outer', -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+                        mode = 'cursor',      -- Line used to calculate context. Choices: 'cursor', 'topline'
                     }
                 end
             }
         },
-        config = function(_, opts)
-            require("nvim-treesitter").setup(opts)
-        end,
-        opts = {
-            highlight = { enable = true },
-            indent = { enable = true },
-            autotag = { enable = true },
-            matchup = { enable = true },
-            ensure_installed = {
+        config = function()
+            local ts = require("nvim-treesitter")
+            ts.setup()
+            ts.install({
                 "c",
                 "cpp",
                 "go",
@@ -42,9 +31,16 @@ return {
                 "bash",
                 "vim",
                 "vimdoc",
-            },
-            auto_install = true,
-        },
+            })
+
+            vim.api.nvim_create_autocmd("FileType", {
+                callback = function(args)
+                    if pcall(vim.treesitter.start, args.buf) then
+                        vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+                    end
+                end,
+            })
+        end,
     },
     {
         "tpope/vim-fugitive",

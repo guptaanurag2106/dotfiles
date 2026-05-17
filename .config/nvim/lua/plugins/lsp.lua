@@ -195,7 +195,6 @@ return {
                     "--pch-storage=memory",
                     "--header-insertion=iwyu",
                     "--completion-style=detailed",
-                    "--header-insertion=iwyu",
                     "--suggest-missing-includes",
                 },
                 init_options = {
@@ -267,6 +266,14 @@ return {
             --     },
             -- })
             -- vim.lsp.enable("pyright")
+
+            vim.lsp.config("ocamllsp", {
+                capabilities = lsp_capabilities,
+                filetypes = { "ocaml", "menhir", "ocamlinterface", "ocamllex", "reason", "dune" },
+                settings = {
+                }
+            })
+            vim.lsp.enable("ocamllsp")
 
             vim.lsp.config("rust_analyzer", {
                 capabilities = lsp_capabilities,
@@ -398,7 +405,7 @@ return {
     {
         "L3MON4D3/LuaSnip",
         dependencies = { { "rafamadriz/friendly-snippets" } },
-        run = "make install_jsregexp",
+        build = "make install_jsregexp",
         config = function()
             require("luasnip.loaders.from_vscode").lazy_load()
             local ls = require("luasnip")

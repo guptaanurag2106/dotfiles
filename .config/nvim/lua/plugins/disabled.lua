@@ -16,11 +16,11 @@ return {
         config = function()
             require("mini.ai").setup({ n_lines = 500 })
             require("mini.surround").setup()
-            require("mini.pairs").setup()       -- Auto-pairs
-            require("mini.comment").setup()     -- Commenting
-            
+            require("mini.pairs").setup()   -- Auto-pairs
+            require("mini.comment").setup() -- Commenting
+
             -- Optional: Mini.starter (Dashboard alternative)
-            -- require("mini.starter").setup() 
+            -- require("mini.starter").setup()
 
             local statusline = require("mini.statusline")
             statusline.setup({ use_icons = vim.g.have_nerd_font })
@@ -57,5 +57,13 @@ return {
             { "<leader>gs", "<cmd>Neogit<cr>", desc = "Neogit" },
         },
         config = true,
+    },
+    {
+        "nvim-lualine/lualine.nvim",
+        enabled = false,
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        config = function()
+            require("lualine").setup({})
+        end,
     },
 }
