@@ -8,13 +8,13 @@ set $mod Mod4
 #exec_always --no-startup-id pgrep kanshi || kanshi
 exec_always --no-startup-id ~/.config/sway/scripts/start_applets.sh
 exec_always --no-startup-id ~/.config/scripts/battery_notif.sh
-#exec_always --no-startup-id ~/.config/scripts/wl-sunset.sh
+exec_always --no-startup-id ~/.config/scripts/wl-sunset.sh
 # exec_always ~/.config/sway/scripts/disable_gnome_notif.sh
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 output * bg ~/.config/wallpaper.jpg fill
 #exec /usr/libexec/polkit-gnome-authentication-agent-1 &
 exec_always --no-startup-id xremap ~/.config/xremap/config.yml --watch=device --device /dev/tablet
-exec_always --no-startup-id '~/.config/sway/scripts/absmap.py ~/.config/sway/scripts/basic.yml'
+exec_always --no-startup-id 'absmap ~/.config/sway/scripts/basic.yml'
 
 ### Variables
 #
@@ -318,13 +318,11 @@ bindsym ctrl+$mod+h exec makoctl restore
 #bindsym ctrl+$mod+period exec dunstctl action
 #bindsym ctrl+$mod+m exec dunstctl set-paused toggle
 
-# bindsym ctrl+$mod+w exec "~/.config/scripts/wl-sunset.sh"
-
 # Clipman
 #exec clipman restore
-exec wl-paste --type image --watch cliphist store
 exec wl-paste --type text --watch cliphist store
-bindsym $mod+x exec exec cliphist list | rofi -i -dmenu -display-columns 2 | cliphist decode | wl-copy
+exec wl-paste --type image --watch cliphist store
+bindsym $mod+x exec cliphist list | rofi -i -dmenu -display-columns 2 | cliphist decode | wl-copy --foreground
 
 bindsym $mod+Shift+s exec grim -g "$(slurp)" - \
   | tee ~/Pictures/Screenshots/screenshot-$(date +'%F_%H-%M-%S').png \
