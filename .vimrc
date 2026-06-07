@@ -19,7 +19,7 @@ set t_vb=
 let g:netrw_liststyle=3     " tree view
 "let g:netrw_list_hide=netrw_gitignore#Hide()
 "let g:netrw_list_hide.=',\(^\|\s\s\)\zs\.\S\+'
-
+"
 
 set history=500
 
@@ -34,12 +34,20 @@ augroup vimrc_autoread
   autocmd FocusGained,BufEnter * silent! checktime
 augroup END
 
-" With a map leader it's possible to do extra key combinations
-" like <leader>w saves the current file
 let mapleader = " "
 
-" Fast saving
-nnoremap <silent> <leader>w :w!<cr>
+function! CopyToSystem(text) abort
+    if executable('wl-copy')
+        call system('wl-copy', a:text)
+    elseif executable('xclip')
+        call system('xclip -selection clipboard', a:text)
+    else
+        echoerr 'Neither wl-copy nor xclip found'
+    endif
+endfunction
+
+nnoremap <leader>y :call CopyToSystem(join(getline(1,'$'), "\n"))<CR>
+xnoremap <silent> <leader>y y:call CopyToSystem(getreg('"'))<CR>
 
 " :W sudo saves the file
 " (useful for handling the permission-denied error)
