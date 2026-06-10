@@ -18,7 +18,7 @@ return {
                 end
             end
 
-            local detail = false
+            local detail = true
             require("oil").setup({
                 win_options = {
                     winbar = "%!v:lua.get_oil_winbar()",
@@ -39,8 +39,6 @@ return {
                             end
                         end,
                     },
-                    ["<C-h>"] = false,
-                    ["<M-h>"] = "actions.select_split",
                 },
             })
         end,

@@ -4,7 +4,8 @@ return {
         dependencies = { { "nvim-lua/plenary.nvim" } },
         keys = {
             { "<leader>r",  ":RunFile<CR>", mode = { "n", "v" }, desc = "(Run.nvim) Async on selection" },
-            { "<leader>ra", ":RunLast<CR>", mode = { "n", "v" }, desc = "(Run.nvim) Run Last" }
+            { "<leader>ra", ":RunLast<CR>", mode = { "n", "v" }, desc = "(Run.nvim) Run Last" },
+            { "<leader>rs", ":RunStop<CR>", mode = { "n", "v" }, desc = "(Run.nvim) Stop job" }
         },
         config = function()
             require("run").setup({
