@@ -1,21 +1,53 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
-while true; do
-    # swaymsg -t subscribe '["window"]' | jq 'select(.change).container | if (.app_id == "firefox" or .app_id == "microsoft-edge" or .app_id == "vlc" or .name == "Krita") then halt_error(127 - .fullscreen_mode) else halt end' > /dev/null 2>&1
-    swaymsg -t subscribe '["window"]' | jq 'select(.change).container | halt_error(127 - .fullscreen_mode)' > /dev/null 2>&1
-    return_code=$?
-    echo "$return_code"
-    if [ $return_code -eq 126 ]; then
-        killall -9 wlsunset
-    else
-        if pgrep -f "wlsunset" > /dev/null; then
-            :
-        else
-            # CONTENT=$(curl -s http://ip-api.com/json/)
-            # longitude=$(echo $CONTENT | jq .lon)
-            # latitude=$(echo $CONTENT | jq .lat)
-            wlsunset -l 12.9 -L 77.6 -t 4000 &
-        fi
+LON=77.6
+LAT=12.9
+TEMP=3800
+
+WLSUNSET_PID=""
+
+start_wlsunset() {
+    if [[ -z "$WLSUNSET_PID" ]] || ! kill -0 "$WLSUNSET_PID" 2>/dev/null; then
+        wlsunset -l "$LAT" -L "$LON" -t "$TEMP" &
+        WLSUNSET_PID=$!
     fi
-    sleep 1
+}
+
+stop_wlsunset() {
+    if [[ -n "$WLSUNSET_PID" ]]; then
+        kill "$WLSUNSET_PID" 2>/dev/null
+        wait "$WLSUNSET_PID" 2>/dev/null
+        WLSUNSET_PID=""
+    fi
+}
+
+cleanup() {
+    stop_wlsunset
+    exit 0
+}
+
+trap cleanup EXIT INT TERM
+
+update() {
+    mode=$(
+        swaymsg -t get_tree |
+        jq -r '
+            recurse(.nodes[]?, .floating_nodes[]?)
+            | select(.focused == true)
+            | .fullscreen_mode
+        ' | head -n1
+    )
+
+    if [[ "$mode" == "1" ]]; then
+        stop_wlsunset
+    else
+        start_wlsunset
+    fi
+}
+
+update
+
+swaymsg -m -t subscribe '["window","workspace"]' |
+while read -r _; do
+    update
 done
