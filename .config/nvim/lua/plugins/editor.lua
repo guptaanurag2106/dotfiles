@@ -196,12 +196,6 @@ return {
     },
     {
         "numToStr/Comment.nvim",
-        keys = { "gc", "gcc" },
-        config = function()
-            require("Comment").setup()
-            local ft = require('Comment.ft')
-            ft.set('asm', { ';%s', ';%s' })
-        end,
     },
     {
         "folke/todo-comments.nvim",

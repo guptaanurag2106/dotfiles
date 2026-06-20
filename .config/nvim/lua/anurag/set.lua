@@ -1,7 +1,7 @@
 -- help vim.opt, --help option-list
 
 vim.opt.mouse = 'a'
-vim.opt.hidden = true -- allow switching of buffers without saving
+vim.opt.hidden = true      -- allow switching of buffers without saving
 vim.opt.breakindent = true -- useless as disabled wrap
 vim.opt.nu = true
 vim.opt.relativenumber = true
@@ -65,3 +65,5 @@ vim.opt.splitkeep = "screen"
 -- Reduce command line noise (uncomment to enable)
 -- vim.opt.shortmess:append("c")
 
+-- asm is nasm
+vim.filetype.add({ extension = { asm = 'nasm' } })
