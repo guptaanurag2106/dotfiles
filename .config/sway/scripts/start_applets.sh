@@ -1,4 +1,4 @@
 #!/bin/sh
 blueman-applet &
 nm-applet --indicator &
-lxpolkit &
+lxqt-policykit-agent &

@@ -14,7 +14,7 @@ exec_always --no-startup-id ~/.config/scripts/wl-sunset.sh
 output * bg ~/.config/wallpaper.jpg fill
 #exec /usr/libexec/polkit-gnome-authentication-agent-1 &
 exec_always --no-startup-id xremap ~/.config/xremap/config.yml --watch=device --device /dev/tablet
-exec_always --no-startup-id 'absmap ~/.config/sway/scripts/basic.yml'
+exec_always --no-startup-id '~/.local/bin/absmap ~/.config/sway/scripts/basic.yml'
 
 ### Variables
 #
