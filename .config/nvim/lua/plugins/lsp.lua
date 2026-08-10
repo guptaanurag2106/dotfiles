@@ -275,6 +275,8 @@ return {
             })
             vim.lsp.enable("ocamllsp")
 
+            vim.lsp.enable("vtsls")
+
             vim.lsp.config("rust_analyzer", {
                 capabilities = lsp_capabilities,
                 settings = {
@@ -329,6 +331,14 @@ return {
                 ghost_text = { enabled = false },
                 menu = {
                     -- auto_show_delay_ms = 200,
+                    auto_show = function(ctx)
+                        -- auto_show only when i manually press c-space or if their is lsp attached
+                        if ctx.update_type == 'manual' then
+                            return true
+                        end
+
+                        return #vim.lsp.get_clients({ bufnr = 0 }) > 0
+                    end,
                     draw = {
                         -- treesitter = { "lsp" },
                     },

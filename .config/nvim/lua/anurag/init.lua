@@ -51,8 +51,6 @@ function Colours(colour)
 
     local highlights = {
         "Normal", -- Normal background
-        "LineNr",
-        "Folded",
         "NonText",
         "SpecialKey",
         "VertSplit",
@@ -61,10 +59,18 @@ function Colours(colour)
         "SignColumn",
         "EndOfBuffer",
         "TablineFill",
-        "TablineSel"
+        "TablineSel",
+        "TelescopeNormal",
+        "TelescopeBorder",
+        "TelescopePromptNormal",
+        "TelescopePromptBorder",
+        "TelescopeResultsNormal",
+        "TelescopeResultsBorder",
+        "TelescopePreviewNormal",
+        "TelescopePreviewBorder",
     }
     --
     for _, name in pairs(highlights) do
-        vim.api.nvim_set_hl(0, name, { bg = "#000000" })
+        vim.api.nvim_set_hl(0, name, { bg = "none" })
     end
 end

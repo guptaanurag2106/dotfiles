@@ -205,6 +205,7 @@ return {
                 python = { "ruff" },
                 lua = { "luac" },
                 json = { "jq" },
+                js = { "eslint" },
                 go = { "golangcilint" },
             }
         end,

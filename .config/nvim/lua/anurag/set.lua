@@ -67,3 +67,12 @@ vim.opt.splitkeep = "screen"
 
 -- asm is nasm
 vim.filetype.add({ extension = { asm = 'nasm' } })
+
+vim.o.exrc = true -- folder level file overrides (.nvim.lua)
+--vim.o.secure = true
+
+
+vim.opt.fillchars = { fold = " " }
+vim.opt.foldmethod = "indent"
+vim.opt.foldenable = false
+vim.opt.foldlevel = 99

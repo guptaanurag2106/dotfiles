@@ -16,6 +16,7 @@ return {
                             file_ignore_patterns = {
                                 "node_modules",
                                 ".ruff_cache",
+                                ".nox",
                                 ".git/",
                             }
                         })
