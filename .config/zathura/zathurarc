@@ -13,3 +13,7 @@ set scroll-step 50
 
 # Clipboard behaves as expected
 set selection-clipboard clipboard
+
+set open-first-page false
+set database sqlite
+
