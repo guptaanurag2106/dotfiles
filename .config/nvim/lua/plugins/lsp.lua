@@ -16,6 +16,36 @@ return {
                     local opts = { buffer = event.buf }
                     vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end,
                         { desc = "Go to definition", buffer = opts.buffer })
+                    vim.keymap.set("n", "<leader>gv", function()
+                        local cur = vim.api.nvim_get_current_win()
+                        local cur_buf = vim.api.nvim_win_get_buf(cur)
+                        local cur_pos = vim.api.nvim_win_get_position(cur)
+                        local cur_row, cur_col = cur_pos[1], cur_pos[2]
+                        local wins = vim.api.nvim_tabpage_list_wins(0)
+                        local target = nil
+                        for _, win in ipairs(wins) do
+                            if win ~= cur then
+                                local pos = vim.api.nvim_win_get_position(win)
+                                local w_row, w_col = pos[1], pos[2]
+                                local w_width = vim.api.nvim_win_get_width(win)
+                                if math.abs(w_row - cur_row) < 5 and (math.abs(w_col - cur_col - w_width) < 5 or math.abs(cur_col - w_col - vim.api.nvim_win_get_width(cur)) < 5) then
+                                    target = win
+                                    break
+                                end
+                            end
+                        end
+
+                        if target then
+                            vim.api.nvim_set_current_win(target)
+                        else
+                            vim.cmd("vsplit")
+                            target = vim.api.nvim_get_current_win()
+                        end
+
+                        vim.api.nvim_win_set_buf(target, cur_buf)
+                        vim.api.nvim_win_set_cursor(target, vim.api.nvim_win_get_cursor(cur))
+                        vim.lsp.buf.definition()
+                    end, { desc = "Go to definition (split)", buffer = opts.buffer })
                     vim.keymap.set("n", "gD", function() vim.lsp.buf.declaration() end,
                         { desc = "Go to declaration", buffer = opts.buffer })
                     vim.keymap.set("n", "gi", function() vim.lsp.buf.implementation() end,
@@ -46,30 +76,7 @@ return {
                         { desc = "Go to type definition", buffer = opts.buffer })
                     vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end,
                         { desc = "Show signature help", buffer = opts.buffer })
-                    vim.keymap.set("n", "<leader>fd", function() vim.lsp.buf.format({ async = false }) end,
-                        { desc = "Format document", buffer = opts.buffer })
-                    vim.keymap.set("n", "<leader>th",
-                        function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end,
-                        { desc = "Turn on inlay hints", buffer = opts.buffer })
-                    -- vim.keymap.set("n", "<leader>fl", function() require("lint").try_lint() end,
-                    --     { desc = "Lint document", buffer = opts.buffer })
-
-                    local client = vim.lsp.get_client_by_id(event.data.client_id)
-                    if client and client.server_capabilities.documentHighlightProvider then
-                        local highlight_augroup = vim.api.nvim_create_augroup("UserLSPHighlight", { clear = false })
-                        vim.api.nvim_clear_autocmds({ group = highlight_augroup, buffer = event.buf })
-                        vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" },
-                            { buffer = event.buf, group = highlight_augroup, callback = vim.lsp.buf.document_highlight })
-                        vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" },
-                            { buffer = event.buf, group = highlight_augroup, callback = vim.lsp.buf.clear_references })
-                    end
-
-                    local format_augroup = vim.api.nvim_create_augroup("UserLSPFormat", { clear = false })
-                    vim.api.nvim_clear_autocmds({ group = format_augroup, buffer = event.buf })
-                    vim.api.nvim_create_autocmd("BufWritePre", {
-                        buffer = event.buf,
-                        group = format_augroup,
-                        callback = function()
+                    vim.keymap.set("n", "<leader>fd", function()
                             if vim.bo[event.buf].filetype == "python" then
                                 local file = vim.api.nvim_buf_get_name(event.buf)
                                 if file ~= "" then
@@ -82,7 +89,23 @@ return {
 
                             vim.lsp.buf.format({ bufnr = event.buf, async = false })
                         end,
-                    })
+                        { desc = "Format document", buffer = opts.buffer })
+                    vim.keymap.set("n", "<leader>th",
+                        function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end,
+                        { desc = "Turn on inlay hints", buffer = opts.buffer })
+                    -- vim.keymap.set("n", "<leader>fl", function() require("lint").try_lint() end,
+                    --     { desc = "Lint document", buffer = opts.buffer })
+
+                    local clients = vim.lsp.get_clients({ id = event.data.client_id })
+                    local client = clients[1]
+                    if client and client.server_capabilities.documentHighlightProvider then
+                        local highlight_augroup = vim.api.nvim_create_augroup("UserLSPHighlight", { clear = false })
+                        vim.api.nvim_clear_autocmds({ group = highlight_augroup, buffer = event.buf })
+                        vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" },
+                            { buffer = event.buf, group = highlight_augroup, callback = vim.lsp.buf.document_highlight })
+                        vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" },
+                            { buffer = event.buf, group = highlight_augroup, callback = vim.lsp.buf.clear_references })
+                    end
                 end
             })
 
@@ -407,7 +430,7 @@ return {
                             return vim.fn.getcmdtype() == ":"
                         end,
                     },
-                    ghost_text = { enabled = true },
+                    ghost_text = { enabled = false },
                 },
             },
         },
@@ -460,9 +483,10 @@ IN THE SOFTWARE.
     },
     {
         "j-hui/fidget.nvim",
+        enabled=false,
         config = function()
             require("fidget").setup({
-                notification = { override_vim_notify = false },
+                notification = { override_vim_notify = true },
             })
         end,
     },
