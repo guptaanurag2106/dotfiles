@@ -9,7 +9,6 @@ return {
         end,
         enabled = false
     },
-    -- Mini.nvim Suite (Surround, AI, Pairs, Starter, etc.)
     {
         "echasnovski/mini.nvim",
         enabled = false,
@@ -29,8 +28,6 @@ return {
             end
         end,
     },
-
-    -- Multi-Cursor Editing
     {
         "mg979/vim-visual-multi",
         enabled = false,
@@ -43,11 +40,9 @@ return {
             }
         end,
     },
-
-    -- Git Interface (Magit-style)
     {
         "NeogitOrg/neogit",
-        enabled = false,
+        enabled = true,
         dependencies = {
             "nvim-lua/plenary.nvim",
             "sindrets/diffview.nvim", -- Enhanced diff view
@@ -56,14 +51,15 @@ return {
         keys = {
             { "<leader>gs", "<cmd>Neogit<cr>", desc = "Neogit" },
         },
-        config = true,
-    },
-    {
-        "nvim-lualine/lualine.nvim",
-        enabled = false,
-        dependencies = { "nvim-tree/nvim-web-devicons" },
         config = function()
-            require("lualine").setup({})
+            require("neogit").setup({
+                integrations = {
+                    diffview = true,
+                    telescope = true,
+                },
+                kind = "split",
+                disable_insert_on_commit = true,
+            })
         end,
-    },
+    }
 }

@@ -6,20 +6,16 @@ return {
         dependencies = {
             {
                 "nvim-treesitter/nvim-treesitter-context",
-                config = function()
-                    require('treesitter-context').setup {
-                        enable = true,        -- Enable this plugin (Can be enabled/disabled later via commands)
-                        line_numbers = true,
-                        trim_scope = 'outer', -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
-                        mode = 'cursor',      -- Line used to calculate context. Choices: 'cursor', 'topline'
-                    }
-                end
+                opts = {
+                    enable = true,
+                    line_numbers = true,
+                    trim_scope = 'outer',
+                    mode = 'cursor',
+                },
             }
         },
-        config = function()
-            local ts = require("nvim-treesitter")
-            ts.setup()
-            ts.install({
+        opts = {
+            ensure_installed = {
                 "c",
                 "cpp",
                 "go",
@@ -31,7 +27,10 @@ return {
                 "bash",
                 "vim",
                 "vimdoc",
-            })
+            },
+        },
+        config = function(_, opts)
+            require("nvim-treesitter").setup(opts)
 
             vim.api.nvim_create_autocmd("FileType", {
                 callback = function(args)
@@ -44,6 +43,7 @@ return {
     },
     {
         "tpope/vim-fugitive",
+        enabled = false,
         cmd = { "Fugitive", "Git" },
         keys = {
             { "<leader>gs", vim.cmd.Git, desc = "Open Git" },
@@ -81,9 +81,9 @@ return {
             vim.keymap.set("n", "gh", "<cmd>diffget //3<CR>")
         end
     },
-    -- { "tpope/vim-rhubarb", cmd = "GBrowse" },
     {
         "lewis6991/gitsigns.nvim",
+        enabled = false,
         event = { "BufReadPost", "BufNewFile" },
         dependencies = { "nvim-lua/plenary.nvim" },
         config = function()
@@ -95,7 +95,7 @@ return {
                     topdelete = { text = '‾' },
                     changedelete = { text = '~' },
                 },
-                signcolumn = false,
+                signcolumn = true,
                 current_line_blame = false,
                 on_attach = function(bufnr)
                     local gs = package.loaded.gitsigns
@@ -137,17 +137,29 @@ return {
             }
         end,
     },
-    { "sindrets/diffview.nvim", cmd = "DiffviewOpen" },
+    {
+        "sindrets/diffview.nvim",
+        keys = {
+            { "<leader>gd", "<cmd>DiffviewOpen<cr>",                   desc = "Diffview: Open" },
+            { "<leader>gD", "<cmd>DiffviewFileHistory %<cr>",          desc = "Diffview: File History" },
+            { "<leader>gh", "<cmd>DiffviewToggleFiles<cr>",            desc = "Diffview: Toggle Files" },
+        },
+    },
     {
         "ThePrimeagen/harpoon",
+        branch = "harpoon2",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        config = function()
+            require("harpoon"):setup()
+        end,
         keys = {
-            { "<leader>a", function() require("harpoon.mark").add_file() end,        desc = "Add file (Harpoon)" },
-            { "<C-e>",     function() require("harpoon.ui").toggle_quick_menu() end, desc = "Menu (Harpoon)" },
-            { "<leader>1", function() require("harpoon.ui").nav_file(1) end,         desc = "Harpoon File 1" },
-            { "<leader>2", function() require("harpoon.ui").nav_file(2) end,         desc = "Harpoon File 2" },
-            { "<leader>3", function() require("harpoon.ui").nav_file(3) end,         desc = "Harpoon File 3" },
-            { "<leader>4", function() require("harpoon.ui").nav_file(4) end,         desc = "Harpoon File 4" },
-            { "<leader>5", function() require("harpoon.ui").nav_file(5) end,         desc = "Harpoon File 5" },
+            { "<leader>a", function() require("harpoon"):list():add() end,                     desc = "Add file (Harpoon)" },
+            { "<C-e>",     function() require("harpoon").ui:toggle_quick_menu(require("harpoon"):list()) end, desc = "Menu (Harpoon)" },
+            { "<leader>1", function() require("harpoon"):list():select(1) end,                 desc = "Harpoon File 1" },
+            { "<leader>2", function() require("harpoon"):list():select(2) end,                 desc = "Harpoon File 2" },
+            { "<leader>3", function() require("harpoon"):list():select(3) end,                 desc = "Harpoon File 3" },
+            { "<leader>4", function() require("harpoon"):list():select(4) end,                 desc = "Harpoon File 4" },
+            { "<leader>5", function() require("harpoon"):list():select(5) end,                 desc = "Harpoon File 5" },
         },
     },
     {
@@ -158,16 +170,18 @@ return {
     },
     {
         "folke/zen-mode.nvim",
+        config = function()
+            require("zen-mode").setup({
+                window = {
+                    width = 150,
+                    options = {}
+                },
+            })
+        end,
         keys = {
             {
                 "<leader>zz",
                 function()
-                    require("zen-mode").setup {
-                        window = {
-                            width = 150,
-                            options = {}
-                        },
-                    }
                     require("zen-mode").toggle()
                     vim.wo.wrap = false
                     vim.wo.number = true
@@ -178,12 +192,6 @@ return {
             {
                 "<leader>zZ",
                 function()
-                    require("zen-mode").setup {
-                        window = {
-                            width = 150,
-                            options = {}
-                        },
-                    }
                     require("zen-mode").toggle()
                     vim.wo.wrap = false
                     vim.wo.number = false

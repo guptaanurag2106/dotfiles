@@ -2,20 +2,6 @@ require("anurag.remap")
 require("anurag.set")
 require("anurag.autocmds")
 
-P = function(v)
-    print(vim.inspect(v))
-    return v
-end
-
-RELOAD = function(...)
-    return require("plenary.reload").reload_module(...)
-end
-
-R = function(name)
-    RELOAD(name)
-    return require(name)
-end
-
 -- Open a new scratch buffer
 function OpenScratchBuffer()
     local bufnr = vim.api.nvim_create_buf(false, true)
@@ -39,14 +25,10 @@ function SaveScratchBuffer()
     end
 end
 
--- Create a command to open a new scratch buffer
 vim.api.nvim_create_user_command('Scratch', OpenScratchBuffer, {})
-
--- Create a keymap to save the scratch buffer
-vim.api.nvim_set_keymap('n', '<leader>sb', ':lua SaveScratchBuffer()<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>sb', SaveScratchBuffer, { noremap = true, silent = true, desc = "Save scratch buffer" })
 
 function Colours(colour)
-    colour = colour or "vscode"
     vim.cmd.colorscheme(colour)
 
     local highlights = {

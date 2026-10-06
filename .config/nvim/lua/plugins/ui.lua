@@ -8,6 +8,7 @@ return {
             { "<leader>-", function() require("oil").toggle_float() end, desc = "Open parent dir (Oil) float" },
         },
         config = function()
+            ---@diagnostic disable-next-line: global-element
             function _G.get_oil_winbar()
                 local bufnr = vim.api.nvim_win_get_buf(vim.g.statusline_winid)
                 local dir = require("oil").get_current_dir(bufnr)
