@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <object class="GtkMenu" id="menu">
+    <child>
+      <object class="GtkMenuItem" id="eye">
+        <property name="label">Eye</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="pom">
+        <property name="label">Pomodoro</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="both">
+        <property name="label">Eye + Pomodoro</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkSeparatorMenuItem" id="sep"/>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="stop">
+        <property name="label">Stop</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkSeparatorMenuItem" id="bottompad"/>
+    </child>
+  </object>
+</interface>

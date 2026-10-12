@@ -35,6 +35,7 @@
         "custom/audio",
         "custom/separator",
         "custom/dunst",
+        "custom/gomind",
         "network",
         "tray",
         "custom/power",
@@ -199,8 +200,24 @@
     },
     "custom/dunst": {
         "exec": "~/.config/scripts/dunst.sh",
-        "interval": 5,
+        "interval": 1,
         "tooltip": false,
+    },
+    "custom/gomind": {
+        "return-type": "json",
+        "exec": "~/go/bin/gomind --status",
+        "format": "{text}",
+        "on-click": "~/go/bin/gomind --stop && pkill -SIGRTMIN+9 waybar",
+        "menu": "on-click-right",
+        "menu-file": "~/.config/waybar/gomind.xml",
+        "menu-actions": {
+            "eye": "sh -c '~/go/bin/gomind --eye & sleep 0.2 && pkill -SIGRTMIN+9 waybar'",
+            "pom": "sh -c '~/go/bin/gomind --pomodoro & sleep 0.2 && pkill -SIGRTMIN+9 waybar'",
+            "both": "sh -c '~/go/bin/gomind --eye --pomodoro & sleep 0.2 && pkill -SIGRTMIN+9 waybar'",
+            "stop": "~/go/bin/gomind --stop && pkill -SIGRTMIN+9 waybar"
+        },
+        "interval": 5,
+        "signal": 9
     },
     "tray": {
       "spacing": 5,

@@ -1,5 +1,5 @@
 * {
-    color: #d8dee9;
+    color: #e4e4ef;
     border: 0;
     outline: 0;
     padding: 1px 0;
@@ -15,35 +15,41 @@
     border: 0;
     outline: 0;
     border-radius: 0;
-    color: #000000;
-    background-color: rgba(144, 205, 250, 0.4);
+    color: #9aaed0;
+    background-color: #303030;
 }
 
 #workspaces button.focused {
-    background-color: rgba(182, 155, 241, 0.5);
+    color: #181818;
+    background-color: #b8a020;
 }
 
 #workspaces button.urgent {
-    background-color: #900000;
+    color: #ffffff;
+    background-color: #f43841;
 }
 
 #workspaces button.active {
-    background-color: rgba(0, 0, 0, 1);
+    color: #e4e4ef;
+    background-color: #303030;
 }
 
 #workspaces button:hover {
-    background: rgba(182, 155, 241, 1);
+    color: #181818;
+    background: #d8bd2b;
 }
 
 #clock, #battery, #idle_inhibitor, #pulseaudio, #mode, #cpu, #memory,
-#window, #custom-dunst, #custom-temperature, #backlight, #disk, #custom-audio, #custom-scratchpad, #keyboard-state, #custom-power{
-    color: #d8dee9;
+#window, #custom-dunst, #custom-temperature, #custom-gomind, #backlight, #disk,
+#custom-audio, #custom-scratchpad, #keyboard-state, #custom-power {
+    color: #e4e4ef;
     margin: 0 4px;
 }
 
 #custom-separator {
     margin: 0;
     padding: 0;
+    color: #91888c;
 }
 
 /* -----------------------------------------------------------------------------
@@ -51,19 +57,19 @@
  * -------------------------------------------------------------------------- */
 
 #battery.charging {
-    color: #81a1c1;
+    color: #73d936;
 }
 
 @keyframes blink {
     to {
-        color: #4c566a;
-        background-color: #eceff4;
+        color: #181818;
+        background-color: #f4f4ff;
     }
 }
 
 #battery.critical:not(.charging) {
-    background: #bf616a;
-    color: #eceff4;
+    background: #f43841;
+    color: #f4f4ff;
     animation-name: blink;
     animation-duration: 0.5s;
     animation-timing-function: linear;
@@ -72,47 +78,49 @@
 }
 
 #network.disabled {
-    color: #4c566a;
+    color: #52494e;
 }
 
 #network.disconnected {
-    color: #4c566a;
+    color: #f43841;
 }
 
 #network {
     margin-left: 4px;
+    color: #9aaed0;
 }
 
 /*
 #pulseaudio {
-    color: #88c0d0;
+    color: #95a99f;
 }
 
 #pulseaudio.sink.muted {
-    color: #4c566a;
+    color: #52494e;
 }
 
 #pulseaudio.sink:not(.muted) {
-    color: #a3be8c;
+    color: #73d936;
 }
 
 #pulseaudio.source-muted {
-    color: #4c566a;
+    color: #52494e;
 }
 */
 
 #idle_inhibitor {
-    color: #ebcb8b;
+    color: #d8bd2b;
 }
 
 #idle_inhibitor.deactivated {
-    color: #4c566a;
+    color: #52494e;
 }
 
 #custom-power {
     margin-left: 10px;
+    color: #f43841;
 }
 
 #mode {
-    color: #ebcb8b;
+    color: #cc8c3c;
 }
